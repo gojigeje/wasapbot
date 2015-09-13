@@ -1,0 +1,37 @@
+{
+    "name": "whatsapp/chat-api",
+    "description": "The PHP WhatsApp library",
+    "license": "MIT",
+    "keywords": [
+        "WhatsApp",
+        "WhatsAPI",
+        "Chat-API"
+    ],
+    "authors": [
+        {
+            "role": "Contributors",
+            "name": "Chat API Contributing Team",
+            "homepage": "https://github.com/WHAnonymous/Chat-API/graphs/contributors"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/WHAnonymous/Chat-API/issues",
+        "wiki": "https://github.com/WHAnonymous/Chat-API/wiki",
+        "source": "https://github.com/WHAnonymous/Chat-API"
+    },
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    },
+    "require": {
+        "php": ">=5.3",
+        "ext-curl": "*",
+        "ext-gd" : "*",
+        "ext-mcrypt": "*",
+        "ext-openssl" : "*",
+        "ext-pdo" : "*",
+        "ext-sockets" : "*",
+        "ext-sqlite3" : "*"
+    }
+}
