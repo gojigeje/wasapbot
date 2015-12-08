@@ -8,18 +8,16 @@
  *
  */
 
-require_once('../src/whatsprot.class.php');
+require_once('../src/Registration.php');
 
 /**
  * Config data.
  */
 $debug = true;
+$username = '34666554433';   // Telephone number including the country code without '+' or '00'.
 
-$username = '34666554433';                      // Telephone number including the country code without '+' or '00'.
-$nickname = 'John Doe';                         // This is the username displayed by WhatsApp clients.
-
-// Create an instance of WhatsProt.
-$w = new WhatsProt($username, $nickname, $debug);
+// Create an instance of Registration.
+$w = new Registration($username, $debug);
 
 // How to create an account __ONLY__ if you do not have a associated to our phone number.
 // You can test your credentials with: $w->checkCredentials() (BUT ONLY ONLY IF YOU HAVE THE IDENTITY);

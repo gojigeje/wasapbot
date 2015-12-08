@@ -89,7 +89,7 @@ $w->sendMessageImage($target, "demo/x3.jpg");
 //$w->sendMessageAudio($target, 'http://www.kozco.com/tech/piano2.wav');
 
 //send Location
-//$w->sendLocation($target, '4.948568', '52.352957');
+//$w->sendMessageLocation($target, '4.948568', '52.352957');
 
 // Implemented out queue messages and auto msgid
 $w->sendMessage($target, "Guess the number :)");

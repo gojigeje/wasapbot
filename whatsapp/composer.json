@@ -1,7 +1,7 @@
 {
     "name": "whatsapp/chat-api",
     "description": "The PHP WhatsApp library",
-    "license": "MIT",
+    "license": "GPL-3.0+",
     "keywords": [
         "WhatsApp",
         "WhatsAPI",
@@ -25,7 +25,7 @@
         ]
     },
     "require": {
-        "php": ">=5.3",
+        "php": ">=5.6",
         "ext-curl": "*",
         "ext-gd" : "*",
         "ext-mcrypt": "*",

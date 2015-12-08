@@ -64,7 +64,6 @@ abstract class AllEvents
     public function onGetImage($mynumber, $from, $id, $type, $time, $name, $size, $url, $file, $mimeType, $fileHash, $width, $height, $preview, $caption) {}
     public function onGetGroupImage($mynumber, $from_group_jid, $from_user_jid, $id, $type, $time, $name, $size, $url, $file, $mimeType, $fileHash, $width, $height, $preview, $caption) {}
     public function onGetGroupVideo($mynumber, $from_group_jid, $from_user_jid, $id, $type, $time, $name, $url, $file, $size, $mimeType, $fileHash, $duration, $vcodec, $acodec, $preview, $caption) {}
-    public function onGetKeysLeft($mynumber, $keysLeft) {}
     public function onGetLocation($mynumber, $from, $id, $type, $time, $name, $author, $longitude, $latitude, $url, $preview, $fromJID_ifGroup = null) {}
     public function onGetMessage($mynumber, $from, $id, $type, $time, $name, $body) {}
     public function onGetNormalizedJid($mynumber, $data) {}
@@ -86,7 +85,6 @@ abstract class AllEvents
     public function onGroupsParticipantChangedNumber($mynumber, $groupId, $time, $oldNumber, $notify, $newNumber) {}
     public function onGroupsParticipantsPromote($myNumber, $groupJID, $time, $issuerJID, $issuerName, $promotedJIDs = array()) {}
     public function onGroupsParticipantsRemove($mynumber, $groupId, $jid) {}
-    public function onLogin($mynumber) {}
     public function onLoginFailed($mynumber, $data) {}
     public function onLoginSuccess($mynumber, $kind, $status, $creation, $expiration) {}
     public function onAccountExpired($mynumber, $kind, $status, $creation, $expiration ){}

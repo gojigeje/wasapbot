@@ -77,7 +77,43 @@ class ProtocolNode
     {
         return $this->children;
     }
+    /**
+    * @param ProtocolNode $node
+    */
+    public function addChild(ProtocolNode $node){
+      $this->children[] = $node;
+    }
 
+    /**
+    * @param ProtocolNode $node
+    */
+    public function removeChild($tag, $attrs = []){
+        if($this->children){
+          if(is_int($tag)){
+              if(isset($this->childen[$tag])){
+                array_slice($this->children,$tag,1);
+              }
+          }
+          else{
+            foreach($this->childen as $i=>$child){
+              $index = -1;
+              if(strcmp($child->tag, $tag) == 0){
+                $index = $i;
+                foreach($attrs as $key=>$val){
+                  if(strcmp($child->getAttribute($key),$val) != 0){
+                    $index = -1; // attrs not equal
+                    break;
+                  }
+                }
+              }
+              if($index != -1){
+                array_slice($this->children,$index,1);
+                return;
+              }
+            }
+          }
+        }
+    }
     public function __construct($tag, $attributeHash, $children, $data)
     {
         $this->tag           = $tag;
@@ -167,9 +203,10 @@ class ProtocolNode
     //get children supports string tag or int index
     /**
      * @param $tag
+     * @param array $attrs
      * @return ProtocolNode
      */
-    public function getChild($tag)
+    public function getChild($tag, $attrs = [])
     {
         $ret = null;
         if ($this->children) {
@@ -182,9 +219,18 @@ class ProtocolNode
             }
             foreach ($this->children as $child) {
                 if (strcmp($child->tag, $tag) == 0) {
-                    return $child;
+                    $found = true;
+                    foreach($attrs as $key=>$value){
+                      if(strcmp($child->getAttribute($key),$value) != 0)
+                      {
+                        $found = false;
+                        break;
+                      }
+                    }
+                    if($found)
+                      return $child;
                 }
-                $ret = $child->getChild($tag);
+                $ret = $child->getChild($tag, $attrs);
                 if ($ret) {
                     return $ret;
                 }

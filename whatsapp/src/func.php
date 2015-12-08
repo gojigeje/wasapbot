@@ -159,7 +159,7 @@ function updateData($nameFile, $WAver, $WAToken = null)
     $content = explode("\n", $content);
 
     if ($file == __DIR__ . '/token.php') {
-        $content[22] = '    $releaseTime = \'' . $WAToken .'\';';
+        $content[27] = '    $releaseTime = \'' . $WAToken .'\';';
     } else {
         if ($file == __DIR__ . '/Constants.php') {
             $content[21] = '    const WHATSAPP_VER = \'' . trim($WAver) . '\';                                                          // The WhatsApp version.';
@@ -239,4 +239,125 @@ function getExtensionFromMime($mime)
   );
 
   return $extensions[$mime];
+}
+
+function adjustId($id)
+{
+  $data = strrev(pack("L",$id));
+  $data = bin2hex(ltrim($data));
+  while(strlen($data) < 6)
+    $data = "0".$data;
+
+  return hex2bin($data);
+}
+
+function deAdjustId($data)
+{
+  if(strlen($data) < 4)
+    $data = "\x00".$data;
+  $data = strrev($data);
+  $data = unpack("L",$data);
+
+  return $data[1];
+}
+
+function unpadV2Plaintext($v2plaintext)
+{
+  if(strlen($v2plaintext) < 128)
+    return substr($v2plaintext,2,-1);
+  else
+    return substr($v2plaintext,3,-1);
+}
+function parseText($txt){
+    for($x=0;$x<strlen($txt);$x++){
+        if(ord($txt[$x]) < 20 || ord($txt[$x]) > 230)
+        {
+            $txt = "HEX:".bin2hex($txt);
+            return $txt;
+        }
+    }
+    return $txt;
+}
+function niceVarDump($obj,$ident = 0){
+    $data = "";
+    $data .= str_repeat(" ",$ident);
+    $original_ident = $ident;
+    $toClose = false;
+    switch(gettype($obj)){
+        case "object":
+            $vars = (array) $obj;
+            $data .= gettype($obj)." (".get_class($obj).") (".count($vars).") {\n";
+            $ident += 2;
+            foreach($vars as $key=>$var){
+                $type = "";
+                $k = bin2hex($key);
+                if(strpos($k,"002a00") === 0){
+                    $k = str_replace("002a00", "", $k);
+                    $type = ":protected";
+                }
+                else if(strpos($k,bin2hex("\x00".get_class($obj)."\x00")) === 0){
+                    $k = str_replace(bin2hex("\x00".get_class($obj)."\x00"),"", $k);
+                    $type = ":private";
+                }
+                $k = hex2bin($k);
+                if(is_subclass_of($obj, "ProtobufMessage") && $k == "values"){
+                    $r = new ReflectionClass($obj);
+                    $constants = $r->getConstants();
+                    $newVar = [];
+                    foreach($constants as $ckey=>$cval){
+                        if(substr($ckey,0,3) != "PB_")
+                            $newVar[$ckey] = $var[$cval];
+                    }
+                    $var = $newVar;
+                }
+                $data .= str_repeat(" ", $ident)."[$k$type]=>\n".niceVarDump($var,$ident)."\n";
+            }
+            $toClose = true;
+        break;
+        case "array":
+            $data .= "array (".count($obj).") {\n";
+            $ident += 2;
+            foreach($obj as $key=>$val){
+                $data .= str_repeat(" ", $ident)."[".(is_integer($key)?$key:"\"$key\"")."]=>\n".niceVarDump($val,$ident)."\n";
+            }
+            $toClose = true;
+        break;
+        case "string":
+            $data .= "string \"".parseText($obj)."\"\n";
+        break;
+        case "NULL":
+            $data .= gettype($obj);
+        break;
+        default:
+            $data .= gettype($obj)."(".strval($obj).")\n";
+        break;
+    }
+    if($toClose)
+        $data .= str_repeat(" ", $original_ident)."}\n";
+
+    return $data;
+}
+function encodeInt7bit($value)
+{
+  $v = $value;
+  $out = "";
+  while($v >= 0x80){
+    $out .= chr(($v | 0x80) % 256);
+    $v >>= 7;
+  }
+  $out .= chr(v % 256);
+
+  return $out;
+}
+
+function padMessage($plaintext)
+{
+  $padded = "";
+  $padded .= "\n";
+  $padded .= encodeInt7bit(strlen($plaintext));
+  $padded .= $plaintext;
+  $padded .= chr("\x01");
+  $plaintext = $padded;
+
+  return $plaintext;
 }

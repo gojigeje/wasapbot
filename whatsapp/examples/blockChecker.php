@@ -26,7 +26,7 @@ echo "####################\n";
 echo "\n\nUsername (country code + number without + or 00): ";
 $username = trim(fgets(STDIN));
 
-$w = new WhatsProt($username, '', $debug);
+$w = new Registration($username, $debug);
 $w->eventManager()->bind("onCredentialsBad", "onCredentialsBad");
 $w->eventManager()->bind("onCredentialsGood", "onCredentialsGood");
 

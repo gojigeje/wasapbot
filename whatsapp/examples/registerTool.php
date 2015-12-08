@@ -1,5 +1,5 @@
 <?php
-require_once('../src/whatsprot.class.php');
+require_once('../src/Registration.php');
 
 $debug = true;
 
@@ -18,8 +18,7 @@ if (!preg_match('!^\d+$!', $username))
 }
 $identityExists = file_exists("../src/wadata/id.$username.dat");
 
-// Create a instance of WhastPort.
-$w = new WhatsProt($username, '', $debug);
+$w = new Registration($username, $debug);
 
 if (!$identityExists)
 {

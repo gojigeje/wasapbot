@@ -19,8 +19,8 @@ class Constants
     const WHATSAPP_REQUEST_HOST = 'v.whatsapp.net/v2/code';                                  // The request code host.
     const WHATSAPP_SERVER = 's.whatsapp.net';                                                // The hostname used to login/send messages.
     const WHATSAPP_DEVICE = 'S40';                                                           // The device name.
-    const WHATSAPP_VER = '2.12.96';                                                          // The WhatsApp version.
-    const WHATSAPP_USER_AGENT = 'WhatsApp/2.12.96 S40Version/14.26 Device/Nokia302';         // User agent used in request/registration code.
+    const WHATSAPP_VER = '2.13.9';                                                          // The WhatsApp version.
+    const WHATSAPP_USER_AGENT = 'WhatsApp/2.13.9 S40Version/14.26 Device/Nokia302';         // User agent used in request/registration code.
     const WHATSAPP_VER_CHECKER = 'https://coderus.openrepos.net/whitesoft/whatsapp_scratch'; // Check WhatsApp version
 
 }

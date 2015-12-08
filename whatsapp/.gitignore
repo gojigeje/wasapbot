@@ -1,0 +1,14 @@
+/bootstrap/compiled.php
+/vendor
+/.idea
+/nbproject
+composer.phar
+.env.*.php
+.env.php
+.DS_Store
+Thumbs.db
+*.dat
+
+*.db
+
+*.log
