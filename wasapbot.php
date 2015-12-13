@@ -1,11 +1,12 @@
 <?php
 
   // --------------------------------------------------------------------------------------------------------------- //
-  //  wasapbot by @gojigeje - A super simple WhatsApp bot                                                             //
+  //  wasapbot by @gojigeje - A super simple WhatsApp bot                                                            //
   // --------------------------------------------------------------------------------------------------------------- //
   //    Author      : Ghozy Arif Fajri < gojigeje @ gmail.com >                                                      //
   //    Github      : https://github.com/gojigeje                                                                    //
   //    Social      : https://twitter.com/gojigeje                                                                   //
+  //    Chat        : https://telegram.me/gojigeje                                                                   //
   // --------------------------------------------------------------------------------------------------------------- //
   //                                                                                                                 //
   //    WARNING!  Code is very unclean, not professional, not modular, not OOP, product of newbie. Probably buggy    //
@@ -26,8 +27,8 @@
   // --> whatsapp/examples/registerTool.php
 
   $nickname = "wasapbot";                          // bot nickname
-  // $username = "62xxxxxxxxxxx";                     // bot number
-  // $password = "C34G7Cauuw8lbxxxxxxxxxxxxxxxx";     // password
+  $username = "62xxxxxxxxxxx";                     // bot number
+  $password = "C34G7Cauuw8lbxxxxxxxxxxxxxxxx";     // password
 
 
   // --------------------------------------------------------------------------------------------------------------- //
