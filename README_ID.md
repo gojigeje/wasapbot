@@ -26,18 +26,18 @@ Install dependency dengan command:
 
 Pastikan dependency sudah terpasang. Beberapa hal yang perlu diperiksa sebelum memulai wasapbot:
 
-- Periksa versi php:
-  ` $ php -v `
-  pastikan versinya >= 5.6
+- Periksa versi php:  
+` $ php -v `  
+pastikan versinya >= 5.6
 ```
  PHP 5.6.16-2+deb.sury.org~trusty+1 (cli) 
  Copyright (c) 1997-2015 The PHP Group
  ......
 ```
 
-- Periksa ekstensi *mcrypt* sudah ter-*load*
-  ` $ php -i | grep ^mcrypt `
-  pastikan ada output seperti berikut:
+- Periksa ekstensi *mcrypt* sudah ter-*load*  
+` $ php -i | grep ^mcrypt `  
+pastikan ada output seperti berikut:
 ```
  mcrypt
  mcrypt support => enabled
