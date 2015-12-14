@@ -1,41 +1,43 @@
 # wasapbot
 
-Script bot WhatsApp yang sangat sederhana, menggunakan library [Chat-API](https://github.com/WHAnonymous/Chat-API). Sebagai contoh, script wasapbot ini akan mengirim kembali chat yang dikirimkan melalui pesan privat, dan akan menanggapi kiriman "!ping" atau "!help" di grup.
+Baca dalam [Bahasa Indonesia](README_ID.md).
 
-Silakan dioprek sesuai keperluan :smile:
+A very simple WhatsApp bot script built using [Chat-API](https://github.com/WHAnonymous/Chat-API) library. This bot will send back any private message sent to it, and it also respond to "!ping" or "!help" sent to group.
+
+Of course you can always add new feature or new function to this bot, this script is super simple, enough to give you a clue on how Chat-API works.
 
 ![wasapbot](wasapbot.png)
 
 ---
 
-> Di sini akan dicontohkan untuk setup di Linux Ubuntu, untuk setup di sistem lain serta semua hal lain yang belum dijelaskan di readme ini, silakan mengacu ke repository [Chat-API](https://github.com/WHAnonymous/Chat-API).
+> This project is set up and tested on Ubuntu Linux system. If you're on other system or you can't find more detail on any particular information on this repo, you should always refer to [Chat-API](https://github.com/WHAnonymous/Chat-API).
 
 ---
 
-### 1. Persiapan & Setup
+### 1. Preparations & Setup
 
-#### Install dependency yang dibutuhkan Chat-API ([acuan](https://github.com/WHAnonymous/Chat-API/wiki/Dependencies))
-Install dependency dengan command:  
+#### Install dependencies needed by Chat-API ([ref.](https://github.com/WHAnonymous/Chat-API/wiki/Dependencies))
+Install dependencies using command:  
   
   ```
    $ sudo apt-get update
    $ sudo apt-get install ffmpeg openssl php5-cli php5-gd php5-curl php5-sqlite php5-mcrypt
   ```
 
-Pastikan dependency sudah terpasang. Beberapa hal yang perlu diperiksa sebelum memulai wasapbot:
+Make sure that all dependencies succesfully installed. Some things you need to check is:
 
-- Periksa versi php:
+- Check PHP version:
   ` $ php -v `
-  pastikan versinya >= 5.6
+  make sure the version is >= 5.6
 ```
  PHP 5.6.16-2+deb.sury.org~trusty+1 (cli) 
  Copyright (c) 1997-2015 The PHP Group
  ......
 ```
 
-- Periksa ekstensi *mcrypt* sudah ter-*load*
+- Make sure the PHP's *mcrypt* extension is loaded
   ` $ php -i | grep ^mcrypt `
-  pastikan ada output seperti berikut:
+  the output sould look like this:
 ```
  mcrypt
  mcrypt support => enabled
@@ -44,64 +46,56 @@ Pastikan dependency sudah terpasang. Beberapa hal yang perlu diperiksa sebelum m
  mcrypt.modes_dir => no value => no value
 ```
 
-Jika tidak ada masalah, Anda bisa melanjutkan ke langkah berikutnya.  
+If everything is OK, you can proceed to the next step.
 
-#### Mendapatkan token/password WhatsApp untuk nomor Anda
+#### Get WhatsApp password/token for your number
 
-Ada beberapa tool untuk mendapatkan password WhatsApp, diantaranya adalah:
+There ada some tools we can use to get WhatsApp password:
 
-- Menggunakan script CLI [registerTool.php](https://github.com/mgp25/WhatsAPI-Official/blob/master/examples/registerTool.php) dari Chat-API
-- Menggunakan [WART](https://github.com/mgp25/WART) (untuk Windows)
-- Menggunakan online tool http://watools.es/pwd.html
+- Using CLI script provided by Chat-API [registerTool.php](https://github.com/mgp25/WhatsAPI-Official/blob/master/examples/registerTool.php)
+- Using [WART](https://github.com/mgp25/WART) (for Windows)
+- Using online tool http://watools.es/pwd.html made by Chat-API developer
 
-Sebagai contoh, kita akan menggunakan registerTool.php (Anda tetap bisa menggunakan tool lain, silakan merujuk ke repository [Chat-API](https://github.com/WHAnonymous/Chat-API)).
+Here we will use registerTool.php (you can always use other tool, their function is same, please refer to Chat-API).
 
-1. Siapkan nomor yang akan dijadikan nomor bot, disarankan untuk menggunakan nomor yang belum pernah menggunakan WhatsApp sebelumnya, pastikan nomor tersebut bisa menerima sms atau menerima panggilan (untuk menerima kode WhatsApp)
-2. Download repository ini, lalu ekstrak.
-3. Masuk ke folder [whatsapp/examples/](whatsapp/examples/) dan jalankan registerTool.php:  
+1. Prepare any mobile number, it's advised to use a new number which has never been used on WhatsApp before, otherwise it may cause some problem. Make sure the number is able to receive sms or voice call to receive registration code from WhatsApp
+2. Download this repo, then extract it
+3. Go to [whatsapp/examples/](whatsapp/examples/) folder and run registerTool.php from your terminal or CLI:  
 ` $ cd whatsapp/examples/ `
 ` $ php registerTool.php `
-4. Masukkan nomor bot (awali dengan kode negara, tanpa tanda plus '+'):  
-misal: ` 6285xxxxxxxxx `
-5. Akan ada pilihan method 'sms' atau 'voice', pilih salah satu
-6. Tunggu kiriman kode dari WhatsApp
-7. Inputkan kode
-8. Password didapatkan!  
-biasanya dengan format: ` gojigejeB79ONvyUV87TtBIP8v7= `
+4. Input your bot's mobile number (country code prefixed, without plus sign '+')  
+e.g. ` 6285xxxxxxxxx `
+5. There will be option to choose verification method, 'sms' or 'voice', select one
+6. Wait for the code
+7. Input the code, in ` XXX-XXX ` format
+8. We got the password!  
+usually with this format: ` gojigejeB79ONvyUV87TtBIP8v7= `
 
-Jika terjadi error atau fail, silakan merujuk ke repository [Chat-API](https://github.com/WHAnonymous/Chat-API) untuk mengetahui penyebabnya dan cara mengatasinya. Yang perlu diperhatikan adalah bagian  ` [reason] ` dan ` [retry_after] `. ` [reason] ` adalah alasan mengapa terjadi kegagalan, dan  ` [retry_after] ` adalah waktu jeda/tunggu yang harus diikuti sebelum mencoba melakukan register ulang dalam satuan detik (3600 = 1 jam).
+If registration was unsuccessful, please examine the command's output then refer to [Chat-API Issues](https://github.com/WHAnonymous/Chat-API/issues) to find for the cause and how to deal with it.
 
-**PENTING!** Sebaiknya tidak mencoba melakukan register ulang dalam waktu jeda ini, karena bisa mengakibatkan nomor Anda diblok oleh WhatsApp (` [reason] => blocked `) dan tidak bisa digunakan untuk WhatsApp (baik melalui API ataupun melalui aplikasi resmi!) :sob:.
+### 2. Running The Bot
 
-*TIPS*: Anda bisa mencoba method pengiriman kode lain jika method sebelumnya gagal. Misalnya gagal ketika menggunakan method 'sms', Anda bisa mencoba menggunakan method 'voice', namun tetap perhatikan bagian ` [retry_after] `.
+If you've got the password, then the next step is to run the [wasapbot.php](wasapbot.php) script.
 
-### 2. Menjalankan Bot
-
-Jika password sudah didapatkan, maka selanjutnya tinggal menjalankan script [wasapbot.php](wasapbot.php).
-
-1. Ubah variabel ` $username `, ` $password `, dan ` $nickname ` sesuai dengan bot Anda.
-2. Jalankan via CLI:  
+1. Change the ` $username `, ` $password `, and ` $nickname ` according to your bot details.
+2. Run via CLI:  
 ` $ php wasapbot.php `  
-tunggu hingga muncul tulisan 'BOT SIAP'.
-3. Coba kirim pesan ke bot, jika pesan dikirim kembali, maka bot sudah berhasil dijalankan.
+wait until it says 'BOT SIAP'.
+3. Try to send message to the bot, the bot should send your message back to you. Success!
 
-#### Troubleshooting / Ketika Gagal Menjalankan Bot
+#### Troubleshooting
 
-- Coba beri komentar baris ` error_reporting(....) ` (*baris 19*) agar php menampilkan pesan error, lalu analisa outputnya.
-- Coba ubah variabel ` $debug ` menjadi *true* agar Chat-API mengaktifkan mode debug, lalu analisa outputnya.
+- Comment the ` error_reporting(....) ` (*row 19, wasapbot.php*) so PHP will display script error, check if there's an error.
+- Change ` $debug ` variable into *true* so Chat-API will run in debug mode, check the debug output.
 
-### 3. Mengubah Perilaku / Balasan Bot
+### 3. Change The Bot's Response
 
-Pada project ini hanya dicontohkan perilaku bot untuk merespon *event* pesan privat dan *event* pesan grup dengan ` if else ` sederhana. Anda bisa mengubahnya dengan cara mengedit function ` onGetMessage(...) ` dan ` onGetGroupMessage(...) ` (*baris 126 dan baris 182*).
+In this project, we only use 2 *event* as an example, ` onGetMessage(...) ` to get private message, and ` onGetGroupMessage(...) ` to get group message. You can change bot's response by editing the script inside those function. (*row 126 and 182, wasapbot.php*).
 
-Anda bisa menambahkan *event* lain agar bot bisa lebih banyak fiturnya, sekali lagi, silakan merujuk ke repository [Chat-API](https://github.com/WHAnonymous/Chat-API) :grin:.
+You can also add other *event* to add bot's capability, please refer to  [Chat-API Events](https://github.com/WHAnonymous/Chat-API/wiki/WhatsAPI-Documentation#list-of-all-events) for the list of available events.
 
-Semoga bermanfaat :)
+### Contribute
 
-### Berkontribusi
-
-Project ini hanya sekedar contoh sederhana dan masih sangat minimal dalam menggunakan API-API yang ada pada Chat-API. Silakan berkontribusi dalam bentuk apapun agar membantu project ini menjadi lebih baik.
-
-* *Fork* dan ajukan *Pull Request*
-* Laporkan *bug* dan berikan saran di form [Issues](issues)
-* Kontak saya via telegram: http://telegram.me/gojigeje
+* *Fork* and submit *Pull Request*
+* Report *bug* and give any feedback on [Issues](issues)
+* Contact me on Telegram: http://telegram.me/gojigeje
