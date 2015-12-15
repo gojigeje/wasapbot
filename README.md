@@ -38,7 +38,7 @@ make sure the version is >= 5.6
 - Make sure the PHP's *mcrypt* extension is loaded  
 ` $ sudo php5enmod mcrypt `  
 ` $ php -i | grep ^mcrypt `  
-the output sould look something like this:
+the output sould look something like this:  
 ```
  mcrypt
  mcrypt support => enabled

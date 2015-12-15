@@ -36,9 +36,9 @@ pastikan versinya >= 5.6
 ```
 
 - Periksa ekstensi *mcrypt* sudah ter-*load*  
-` $ sudo php5enmod mcrypt `    
+` $ sudo php5enmod mcrypt `  
 ` $ php -i | grep ^mcrypt `  
-pastikan ada output seperti berikut:
+pastikan ada output seperti berikut:  
 ```
  mcrypt
  mcrypt support => enabled
