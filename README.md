@@ -26,18 +26,19 @@ Install dependencies using command:
 
 Make sure that all dependencies succesfully installed. Some things you need to check is:
 
-- Check PHP version:
-  ` $ php -v `
-  make sure the version is >= 5.6
+- Check PHP version:  
+` $ php -v `  
+make sure the version is >= 5.6
 ```
  PHP 5.6.16-2+deb.sury.org~trusty+1 (cli) 
  Copyright (c) 1997-2015 The PHP Group
  ......
 ```
 
-- Make sure the PHP's *mcrypt* extension is loaded
-  ` $ php -i | grep ^mcrypt `
-  the output sould look like this:
+- Make sure the PHP's *mcrypt* extension is loaded  
+` $ sudo php5enmod mcrypt `  
+` $ php -i | grep ^mcrypt `  
+the output sould look something like this:
 ```
  mcrypt
  mcrypt support => enabled
