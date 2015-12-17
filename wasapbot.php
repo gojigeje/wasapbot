@@ -140,7 +140,7 @@
             // selalu kasih jeda barang 2-3 detik, biar ga dikira bot
             sleep(3);
             // kirim balik
-            $w->sendMessage($from, $body);
+            $w->sendMessage($from, $body); // kirim ke orangnya
             // setelah send apapun, selalu poll
             $w->pollMessage();
 
@@ -159,9 +159,9 @@
       //      // jika ada respon, kirimkan responnya
       //      if (!empty($respon)) {
       //        // dikirim  belakangan
-      //        $w->sendMessageComposing($from_group); // kirim ke grup
+      //        $w->sendMessageComposing($from); // kirim ke orangnya
       //        sleep(3);
-      //        $w->sendMessage($from_group, $respon);
+      //        $w->sendMessage($from, $respon);
       //        $w->pollMessage();
       //      }
 
