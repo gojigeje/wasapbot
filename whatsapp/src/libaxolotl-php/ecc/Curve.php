@@ -33,7 +33,6 @@ class Curve {
     }
     public static function calculateAgreement ($publicKey, $privateKey) // [ECPublicKey publicKey, ECPrivateKey privateKey]
     {
-
         if (($publicKey->getType() != $privateKey->getType()))
         {
             throw new InvalidKeyException("Public and private keys must be of the same type!");

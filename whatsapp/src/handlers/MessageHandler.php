@@ -17,7 +17,7 @@ class MessageHandler implements Handler
   protected $parent;
   protected $phoneNumber;
 
-  public function MessageHandler($parent, $node)
+  public function __construct($parent, $node)
   {
     $this->node         = $node;
     $this->parent       = $parent;
@@ -43,7 +43,6 @@ class MessageHandler implements Handler
 
           if (extension_loaded('curve25519') && extension_loaded('protobuf'))
             $dec_node = $this->processEncryptedNode($this->node);
-
           if($dec_node)
             $this->node = $dec_node;
         }
@@ -94,7 +93,7 @@ class MessageHandler implements Handler
               $msgId = $this->parent->createIqId();
               $ackNode = new ProtocolNode("ack",
                   array(
-                      "url" => $this->node->getChild(0)->getAttribute('url')
+                      "url" => $this->node->getChild("media")->getAttribute('url')
                   ), null, null);
 
               $iqNode = new ProtocolNode("iq",
@@ -323,6 +322,7 @@ class MessageHandler implements Handler
     {
 
        $author = ExtractNumber($node->getAttribute("from"));
+
        $version  = $node->getChild(0)->getAttribute("v");
        $encType  = $node->getChild(0)->getAttribute("type");
        $encMsg   = $node->getChild("enc")->getData();
@@ -331,11 +331,12 @@ class MessageHandler implements Handler
          $this->parent->addPendingNode($node);
          $this->parent->logFile('info', 'Requesting cipher keys from {from}', array('from' => $author));
          $this->parent->sendGetCipherKeysFromUser($author);
+
        }
        else{
          //decrypt the message with the session
            if ($node->getChild("enc")->getAttribute('count') == "")
-            $this->parent->setRetryCounter = 1;
+            $this->parent->setRetryCounter($node->getAttribute("id"),1);
 
            if ($version == "2")
            {
@@ -344,11 +345,15 @@ class MessageHandler implements Handler
            }
 
           $plaintext = $this->decryptMessage($from, $encMsg, $encType, $node->getAttribute('id'), $node->getAttribute('t'));
-          if(!$plaintext) {
-            $this->parent->sendRetry($from, $node->getAttribute('id'), $node->getAttribute('t'));
+
+          //$plaintext ="A";
+          if($plaintext === false) {
+            $this->parent->sendRetry($this->node,$from, $node->getAttribute('id'), $node->getAttribute('t'));
             $this->parent->logFile('info', 'Couldn\'t decrypt message with {id} id from {from}. Retrying...', array('id' => $node->getAttribute('id'), 'from' => ExtractNumber($from)));
             return $node; // could not decrypt
           }
+          if(isset($this->parent->retryNodes[$node->getAttribute('id')])) unset($this->parent->retryNodes[$node->getAttribute('id')]);
+          if(isset($this->parent->retryCounters[$node->getAttribute('id')])) unset($this->parent->retryCounters[$node->getAttribute('id')]);
           switch($node->getAttribute("type")){
             case "text":
               $node->addChild(new ProtocolNode("body", null, null, $plaintext));
@@ -359,7 +364,25 @@ class MessageHandler implements Handler
                 case "image":
                   $image = new ImageMessage();
                   $image->parseFromString($plaintext);
+                  $keys = (new HKDFv3())->deriveSecrets($image->getRefKey(), hex2bin("576861747341707020496d616765204b657973"), 112);
+                  $iv = substr($keys,0,16);
+                  $keys = substr($keys,16);
+                  $parts = str_split($keys,32);
+                  $key = $parts[0];
+                  $macKey = $parts[1];
+                  $refKey = $parts[2];
 
+                  //should be changed to nice curl, no extra headers :D
+                  $file_enc = file_get_contents($image->getUrl());
+                  //requires mac check , last 10 chars
+                  $mac = substr($file_enc,-10);
+                  $cipherImage = substr($file_enc,0,strlen($file_enc)-10);
+                  $decrypted_image = pkcs5_unpad(mcrypt_decrypt(MCRYPT_RIJNDAEL_128, $key, $cipherImage, MCRYPT_MODE_CBC,$iv));
+                  $save_file = tempnam(sys_get_temp_dir(),"WAIMG_");
+
+                  file_put_contents($save_file,$decrypted_image);
+                  $child = new ProtocolNode("media", array("size"=>$image->getLength(),"caption"=>$image->getCaption(), "url"=>$image->getUrl(),"mimetype"=>$image->getMimeType(),"filehash"=>bin2hex($image->getSha256()),"width"=>0,"height"=>0,"file"=>$save_file,"type"=>"image"),null,$image->getThumbnail());
+                  $node->addChild($child);
                 break;
               }
             break;
@@ -391,7 +414,7 @@ class MessageHandler implements Handler
              $from     = $node->getAttribute("participant");
              $version  = $child->getAttribute("v");
              if ($node->getChild("enc")->getAttribute('count') == "")
-               $this->parent->retryCounter = 1;
+               $this->parent->setRetryCounter($node->getAttribute("id"),1);
 
              if ($version == "2")
              {
@@ -420,7 +443,7 @@ class MessageHandler implements Handler
                 $senderKeyGroupMessage = $senderKeyGroupMessage->getSenderKey();
                }
                $senderKey = new SenderKeyDistributionMessage(null, null, null, null, $senderKeyGroupMessage->getSenderKey());
-               $groupSessionBuilder = new GroupSessionBuilder($this->axolotlStore);
+               $groupSessionBuilder = new GroupSessionBuilder($this->parent->axolotlStore);
                $groupSessionBuilder->processSender($group_number.":".$author,$senderKey);
                if(isset($message)){
                  $this->parent->sendReceipt($node, 'receipt', $this->parent->getJID($this->phoneNumber));
@@ -434,16 +457,19 @@ class MessageHandler implements Handler
            $version  = $child->getAttribute("v");
            if ($version == "2")
            {
-             if (!in_array($author, $this->v2Jids))
-               $this->v2Jids[] = $author;
+             if (!in_array($author, $this->parent->v2Jids))
+               $this->parent->setv2Jids($author);
            }
 
            $plaintext =  $this->decryptMessage([$group_number,$author], $child->getData(), $child->getAttribute("type"), $node->getAttribute('id'), $node->getAttribute('t'));
+
            if(!$plaintext) {
-             $this->parent->sendRetry($from, $node->getAttribute('id'), $node->getAttribute('t'));
+             $this->parent->sendRetry($this->node,$from, $node->getAttribute('id'), $node->getAttribute('t'),$node->getAttribute('participant'));
              $this->parent->logFile('info', 'Couldn\'t decrypt group message with {id} id from {from}. Retrying...', array('id' => $node->getAttribute('id'), 'from' => $from));
              return $node; // could not decrypt
            } else {
+             if(isset($this->parent->retryNodes[$node->getAttribute('id')])) unset($this->parent->retryNodes[$node->getAttribute('id')]);
+             if(isset($this->parent->retryCounters[$node->getAttribute('id')])) unset($this->parent->retryCounters[$node->getAttribute('id')]);
              $this->parent->logFile('info', 'Decrypted group message with {id} from {from}', array('id' => $node->getAttribute('id'), 'from' => $from));
              $this->parent->sendReceipt($node, 'receipt', $this->parent->getJID($this->phoneNumber));
              $node->addChild(new ProtocolNode("body", null, null, $plaintext));
@@ -467,14 +493,15 @@ class MessageHandler implements Handler
         $sessionCipher = $this->parent->getSessionCipher(ExtractNumber($from));
         $plaintext = $sessionCipher->decryptPkmsg($preKeyWhisperMessage);
 
-        if ($version == "2" && !$skip_unpad)
+        if ($version == "2" && !$skip_unpad){
           $plaintext = unpadV2Plaintext($plaintext);
+        }
         $this->parent->debugPrint(parseText($plaintext)."\n\n");
         return $plaintext;
       } catch (Exception $e)
       {
         $this->parent->debugPrint($e->getMessage()." - ".$e->getFile()." - ".$e->getLine());
-        if ($e->getMessage() != "Null values!"){
+       // if ($e->getMessage() != "Null values!"){
           $this->parent->debugPrint("Message $id could not be decrypted, sending retry.\n\n");
           $participant = null;
           if($retry_from != null){
@@ -484,7 +511,7 @@ class MessageHandler implements Handler
           }
           //$this->sendRetry($from, $id, $t, $participant);
           return false;
-        }
+        //}
       }
     }
     // msg, WhisperMessage
@@ -496,8 +523,9 @@ class MessageHandler implements Handler
         $sessionCipher = $this->parent->getSessionCipher(ExtractNumber($from));
         $plaintext = $sessionCipher->decryptMsg($whisperMessage);
 
-        if ($version == "2" && !$skip_unpad)
+        if ($version == "2" && !$skip_unpad){
           $plaintext = unpadV2Plaintext($plaintext);
+        }
         $this->parent->debugPrint(parseText($plaintext)."\n\n");
         return $plaintext;
       } catch (Exception $e)
@@ -511,7 +539,7 @@ class MessageHandler implements Handler
       }
     }
     else if($type == "skmsg"){
-      if(in_array($from[1], $this->v2Jids)) $version = "2";
+      if(in_array($from[1], $this->parent->v2Jids)) $version = "2";
       try{
         $groupCipher = $this->parent->getGroupCipher(ExtractNumber($from[0]).":".$from[1]);
         $plaintext =  $groupCipher->decrypt($ciphertext);
@@ -522,7 +550,7 @@ class MessageHandler implements Handler
       }catch(Exception $e){
         $this->parent->debugPrint($e->getMessage()." - ".$e->getFile()." - ".$e->getLine());
         if($retry_from != null) $from = $retry_from;
-        $this->parent->sendRetry($this->parent->getJID($from[0]), $id, $t);
+        $this->parent->sendRetry($this->node,$this->parent->getJID($from[0]), $id, $t);
         return false;
       }
     }

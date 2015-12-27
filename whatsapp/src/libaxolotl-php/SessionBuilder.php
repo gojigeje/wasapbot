@@ -21,6 +21,7 @@ require_once(__DIR__."/state/SignedPreKeyStore.php");
 require_once(__DIR__."/util/KeyHelper.php");
 require_once(__DIR__."/util/Medium.php");
 require_once __DIR__."/StaleKeyExchangeException.php";
+require_once __DIR__."/UntrustedIdentityException.php";
 class SessionBuilder{
     protected $sessionStore;
     protected $preKeyStore;

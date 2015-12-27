@@ -4,7 +4,7 @@ abstract class AllEvents
     protected $eventsToListenFor = array();
     protected $whatsProt;
 
-    public function __construct(WhatsProt $whatsProt)
+    public function __construct($whatsProt)
     {
         $this->whatsProt = $whatsProt;
         return $this;
@@ -70,7 +70,6 @@ abstract class AllEvents
     public function onGetPrivacyBlockedList($mynumber, $data) {}
     public function onGetProfilePicture($mynumber, $from, $type, $data) {}
     public function onGetReceipt($from, $id, $offline, $retry) {}
-    public function onGetRequestLastSeen($mynumber, $from, $id, $seconds) {}
     public function onGetServerProperties($mynumber, $version, $props) {}
     public function onGetServicePricing($mynumber, $price, $cost, $currency, $expiration) {}
     public function onGetStatus($mynumber, $from, $requested, $id, $time, $data) {}
@@ -92,6 +91,8 @@ abstract class AllEvents
     public function onMediaUploadFailed($mynumber, $id, $node, $messageNode, $statusMessage) {}
     public function onMessageComposing($mynumber, $from, $id, $type, $time) {}
     public function onMessagePaused($mynumber, $from, $id, $type, $time) {}
+    public function onGroupMessageComposing($mynumber, $from_group_jid, $from_user_jid, $id, $type, $time) {}
+    public function onGroupMessagePaused($mynumber, $from_group_jid, $from_user_jid, $id, $type, $time) {}
     public function onMessageReceivedClient($mynumber, $from, $id, $type, $time, $participant) {}
     public function onMessageReceivedServer($mynumber, $from, $id, $type, $time) {}
     public function onNumberWasAdded($mynumber, $jid) {}

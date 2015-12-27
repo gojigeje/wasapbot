@@ -1,5 +1,5 @@
 <?php
-require_once('../src/whatsprot.class.php');
+require_once('../src/Registration.php');
 require '../src//events/MyEvents.php';
 
 $debug = true;

@@ -22,12 +22,15 @@ class BinTreeNodeReader
             $this->input = $input;
         }
         $firstByte  = $this->peekInt8();
-        $stanzaFlag = ($firstByte & 0xF0) >> 4;
+        $stanzaFlag = ($firstByte & 0xF0) >> 4; //ENCRYPTED
+      /*$isCompressed = (0x400000 & $firstByte) > 0;
+        $isEncrypted = (0x800000 & $firstByte) > 0;*/
         $stanzaSize = $this->peekInt16(1) | (($firstByte & 0x0F) << 16);
         if ($stanzaSize > strlen($this->input)) {
             throw new Exception("Incomplete message $stanzaSize != " . strlen($this->input));
         }
-        $this->readInt24();
+
+        $head = $this->readInt24();
         if ($stanzaFlag & 8) {
             if (isset($this->key)) {
                 $realSize    = $stanzaSize - 4;
@@ -39,7 +42,6 @@ class BinTreeNodeReader
         if ($stanzaSize > 0) {
             return $this->nextTreeInternal();
         }
-
         return null;
     }
 
@@ -100,77 +102,207 @@ class BinTreeNodeReader
 
         return $ret;
     }
-
+    protected function getTokenDouble($n, $n2) {
+        $pos = $n2 + $n * 256;
+        $ret     = "";
+        $subdict = true;
+        TokenMap::GetToken($pos, $subdict, $ret);
+        if (!$ret) {
+            throw new Exception("BinTreeNodeReader->getToken: Invalid token $pos($n + $n * 256)");
+        }
+        return $ret;
+    }
     protected function readString($token)
     {
-        $ret = "";
 
+        $ret = "";
         if ($token == -1) {
             throw new Exception("BinTreeNodeReader->readString: Invalid token $token");
         }
 
-        if (($token > 2) && ($token < 0xf5)) {
-            $ret = $this->getToken($token);
-        } elseif ($token == 0) {
-            $ret = "";
-        } elseif ($token == 0xfc) {
-            $size = $this->readInt8();
-            $ret  = $this->fillArray($size);
-        } elseif ($token == 0xfd) {
-            $size = $this->readInt24();
-            $ret  = $this->fillArray($size);
-        } elseif ($token == 0xfa) {
-            $user   = $this->readString($this->readInt8());
-            $server = $this->readString($this->readInt8());
-            if ((strlen($user) > 0) && (strlen($server) > 0)) {
-                $ret = $user . "@" . $server;
-            } elseif (strlen($server) > 0) {
-                $ret = $server;
+        if (($token > 2) && ($token < 236)) { 
+            return $this->getToken($token);
+        } else
+        {
+            switch($token){
+                case 0:
+                    $ret = "";
+                    break;
+                case 236:
+                case 237:
+                case 238:
+                case 239:
+                    $token2 = $this->readInt8();
+                    return $this->getTokenDouble($token-236,$token2); 
+                    break;
+              case 250: {
+                    $readString = $this->readString($this->readInt8());
+                    $s = $this->readString($this->readInt8());
+                    if ($readString != null && $s != null) {
+                        return $readString . "@" .$s;
+                    }
+                    if ($s == null) {
+                       return "";
+                    }
+                    break;
+                }
+                case 251:
+                case 255:
+                    return $this->readPacked8($token); //maybe utf8 decode
+                case 252: {
+                    $len = $this->readInt8();
+                    return $this->fillArray($len);//maybe ut8 decode
+                }
+                case 253: {
+                    $len = $this->readInt20();
+                    return $this->fillArray($len); //maybe ut8 decode
+                }
+                case 254: {
+                    $len = $this->readInt31();
+                    return $this->fillArray($len);//maybe ut8 decode
+                }
+                default:
+                    throw new Exception("readString couldn't match token ".$token);
             }
-        } elseif ($token == 0xff) {
-            $ret = $this->readNibble();
-        }
+            
+        }   
+    }
+    protected function readPacked8($n) {
 
-        return $ret;
+        $len = $this->readInt8();
+        $remove = 0;
+        if(($len & 0x80) != 0 && $n == 251) $remove = 1;
+        $len = $len & 0x7F;
+        $text = substr($this->input,0,$len);
+        $this->input = substr($this->input,$len); 
+        $data =  bin2hex($text); 
+        $len = strlen($data);
+        $out = "";
+        for ($i = 0; $i < $len; ++$i) {
+            $val = ord(hex2bin("0".$data[$i]));
+            if($i == ($len-1) && $val > 11 && $n != 251) continue;
+            $out .= chr($this->unpackByte($n, $val));
+
+        }
+        return substr($out,0,strlen($out)-$remove);
     }
 
+   protected function unpackByte($n, $n2) {
+        switch ($n) {
+            case 251:
+                return $this->unpackHex($n2);
+            case 255:
+                return $this->unpackNibble($n2);
+            default:
+                throw new Exception("bad packed type " + $n);
+        }
+    }
+    protected function unpackHex($n) {
+        switch ($n) {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+                return $n + 48;
+            case 10:
+            case 11:
+            case 12:
+            case 13:
+            case 14:
+            case 15:
+                return 65 + ($n - 10);
+            default:
+                throw new Exception("bad hex " . $n);
+        }
+    }
+    
+    protected function unpackNibble($n){
+        switch ($n) {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+                return $n + 48;
+            case 10:
+            case 11:
+                return 45 + ($n - 10);
+            default:
+                throw new Exception("bad nibble " . $n);
+        }
+    }
+    
     protected function readAttributes($size)
     {
         $attributes  = array();
         $attribCount = ($size - 2 + $size % 2) / 2;
-
         for ($i = 0; $i < $attribCount; $i++) {
-            $key              = $this->readString($this->readInt8());
-            $value            = $this->readString($this->readInt8());
+            $len1 = $this->readInt8();
+            $key              = $this->readString($len1);
+            $len2 = $this->readInt8();
+            $value            = $this->readString($len2);
             $attributes[$key] = $value;
         }
 
         return $attributes;
     }
-
+    protected function inflateBuffer($stanzaSize = 0){
+        $this->input = gzuncompress($this->input); // maybe gzinflate or gzdecode .
+    }
     protected function nextTreeInternal()
     {
+        $size  = $this->readListSize($this->readInt8());
         $token = $this->readInt8();
-        $size  = $this->readListSize($token);
-        $token = $this->readInt8();
-        if ($token == 1) {
-            $attributes = $this->readAttributes($size);
+        if($token == 1){ $token = $this->readInt8();}
+        if($token == 2) return null;
 
-            return new ProtocolNode("start", $attributes, null, "");
-        } elseif ($token == 2) {
-            return null;
+        $tag = $this->readString($token);
+        if($size == 0 || $size == null){
+            throw new Exception("nextTree sees 0 list or null tag");
         }
-        $tag        = $this->readString($token);
         $attributes = $this->readAttributes($size);
-        if (($size % 2) == 1) {
-            return new ProtocolNode($tag, $attributes, null, "");
+        if($size % 2 == 1){
+            return new ProtocolNode($tag, $attributes,null,"");
         }
-        $token = $this->readInt8();
-        if ($this->isListTag($token)) {
-            return new ProtocolNode($tag, $attributes, $this->readList($token), "");
+        $read2 = $this->readInt8();
+        if ($this->isListTag($read2)) {
+            return new ProtocolNode($tag, $attributes, $this->readList($read2),"");
         }
-
-        return new ProtocolNode($tag, $attributes, null, $this->readString($token));
+        switch($read2){
+            case 252:
+                $len = $this->readInt8();
+                $data = $this->fillArray($len);//maybe ut8 decode
+                return new ProtocolNode($tag, $attributes, null, $data);
+            break;
+            case 253:
+                $len = $this->readInt20();
+                $data = $this->fillArray($len);//maybe ut8 decode
+                return new ProtocolNode($tag, $attributes, null, $data);
+            break;
+            case 254:
+                $len = $this->readInt31();
+                $data = $this->fillArray($len);//maybe ut8 decode
+                return new ProtocolNode($tag, $attributes, null, $data);
+            break;
+            case 255:
+            case 251:
+                return new ProtocolNode($tag, $attributes, null, $this->readPacked8($read2));
+            break;
+            default:
+                return new ProtocolNode($tag, $attributes, null, $this->readString($read2));
+            break;
+        }
     }
 
     protected function isListTag($token)
@@ -191,8 +323,12 @@ class BinTreeNodeReader
 
     protected function readListSize($token)
     {
+        if($token == 0){
+            return 0;
+        }
         if ($token == 0xf8) {
-            return $this->readInt8();
+            $len = $this->readInt8();
+            return $len;
         } elseif ($token == 0xf9) {
             return $this->readInt16();
         }
@@ -209,6 +345,16 @@ class BinTreeNodeReader
             $ret |= ord(substr($this->input, $offset + 2, 1)) << 0;
         }
 
+        return $ret;
+    }
+    public function readHeader($offset = 0){
+        $ret = 0;
+        if (strlen($this->input) >= (3 + $offset)) {
+            $b0 = ord(substr($this->input, $offset, 1));
+            $b1 = ord(substr($this->input, $offset + 1, 1));
+            $b2 = ord(substr($this->input, $offset + 2, 1));
+            $ret = $b0 + (($b1 << 16) + ($b2 << 8));
+        }
         return $ret;
     }
 
@@ -263,7 +409,42 @@ class BinTreeNodeReader
 
         return $ret;
     }
-
+    protected function peekInt20($offset = 0){
+        $ret = 0;
+        if (strlen($this->input) >= (3 + $offset)) {
+            $b1 = ord(substr($this->input, $offset, 1));
+            $b2 = ord(substr($this->input, $offset+1, 1));
+            $b3 = ord(substr($this->input, $offset+2, 1));
+            $ret = $b3 + (((0xF & $b2) << 8) + ($b1 << 16));
+        }
+        return $ret;
+    }
+    protected function readInt20(){
+        $ret = $this->peekInt20();
+        if (strlen($this->input) >= 3) {
+            $this->input = substr($this->input, 3);
+        }
+        return $ret;
+    }
+    protected function peekInt31($offset = 0){
+        $ret = 0;
+        if (strlen($this->input) >= (4 + $offset)) {
+            $b1 = ord(substr($this->input, $offset, 1));
+            $b2 = ord(substr($this->input, $offset+1, 1));
+            $b3 = ord(substr($this->input, $offset+2, 1));
+            $b4 = ord(substr($this->input, $offset+3, 1));
+            $n = 0x7F & $b1;
+            $ret = $b3 | ($b2 << 24 | $b2 << 16 | $b4 << 8);
+        }
+        return $ret;
+    }
+    protected function  readInt31() {
+        $ret = $this->peekInt20();
+        if (strlen($this->input) >= 4) {
+            $this->input = substr($this->input, 4);
+        }
+        return $ret;
+    }
     protected function fillArray($len)
     {
         $ret = "";

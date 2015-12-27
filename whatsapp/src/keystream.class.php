@@ -15,9 +15,9 @@ class KeyStream
     public static $AuthMethod = "WAUTH-2";
     const DROP = 768;
     private $rc4;
-    private $seq;
+    private $seq = 0;
     private $macKey;
-
+    //key = password, mackey = challengedata
     public function __construct($key, $macKey)
     {
         $this->rc4    = new rc4($key, self::DROP);

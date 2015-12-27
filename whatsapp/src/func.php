@@ -14,6 +14,13 @@ function ExtractNumber($from)
 {
     return str_replace(array("@s.whatsapp.net", "@g.us"), "", $from);
 }
+function pkcs5_unpad($text) 
+{ 
+    $pad = ord($text{strlen($text)-1}); 
+    if ($pad > strlen($text)) return false; 
+    if (strspn($text, chr($pad), strlen($text) - $pad) != $pad) return false; 
+    return substr($text, 0, -1 * $pad); 
+}
 
 function wa_pbkdf2($algorithm, $password, $salt, $count, $key_length, $raw_output = false)
 {
@@ -345,7 +352,7 @@ function encodeInt7bit($value)
     $out .= chr(($v | 0x80) % 256);
     $v >>= 7;
   }
-  $out .= chr(v % 256);
+  $out .= chr($v % 256);
 
   return $out;
 }
@@ -353,11 +360,9 @@ function encodeInt7bit($value)
 function padMessage($plaintext)
 {
   $padded = "";
-  $padded .= "\n";
+  $padded .= chr(10);
   $padded .= encodeInt7bit(strlen($plaintext));
   $padded .= $plaintext;
-  $padded .= chr("\x01");
-  $plaintext = $padded;
-
-  return $plaintext;
+  $padded .= chr(1);
+  return $padded;
 }

@@ -1,5 +1,4 @@
 <?php
-
 class Login
 {
   protected $phoneNumber;
@@ -9,7 +8,7 @@ class Login
   protected $outputKey;
   protected $parent;
 
-  public function Login($parent, $password)
+  public function __construct($parent, $password)
   {
     $this->parent = $parent;
     $this->password = $password;
@@ -29,7 +28,7 @@ class Login
 
       $this->parent->writer->resetKey();
       $this->parent->reader->resetKey();
-      $resource = Constants::WHATSAPP_DEVICE . '-' . Constants::WHATSAPP_VER . '-' . Constants::PORT;
+      $resource = Constants::PLATFORM . '-' . Constants::WHATSAPP_VER;
       $data = $this->parent->writer->StartStream(Constants::WHATSAPP_SERVER, $resource);
       $feat = $this->createFeaturesNode();
       $auth = $this->createAuthNode();
@@ -55,7 +54,9 @@ class Login
 
       $this->parent->logFile('info', '{number} successfully logged in', array('number' => $this->phoneNumber));
       $this->parent->sendAvailableForChat();
-      $this->parent->setMessageId(substr(base64_encode(mcrypt_create_iv(64, MCRYPT_DEV_URANDOM)), 0, 12));
+      $this->parent->sendGetPrivacyBlockedList();
+      $this->parent->sendGetClientConfig();
+      $this->parent->setMessageId(substr(bin2hex(mcrypt_create_iv(64, MCRYPT_DEV_URANDOM)), 0, 22)); // 11 char hex
 
       if (extension_loaded('curve25519') || extension_loaded('protobuf')) {
         if (file_exists(__DIR__ . DIRECTORY_SEPARATOR . Constants::DATA_FOLDER . DIRECTORY_SEPARATOR . "axolotl-" . $this->phoneNumber . ".db"))
@@ -78,11 +79,11 @@ class Login
    */
   protected function createFeaturesNode()
   {
-      $readreceipts = new ProtocolNode("readreceipts", null, null, null);
+     /* $readreceipts = new ProtocolNode("readreceipts", null, null, null);
       $groupsv2     = new ProtocolNode("groups_v2", null, null, null);
       $privacy      = new ProtocolNode("privacy", null, null, null);
-      $presencev2   = new ProtocolNode("presence", null, null, null);
-      $parent       = new ProtocolNode("stream:features", null, array($readreceipts, $groupsv2, $privacy, $presencev2), null);
+      $presencev2   = new ProtocolNode("presence", null, null, null);*/
+      $parent       = new ProtocolNode("stream:features", null, null, null);
 
       return $parent;
   }
@@ -95,10 +96,12 @@ class Login
   protected function createAuthNode()
   {
       $data = $this->createAuthBlob();
-      $node = new ProtocolNode("auth", array(
-          'mechanism' => 'WAUTH-2',
-          'user'      => $this->phoneNumber
-      ), null, $data);
+      $attributes = array(
+          'user'      => $this->phoneNumber,
+          'mechanism' => 'WAUTH-2'
+
+      );
+      $node = new ProtocolNode("auth", $attributes , null, $data);
 
       return $node;
   }
@@ -135,10 +138,12 @@ class Login
    */
   protected function authenticate()
   {
+
       $keys = KeyStream::GenerateKeys(base64_decode($this->password), $this->parent->getChallengeData());
       $this->inputKey = new KeyStream($keys[2], $keys[3]);
       $this->outputKey = new KeyStream($keys[0], $keys[1]);
-      $array = "\0\0\0\0" . $this->phoneNumber . $this->parent->getChallengeData();// . time() . Constants::WHATSAPP_USER_AGENT . " MccMnc/" . str_pad($phone["mcc"], 3, "0", STR_PAD_LEFT) . "001";
+      $array = "\0\0\0\0" . $this->phoneNumber . $this->parent->getChallengeData(). "" . time() . '000' . hex2bin('00') . '000' . hex2bin('00')
+       . Constants::OS_VERSION . hex2bin('00') . Constants::MANUFACTURER . hex2bin('00') . Constants::DEVICE . hex2bin('00') . Constants::BUILD_VERSION;
       $response = $this->outputKey->EncodeMessage($array, 0, 4, strlen($array) - 4);
       $this->parent->setOutputKey($this->outputKey);
 

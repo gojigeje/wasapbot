@@ -37,6 +37,10 @@ interface axolotlInterface
     //sender_keys
     public function storeSenderKey($senderKeyId, $senderKeyRecord);
     public function loadSenderKey($senderKeyId);
+    public function removeSenderKey($senderKeyId);
+    public function containsSenderKey($senderKeyId);
+
+    public function clear();
 }
 
 class axolotlSqliteStore implements axolotlInterface
@@ -44,13 +48,16 @@ class axolotlSqliteStore implements axolotlInterface
     const DATA_FOLDER = 'wadata';
 
     private $db;
-
+    private $filename;
     public function __construct($number)
     {
-      $fileName = __DIR__ . DIRECTORY_SEPARATOR . self::DATA_FOLDER . DIRECTORY_SEPARATOR . 'axolotl-'.$number.'.db';
-      $createTable = !file_exists($fileName);
+      $this->fileName = __DIR__ . DIRECTORY_SEPARATOR . self::DATA_FOLDER . DIRECTORY_SEPARATOR . 'axolotl-'.$number.'.db';
+      $this->create();
+    }
+    protected function create(){
+      $createTable = !file_exists($this->fileName);
 
-      $this->db = new \PDO("sqlite:" . $fileName, null, null, array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+      $this->db = new \PDO("sqlite:" . $this->fileName, null, null, array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
       if ($createTable)
       {
         //create necesary tables before starting
@@ -96,7 +103,6 @@ class axolotlSqliteStore implements axolotlInterface
                         );');
       }
     }
-
 
     //prekeys
     public function storePreKey($prekeyId, $record)
@@ -268,7 +274,7 @@ class axolotlSqliteStore implements axolotlInterface
     //identity
     public function getIdentityKeyPair()
     {
-      $sql = "SELECT `public_key`, `private_key` FROM identities";
+      $sql = "SELECT `public_key`, `private_key` FROM identities where recipient_id = -1";
       $query = $this->db->prepare($sql);
 
       $query->execute();
@@ -332,10 +338,8 @@ class axolotlSqliteStore implements axolotlInterface
           )
       );
       $row = $query->fetch(PDO::FETCH_ASSOC);
-
       if($row == null || $row === false)
         return true;
-
       return $row['public_key'] == $identityKey->getPublicKey()->serialize();
     }
 
@@ -498,5 +502,25 @@ class axolotlSqliteStore implements axolotlInterface
       }
       return $record;
     }
+    public function containsSenderKey($senderKeyId){
+      $sql = "SELECT record FROM sender_keys WHERE sender_key_id = :sender_key_id";
+      $query = $this->db->prepare($sql);
 
+      $query->execute(
+          array(
+              ':sender_key_id' => $senderKeyId
+          )
+      );
+      $row = $query->fetch(PDO::FETCH_ASSOC);
+     
+      if($row === null && $row === false){
+        return false;
+      }
+      return true;
+    }
+    public function clear(){
+      if(file_exists($this->filename))
+        unlink($this->filename);
+      $this->create();
+    }
 }

@@ -4,7 +4,7 @@ class Logger{
 
   protected $logfile;
 
-  public function Logger($logfile)
+  public function __construct($logfile)
   {
       if (!file_exists($logfile)) {
           if (!touch($logfile)) throw new Exception('Log file ' . $logfile . ' cannot be created');

@@ -1,6 +1,8 @@
 <?php
 set_time_limit(10);
-require_once '../src/whatsprot.class.php';
+require_once __DIR__.'/../src/whatsprot.class.php';
+require_once __DIR__.'/../src//events/MyEvents.php';
+
 //Change to your time zone
 date_default_timezone_set('Europe/Madrid');
 
@@ -53,7 +55,7 @@ function onPresenceAvailable($username, $from)
 function onPresenceUnavailable($username, $from, $last)
 {
     $dFrom = str_replace(array("@s.whatsapp.net","@g.us"), "", $from);
-    echo "<$dFrom is offline>\n\n";
+    echo "<$dFrom is offline> Last seen: $last seconds\n\n";
 }
 
 echo "[] Logging in as '$nickname' ($username)\n";
@@ -129,7 +131,7 @@ while (1) {
                 break;
             case "/lastseen":
                 echo "[] last seen: ";
-                $w->sendGetRequestLastSeen($target);
+                $w->sendPresenceSubscription($target);
                 break;
             default:
                 $w->sendMessage($target , $line);

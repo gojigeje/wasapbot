@@ -104,7 +104,6 @@ class SessionCipher
         /*
         :type ciphertext: WhisperMessage
         */
-
         if (!$this->sessionStore->containsSession($this->recipientId, $this->deviceId))
             throw new NoSessionException("No session for: ".$this->recipientId.", ".$this->deviceId);
 

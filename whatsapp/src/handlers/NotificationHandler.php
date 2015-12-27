@@ -8,7 +8,7 @@ class NotificationHandler implements Handler
   protected $parent;
   protected $phoneNumber;
 
-  public function NotificationHandler($parent, $node)
+  public function __construct($parent, $node)
   {
     $this->node         = $node;
     $this->type         = $node->getAttribute("type");

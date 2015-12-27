@@ -38,7 +38,6 @@ class MyEvents extends AllEvents
 //        'onGetPrivacyBlockedList',
 //        'onGetProfilePicture',
 //        'onGetReceipt',
-//        'onGetRequestLastSeen',
 //        'onGetServerProperties',
 //        'onGetServicePricing',
 //        'onGetStatus',

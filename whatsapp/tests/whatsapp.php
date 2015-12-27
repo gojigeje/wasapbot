@@ -1,5 +1,5 @@
 <?php
-require '../src/whatsprot.class.php';
+require __DIR__.'/../src/whatsprot.class.php';
 
 function fgets_u($pStdn)
 {
@@ -18,8 +18,8 @@ function fgets_u($pStdn)
 $nickname = "WhatsAPI Test";
 
 // #### DO NOT ADD YOUR INFO AND THEN COMMIT THIS FILE! ####
-$sender = 	""; // Mobile number with country code (but without + or 00)
-$password =     ""; // Password you received from WhatsApp
+$sender   = 	""; // Mobile number with country code (but without + or 00)
+$password =   ""; // Password you received from WhatsApp
 
 if ($argc < 2) {
     echo "USAGE: ".$_SERVER['argv'][0]." [-l] [-s <phone> <message>] [-i <phone>] [-set <status>]\n";
@@ -65,10 +65,6 @@ if ($_SERVER['argv'][1] == "-i") {
                     $dst = trim(strstr($line, ' ', FALSE));
                     echo "[] Interactive conversation with $dst:\n";
                     break;
-                case "/lastseen":
-                    echo "[] Request last seen $dst: ";
-                    $wa->sendGetRequestLastSeen($dst);
-                    break;
                 default:
                     echo "[] Send message to $dst: $line\n";
                     $wa->sendMessage($dst , $line);
@@ -97,9 +93,6 @@ if ($_SERVER['argv'][1] == "-set") {
     $wa->sendStatusUpdate($_SERVER['argv'][2]);
     exit(0);
 }
-
-echo "\n[] Request last seen $dst: ";
-$wa->sendGetRequestLastSeen($dst);
 
 echo "\n[] Send message to $dst: $msg\n";
 $wa->sendMessage($dst , $msg);

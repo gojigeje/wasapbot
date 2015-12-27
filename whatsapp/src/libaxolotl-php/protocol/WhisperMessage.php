@@ -24,9 +24,10 @@
                                         $serialized = null)
         {
             if($serialized == null){
+
                 $version = ByteUtil::intsToByteHighAndLow($messageVersion,self::CURRENT_VERSION);
                 $proto_message = new Textsecure_WhisperMessage();
-                $proto_message->setRatchetKey((string)$senderRatchetKey->serialize());
+                $proto_message->setRatchetKey((string)($senderRatchetKey->serialize()));
                 $proto_message->setCounter($counter);
                 $proto_message->setPreviousCounter($previousCounter);
                 $proto_message->setCiphertext($cipherText);

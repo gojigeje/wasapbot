@@ -52,12 +52,23 @@ class Registration
     // Build the url.
     $host  = 'https://' . Constants::WHATSAPP_CHECK_HOST;
     $query = array(
-        'cc' => $phone['cc'],
-        'in' => $phone['phone'],
-        'id' => $this->identity,
-        'lg' => $langCode,
-        'lc' => $countryCode,
-    //  'network_radio_type' => "1"
+      'cc' => $phone['cc'],
+      'in' => $phone['phone'],
+      'lg' => $langCode,
+      'lc' => $countryCode,
+      'id' => $this->identity,
+      'mistyped' => '6',
+      'network_radio_type' => '1',
+      'simnum'  => '1',
+      's' => '',
+      'copiedrc' => '1',
+      'hasinrc' => '1',
+      'rcmatch' => '1',
+      'pid' => mt_rand(100, 9999),
+      //'rchash' => hash('sha256', openssl_random_pseudo_bytes(20)),
+      //'anhash' => md5(openssl_random_pseudo_bytes(20)),
+      'extexist' => '1',
+      'extstate' => '1'
     );
 
     $response = $this->getResponse($host, $query);
@@ -120,19 +131,33 @@ class Registration
         throw new Exception('The provided phone number is not valid.');
     }
 
+    $code = str_replace('-', '', $code);
     //$countryCode = ($phone['ISO3166'] != '') ? $phone['ISO3166'] : 'US';
     //$langCode    = ($phone['ISO639'] != '') ? $phone['ISO639'] : 'en';
 
     // Build the url.
     $host = 'https://' . Constants::WHATSAPP_REGISTER_HOST;
     $query = array(
-        'cc' => $phone['cc'],
-        'in' => $phone['phone'],
-        'id' => $this->identity,
-        'code' => $code,
-        //'lg' => $langCode,
-        //'lc' => $countryCode,
-        //'network_radio_type' => "1"
+      'cc' => $phone['cc'],
+      'in' => $phone['phone'],
+      'lg' => $langCode,
+      'lc' => $countryCode,
+      'id' => $this->identity,
+      'token' => $token,
+      'mistyped' => '6',
+      'network_radio_type' => '1',
+      'simnum'  => '1',
+      's' => '',
+      'copiedrc' => '1',
+      'hasinrc' => '1',
+      'rcmatch' => '1',
+      'pid' => mt_rand(100, 9999),
+      //'rchash' => hash('sha256', openssl_random_pseudo_bytes(20)),
+      //'anhash' => md5(openssl_random_pseudo_bytes(20)),
+      'extexist' => '1',
+      'extstate' => '1',
+      'method' => $method,
+      'code' => $code,
     );
 
     $response = $this->getResponse($host, $query);
@@ -190,7 +215,7 @@ class Registration
   *
   * @throws Exception
   */
-  public function codeRequest($method = 'sms', $carrier = "T-Mobile5", $platform = 'Nokia')
+  public function codeRequest($method = 'sms', $carrier = "T-Mobile5", $platform = 'Android')
   {
     if (!$phone = $this->dissectPhone()) {
         throw new Exception('The provided phone number is not valid.');
@@ -211,19 +236,30 @@ class Registration
     // Build the url.
     $host = 'https://' . Constants::WHATSAPP_REQUEST_HOST;
     $query = array(
-        'in' => $phone['phone'],
         'cc' => $phone['cc'],
-        'id' => $this->identity,
+        'in' => $phone['phone'],
         'lg' => $langCode,
         'lc' => $countryCode,
-        //'mcc' => '000',
-        //'mnc' => '000',
+        'id' => $this->identity,
+        'token' => $token,
+        'mistyped' => '6',
+        'network_radio_type' => '1',
+        'simnum'  => '1',
+        's' => '',
+        'copiedrc' => '1',
+        'hasinrc' => '1',
+        'rcmatch' => '1',
+        'pid' => mt_rand(100, 9999),
+        'rchash' => hash('sha256', openssl_random_pseudo_bytes(20)),
+        'anhash' => md5(openssl_random_pseudo_bytes(20)),
+        'extexist' => '1',
+        'extstate' => '1',
+        'mcc' => $phone['mcc'],
+        'mnc' => $mnc,
         'sim_mcc' => $phone['mcc'],
         'sim_mnc' => $mnc,
         'method' => $method,
         //'reason' => "self-send-jailbroken",
-        'token' => $token,
-        //'network_radio_type' => "1"
     );
 
     $this->debugPrint($query);
