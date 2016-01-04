@@ -378,10 +378,20 @@ class MessageHandler implements Handler
                   $mac = substr($file_enc,-10);
                   $cipherImage = substr($file_enc,0,strlen($file_enc)-10);
                   $decrypted_image = pkcs5_unpad(mcrypt_decrypt(MCRYPT_RIJNDAEL_128, $key, $cipherImage, MCRYPT_MODE_CBC,$iv));
-                  $save_file = tempnam(sys_get_temp_dir(),"WAIMG_");
-
-                  file_put_contents($save_file,$decrypted_image);
-                  $child = new ProtocolNode("media", array("size"=>$image->getLength(),"caption"=>$image->getCaption(), "url"=>$image->getUrl(),"mimetype"=>$image->getMimeType(),"filehash"=>bin2hex($image->getSha256()),"width"=>0,"height"=>0,"file"=>$save_file,"type"=>"image"),null,$image->getThumbnail());
+                  //$save_file = tempnam(sys_get_temp_dir(),"WAIMG_");
+                  //file_put_contents($save_file,$decrypted_image);
+                  $child = new ProtocolNode("media",
+                    array(
+                        "size" => $image->getLength(),
+                        "caption" => $image->getCaption(),
+                        "url" => $image->getUrl(),
+                        "mimetype" => $image->getMimeType(),
+                        "filehash" => bin2hex($image->getSha256()),
+                        "width" => 0,
+                        "height" => 0,
+                        "file" => $decrypted_image,
+                        "type" => "image"
+                      ), null, $image->getThumbnail());
                   $node->addChild($child);
                 break;
               }

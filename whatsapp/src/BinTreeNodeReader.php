@@ -120,7 +120,7 @@ class BinTreeNodeReader
             throw new Exception("BinTreeNodeReader->readString: Invalid token $token");
         }
 
-        if (($token > 2) && ($token < 236)) { 
+        if (($token > 2) && ($token < 236)) {
             return $this->getToken($token);
         } else
         {
@@ -133,7 +133,7 @@ class BinTreeNodeReader
                 case 238:
                 case 239:
                     $token2 = $this->readInt8();
-                    return $this->getTokenDouble($token-236,$token2); 
+                    return $this->getTokenDouble($token-236,$token2);
                     break;
               case 250: {
                     $readString = $this->readString($this->readInt8());
@@ -164,8 +164,8 @@ class BinTreeNodeReader
                 default:
                     throw new Exception("readString couldn't match token ".$token);
             }
-            
-        }   
+
+        }
     }
     protected function readPacked8($n) {
 
@@ -174,8 +174,8 @@ class BinTreeNodeReader
         if(($len & 0x80) != 0 && $n == 251) $remove = 1;
         $len = $len & 0x7F;
         $text = substr($this->input,0,$len);
-        $this->input = substr($this->input,$len); 
-        $data =  bin2hex($text); 
+        $this->input = substr($this->input,$len);
+        $data =  bin2hex($text);
         $len = strlen($data);
         $out = "";
         for ($i = 0; $i < $len; ++$i) {
@@ -221,7 +221,7 @@ class BinTreeNodeReader
                 throw new Exception("bad hex " . $n);
         }
     }
-    
+
     protected function unpackNibble($n){
         switch ($n) {
             case 0:
@@ -242,7 +242,7 @@ class BinTreeNodeReader
                 throw new Exception("bad nibble " . $n);
         }
     }
-    
+
     protected function readAttributes($size)
     {
         $attributes  = array();
@@ -415,7 +415,7 @@ class BinTreeNodeReader
             $b1 = ord(substr($this->input, $offset, 1));
             $b2 = ord(substr($this->input, $offset+1, 1));
             $b3 = ord(substr($this->input, $offset+2, 1));
-            $ret = $b3 + (((0xF & $b2) << 8) + ($b1 << 16));
+            $ret = ($b1 << 16) | ($b2 << 8) | $b3;
         }
         return $ret;
     }
@@ -433,13 +433,13 @@ class BinTreeNodeReader
             $b2 = ord(substr($this->input, $offset+1, 1));
             $b3 = ord(substr($this->input, $offset+2, 1));
             $b4 = ord(substr($this->input, $offset+3, 1));
-            $n = 0x7F & $b1;
-            $ret = $b3 | ($b2 << 24 | $b2 << 16 | $b4 << 8);
+            // $n = 0x7F & $b1; dont know what is this for
+            $ret = ($b1 << 24) | ($b2 << 16) | ($b3 << 8) | $b4;
         }
         return $ret;
     }
     protected function  readInt31() {
-        $ret = $this->peekInt20();
+        $ret = $this->peekInt31();
         if (strlen($this->input) >= 4) {
             $this->input = substr($this->input, 4);
         }

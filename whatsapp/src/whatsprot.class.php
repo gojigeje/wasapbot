@@ -1274,7 +1274,6 @@ class WhatsProt
               ), null, $message);
         }
         else {
-          $type = "skmsg";
          /* if (in_array($to, $this->v2Jids))
           {
             $version = "2";
@@ -1782,16 +1781,16 @@ class WhatsProt
      *   A message id string.
      */
     protected function createMsgId()
-    {  
+    {
         $msg = hex2bin($this->messageId);
         $chars = str_split($msg);
         $chars_val = array_map("ord", $chars);
         $pos = count($chars_val)-1;
         while(true){
             if($chars_val[$pos] < 255){
-                 $chars_val[$pos]++; 
+                 $chars_val[$pos]++;
                  break;
-            } 
+            }
             else{
                 $chars_val[$pos] = 0;
                 $pos--;

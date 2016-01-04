@@ -30,7 +30,7 @@ echo "====================================\n";
 
 $fileName = __DIR__ . DIRECTORY_SEPARATOR . 'data.db';
 $contactsDB = __DIR__ . DIRECTORY_SEPARATOR . 'contacts.db';
-if ($argv[1] != null) {
+if (isset($argv[1])) {
   if (!file_exists($fileName))
   {
     $db = new \PDO("sqlite:" . $fileName, null, null, array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));

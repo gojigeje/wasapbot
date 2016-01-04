@@ -11,7 +11,7 @@ class Registration
   protected $identity;      //The Device Identity token. Obtained during registration with this API
   protected $debug;
 
-  public function Registration($number, $debug = false, $customPath = false)
+  public function __construct($number, $debug = false, $customPath = false)
   {
     $this->debug        = $debug;
     $this->phoneNumber  = $number;

@@ -5,7 +5,6 @@ require_once __DIR__."/ECPrivateKey.php";
 require_once __DIR__."/ECPublicKey.php";
 require_once __DIR__."/DjbECPublicKey.php";
 require_once __DIR__."/DjbECPrivateKey.php";
-if(!class_exists("Curve")){
 class Curve {
     const DJB_TYPE = 0x05;  // int
     public static function generateKeyPair ()
@@ -76,5 +75,4 @@ class Curve {
         }
         else throw new Exception("Cannot generate secure random bytes");
     }
-}
 }
