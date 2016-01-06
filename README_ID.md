@@ -20,14 +20,64 @@ Tentu saja Anda bisa menambahkan fitur dan fungsi lain untuk bot ini, karena scr
 Install dependency dengan command:  
   
   ```
-   $ sudo apt-get update
-   $ sudo apt-get install ffmpeg openssl php5-cli php5-gd php5-curl php5-sqlite php5-mcrypt
+   sudo apt-get update
+   sudo apt-get install git ffmpeg openssl php5-cli php5-gd php5-curl php5-sqlite php5-mcrypt php5-dev
   ```
 
-Pastikan dependency sudah terpasang. Beberapa hal yang perlu diperiksa sebelum memulai wasapbot:
+**PENTING!** WhatsApp sekarang menerapkan enkripsi pada setiap pesan, Anda **HARUS** memasang *extension* tambahan agar dapat membaca pesan yang terenkripsi:
+
+- [PHP Protobuf](https://github.com/allegro/php-protobuf)
+- [Curve25519 PHP](https://github.com/mgp25/curve25519-php)
+
+Anda harus mendownload source masing-masing *extension*, lalu melakukan compile dan mengaktifkan *extension* tersebut:
+
+Siapkan folder untuk lokasi download source code *extension*nya:  
+```
+cd
+mkdir php-extension
+cd php-extension
+```
+
+Clone masing-masing repository *extension*nya:  
+```
+git clone https://github.com/allegro/php-protobuf.git
+git clone https://github.com/mgp25/curve25519-php 
+```
+
+Masuk ke dalam masing-masing folder *extension* (`cd php-protobuf` dan `cd curve25519`), dan jalankan command berikut di masing-masing folder:
+```
+phpize
+./configure
+make
+sudo make install
+```
+
+Sampai di sini *extension* sudah terinstall, namun belum aktif. Anda harus menambahkan informasi *extension* baru ke dalam *php.ini*.
+Temukan lokasi php.ini:
+```
+php -i | grep .ini
+```
+
+Anda akan menemukan baris berikut: `Loaded Configuration File => /etc/php5/cli/php.ini`, edit file tersebut:
+```
+sudo nano /etc/php5/cli/php.ini  # lokasi config file Anda
+```
+
+Lalu tambahkan 2 baris berikut di akhir file:
+```
+..
+extension=curve25519.so
+extension=protobuf.so
+```
+
+*extension* sudah berhasil diaktifkan.
+
+
+**Pastikan dependency dan *extension* sudah terpasang.**
+Beberapa hal yang perlu diperiksa sebelum memulai wasapbot:
 
 - Periksa versi php:  
-` $ php -v `  
+` php -v `  
 pastikan versinya >= 5.6
 ```
  PHP 5.6.16-2+deb.sury.org~trusty+1 (cli) 
@@ -35,16 +85,15 @@ pastikan versinya >= 5.6
  ......
 ```
 
-- Periksa ekstensi *mcrypt* sudah ter-*load*  
-` $ sudo php5enmod mcrypt `  
-` $ php -i | grep ^mcrypt `  
-pastikan ada output seperti berikut:  
+- Pastikan semua *extension* yang diperlukan sudah ter-*load*:  
+` php -m`  
+pastikan 3 *extension* berikut ada di bagian `[PHP Modules]`:  
 ```
- mcrypt
- mcrypt support => enabled
- mcrypt_filter support => enabled
- mcrypt.algorithms_dir => no value => no value
- mcrypt.modes_dir => no value => no value
+..
+curve25519
+mcrypt
+protobuf
+..
 ```
 
 Jika tidak ada masalah, Anda bisa melanjutkan ke langkah berikutnya.  
@@ -62,8 +111,8 @@ Sebagai contoh, kita akan menggunakan registerTool.php (Anda tetap bisa mengguna
 1. Siapkan nomor yang akan dijadikan nomor bot, disarankan untuk menggunakan nomor yang belum pernah menggunakan WhatsApp sebelumnya, pastikan nomor tersebut bisa menerima sms atau menerima panggilan (untuk menerima kode WhatsApp)
 2. Download repository ini, lalu ekstrak.
 3. Masuk ke folder [whatsapp/examples/](whatsapp/examples/) dan jalankan registerTool.php:  
-` $ cd whatsapp/examples/ `
-` $ php registerTool.php `
+` cd whatsapp/examples/ `
+` php registerTool.php `
 4. Masukkan nomor bot (awali dengan kode negara, tanpa tanda plus '+'):  
 misal: ` 6285xxxxxxxxx `
 5. Akan ada pilihan method 'sms' atau 'voice', pilih salah satu
@@ -84,7 +133,7 @@ Jika password sudah didapatkan, maka selanjutnya tinggal menjalankan script [was
 
 1. Ubah variabel ` $username `, ` $password `, dan ` $nickname ` sesuai dengan bot Anda.
 2. Jalankan via CLI:  
-` $ php wasapbot.php `  
+` php wasapbot.php `  
 tunggu hingga muncul tulisan 'BOT SIAP'.
 3. Coba kirim pesan ke bot, jika pesan dikirim kembali, maka bot sudah berhasil dijalankan.
 

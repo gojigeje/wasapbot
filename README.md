@@ -20,14 +20,18 @@ Of course you can always add new feature or new function to this bot, this scrip
 Install dependencies using command:  
   
   ```
-   $ sudo apt-get update
-   $ sudo apt-get install ffmpeg openssl php5-cli php5-gd php5-curl php5-sqlite php5-mcrypt
+   sudo apt-get update
+   sudo apt-get install ffmpeg openssl php5-cli php5-gd php5-curl php5-sqlite php5-mcrypt
   ```
+
+**IMPORTANT!** WhatsApp now using encryption on its message, you need to install additional PHP extensions so the script can read encrypted messages. Please follow [this guide](https://github.com/WHAnonymous/Chat-API/issues/1180) on how to install them! **MUST!**
+
+---
 
 Make sure that all dependencies succesfully installed. Some things you need to check is:
 
 - Check PHP version:  
-` $ php -v `  
+` php -v `  
 make sure the version is >= 5.6
 ```
  PHP 5.6.16-2+deb.sury.org~trusty+1 (cli) 
@@ -35,16 +39,15 @@ make sure the version is >= 5.6
  ......
 ```
 
-- Make sure the PHP's *mcrypt* extension is loaded  
-` $ sudo php5enmod mcrypt `  
-` $ php -i | grep ^mcrypt `  
-the output sould look something like this:  
+- Make sure all required extension is loaded  
+` php -m `  
+these 3 extensions must be present:  
 ```
- mcrypt
- mcrypt support => enabled
- mcrypt_filter support => enabled
- mcrypt.algorithms_dir => no value => no value
- mcrypt.modes_dir => no value => no value
+..
+curve25519
+mcrypt
+protobuf
+..
 ```
 
 If everything is OK, you can proceed to the next step.
@@ -62,8 +65,8 @@ Here we will use registerTool.php (you can always use other tool, their function
 1. Prepare any mobile number, it's advised to use a new number which has never been used on WhatsApp before, otherwise it may cause some problem. Make sure the number is able to receive sms or voice call to receive registration code from WhatsApp
 2. Download this repo, then extract it
 3. Go to [whatsapp/examples/](whatsapp/examples/) folder and run registerTool.php from your terminal or CLI:  
-` $ cd whatsapp/examples/ `
-` $ php registerTool.php `
+` cd whatsapp/examples/ `
+` php registerTool.php `
 4. Input your bot's mobile number (country code prefixed, without plus sign '+')  
 e.g. ` 6285xxxxxxxxx `
 5. There will be option to choose verification method, 'sms' or 'voice', select one
@@ -80,7 +83,7 @@ If you've got the password, then the next step is to run the [wasapbot.php](wasa
 
 1. Change the ` $username `, ` $password `, and ` $nickname ` according to your bot details.
 2. Run via CLI:  
-` $ php wasapbot.php `  
+` php wasapbot.php `  
 wait until it says 'BOT SIAP'.
 3. Try to send message to the bot, the bot should send your message back to you. Success!
 
