@@ -1,3 +1,4 @@
 *-dev.php
-README.html
+*.html
+*.out
 assets/
