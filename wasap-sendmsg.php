@@ -1,4 +1,5 @@
 <?php
+
   echo "+\n+ [wasapbot]\n+\n";
   // error_reporting(E_ERROR | E_WARNING | E_PARSE);
   date_default_timezone_set('Asia/Jakarta');
@@ -35,5 +36,10 @@
   sleep(1);
   $w->sendMessage($target, $pesan);    // kirim pesan
   $w->pollMessage();
+  sleep(1);
+  $w->pollMessage();
+  sleep(1);
+  $w->pollMessage();
   echo "+ Selesai\n+\n";
+
  ?>
