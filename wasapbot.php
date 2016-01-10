@@ -96,7 +96,7 @@
     $w->pollMessage(true); // markAsRead
 
     // cek konek
-    if ($poll % 200 == 0 && $poll != 0) {
+    if ($poll % 100 == 0 && $poll != 0) {
       cek_konek();
     }
 
