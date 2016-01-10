@@ -30,7 +30,6 @@
  * You can add as many config blocks as you want to. As long as each new user has a whatsapp password already....
  *
  * Enjoy.
- *
  */
 //This is a aimple password to view this script. It is NOT the whatsapp password.
 $config['webpassword'] = 'MakeUpPassword';
@@ -57,18 +56,16 @@ $config['webpassword'] = 'MakeUpPassword';
 //    'emailPassword' => 'gmailpassword'
 //);
 
-$config['YOURNAME'] = array(
-    'fromNumber' => '441234567890',
-    'nick' => "YOURNICKNAME",
-    'waPassword' => "EsdfsawS+/ffdskjsdhwebdgxbs=",
-    'email' => 'testemail@gmail.com',
-    'emailPassword' => 'gmailpassword'
-);
+$config['YOURNAME'] = [
+    'fromNumber'    => '441234567890',
+    'nick'          => 'YOURNICKNAME',
+    'waPassword'    => 'EsdfsawS+/ffdskjsdhwebdgxbs=',
+    'email'         => 'testemail@gmail.com',
+    'emailPassword' => 'gmailpassword',
+];
 
 /**
- *
  * NOTHING ELSE TO EDIT BELOW THIS LINE.
- *
  */
 require '../src/whatsprot.class.php';
 
@@ -118,7 +115,7 @@ class GoogleContacts implements Contacts
     public function getContacts(array $config, $user)
     {
         if (!array_key_exists($user, $config)) {
-            throw new Exception("No Credentials for the user requested are available.");
+            throw new Exception('No Credentials for the user requested are available.');
         } else {
             $this->config = $config;
             $contacts = $this->getGoogleContacts($user);
@@ -151,14 +148,14 @@ class GoogleContacts implements Contacts
     private function getAuthString($user)
     {
         // Construct an HTTP POST request
-        $clientlogin_url = "https://www.google.com/accounts/ClientLogin";
-        $clientlogin_post = array(
-            "accountType" => "HOSTED_OR_GOOGLE",
-            "Email" => $this->config[$user]['email'],
-            "Passwd" => $this->config[$user]['emailPassword'],
-            "service" => "cp",
-            "source" => "whatsapp"
-        );
+        $clientlogin_url = 'https://www.google.com/accounts/ClientLogin';
+        $clientlogin_post = [
+            'accountType' => 'HOSTED_OR_GOOGLE',
+            'Email'       => $this->config[$user]['email'],
+            'Passwd'      => $this->config[$user]['emailPassword'],
+            'service'     => 'cp',
+            'source'      => 'whatsapp',
+        ];
 
         // Set some options (some for SHTTP)
         curl_setopt($this->curl, CURLOPT_URL, $clientlogin_url);
@@ -173,7 +170,7 @@ class GoogleContacts implements Contacts
 
         // Get the Auth string and save it
         $matches = null;
-        $res = preg_match("/Auth=([a-z0-9_-]+)/i", $authresponse, $matches);
+        $res = preg_match('/Auth=([a-z0-9_-]+)/i', $authresponse, $matches);
         if ($res == 1) {
             $this->auth = $matches[1];
 
@@ -184,10 +181,10 @@ class GoogleContacts implements Contacts
 
     private function setHeaders($auth)
     {
-        $this->headers = array(
-            "Authorization: GoogleLogin auth=" . $auth,
-            "GData-Version: 2.0",
-        );
+        $this->headers = [
+            'Authorization: GoogleLogin auth='.$auth,
+            'GData-Version: 2.0',
+        ];
     }
 
     private function getHeaders()
@@ -198,7 +195,7 @@ class GoogleContacts implements Contacts
     private function getGoogleGroupId($groupname)
     {
         // Connect to Google and get a list of all contact groups.
-        curl_setopt($this->curl, CURLOPT_URL, "https://www.google.com/m8/feeds/groups/default/full");
+        curl_setopt($this->curl, CURLOPT_URL, 'https://www.google.com/m8/feeds/groups/default/full');
         curl_setopt($this->curl, CURLOPT_HTTPHEADER, $this->getHeaders());
         curl_setopt($this->curl, CURLOPT_POST, false);
         curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, true);
@@ -234,50 +231,49 @@ class GoogleContacts implements Contacts
 
         //Load XML response
         $contactsxml = simplexml_load_string($contactsresponse);
-        $data = array();
+        $data = [];
         foreach ($contactsxml->entry as $entry) {
             $name = $entry->title;
             $gd = $entry->children('http://schemas.google.com/g/2005');
             foreach ($gd->phoneNumber as $p) {
-                if ($p->attributes()->rel == "http://schemas.google.com/g/2005#mobile") {
-                    $n = trim(preg_replace("/[\D+]*/", "", $p));
+                if ($p->attributes()->rel == 'http://schemas.google.com/g/2005#mobile') {
+                    $n = trim(preg_replace("/[\D+]*/", '', $p));
                     if (substr((string) $n, 0, 1) !== '0' && strlen($n) > 10) {
-                        $data[] = array('name' => "$name ($n)", 'id' => $n);
+                        $data[] = ['name' => "$name ($n)", 'id' => $n];
                     }
                 }
             }
         }
-        usort($data, array($this, 'sortByName'));
+        usort($data, [$this, 'sortByName']);
 
-        return($data);
+        return $data;
     }
 
     public function sortByName($a, $b)
     {
         return strcasecmp($a['name'], $b['name']);
     }
-
 }
 
-/**
+/*
  * Start session so we don't always have to
  * log in.
  */
 if (!isset($_SESSION)) {
     $cookieParams = session_get_cookie_params(); // Gets current cookies params.
-    session_set_cookie_params($cookieParams["lifetime"], $cookieParams["path"], $cookieParams["domain"], false, true);
+    session_set_cookie_params($cookieParams['lifetime'], $cookieParams['path'], $cookieParams['domain'], false, true);
     session_name('wa_session'); // Sets the session name to the one set above.
     session_start(); // Start the php session
 }
 
-/**
+/*
  * Detect how the script was called. If it was POSTED too, we have
  * something to do, if it was just called via GET, we probably
  * only have to show the login page.
  */
 $whatsapp = new Whatsapp($config);
 
-if ($_SERVER['REQUEST_METHOD'] !== "POST") {
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] !== true) {
         exit($whatsapp->showWebLoginForm());
     }
@@ -292,7 +288,7 @@ class Whatsapp
     private $id;
     private $nick;
     private $password;
-    private $contacts = array();
+    private $contacts = [];
     private $inputs;
     private $messages;
     private $wa;
@@ -303,7 +299,7 @@ class Whatsapp
     {
         $this->config = $config;
 
-        if ($_SERVER['REQUEST_METHOD'] == "POST") {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             try {
                 $this->inputs = $this->cleanPostInputs();
 
@@ -311,11 +307,11 @@ class Whatsapp
                     $this->from = $this->inputs['from'];
 
                     if (!array_key_exists($this->from, $this->config)) {
-                        exit(json_encode(array(
-                            "success" => false,
-                            'type' => 'contacts',
-                            "errormsg" => "No config settings for user $this->from could be found"
-                        )));
+                        exit(json_encode([
+                            'success'  => false,
+                            'type'     => 'contacts',
+                            'errormsg' => "No config settings for user $this->from could be found",
+                        ]));
                     } else {
                         $this->number = $this->config[$this->from]['fromNumber'];
                         $this->id = $this->config[$this->from]['id'];
@@ -323,17 +319,17 @@ class Whatsapp
                         $this->password = $this->config[$this->from]['waPassword'];
 
                         $this->wa = new WhatsProt($this->number, $this->nick, false);
-                        $this->wa->eventManager()->bind('onGetMessage', array($this, 'processReceivedMessage'));
-                        $this->wa->eventManager()->bind('onConnect', array($this, 'connected'));
-                        $this->wa->eventManager()->bind('onGetGroups', array($this, 'processGroupArray'));
+                        $this->wa->eventManager()->bind('onGetMessage', [$this, 'processReceivedMessage']);
+                        $this->wa->eventManager()->bind('onConnect', [$this, 'connected']);
+                        $this->wa->eventManager()->bind('onGetGroups', [$this, 'processGroupArray']);
                     }
                 }
             } catch (Exception $e) {
-                exit(json_encode(array(
-                    "success" => false,
-                    'type' => 'contacts',
-                    "errormsg" => $e->getMessage()
-                )));
+                exit(json_encode([
+                    'success'  => false,
+                    'type'     => 'contacts',
+                    'errormsg' => $e->getMessage(),
+                ]));
             }
         }
     }
@@ -349,39 +345,40 @@ class Whatsapp
     }
 
     /**
-     * Clean and Filter the inputted Form values
+     * Clean and Filter the inputted Form values.
      *
      * This function attempts to clean and filter input values from
      * the form in the $_POST array. As nothing is currently put into
      * a database etc, this is probably not required, but it should help
      * if someone wishes to extend this project later.
      *
-     * @return array     array with values that have been filtered.
      * @throws Exception If no $_POST values submitted.
+     *
+     * @return array array with values that have been filtered.
      */
     private function cleanPostInputs()
     {
-        $args = array(
-            'action' => FILTER_SANITIZE_STRING,
+        $args = [
+            'action'   => FILTER_SANITIZE_STRING,
             'password' => FILTER_SANITIZE_STRING,
-            'from' => FILTER_SANITIZE_STRING,
-            'to' => array(
+            'from'     => FILTER_SANITIZE_STRING,
+            'to'       => [
                 'filter' => FILTER_SANITIZE_NUMBER_INT,
-                'flags' => FILTER_REQUIRE_ARRAY,
-            ),
-            'message' => FILTER_UNSAFE_RAW,
-            'image' => FILTER_VALIDATE_URL,
-            'audio' => FILTER_VALIDATE_URL,
-            'video' => FILTER_VALIDATE_URL,
+                'flags'  => FILTER_REQUIRE_ARRAY,
+            ],
+            'message'      => FILTER_UNSAFE_RAW,
+            'image'        => FILTER_VALIDATE_URL,
+            'audio'        => FILTER_VALIDATE_URL,
+            'video'        => FILTER_VALIDATE_URL,
             'locationname' => FILTER_SANITIZE_STRING,
-            'status' => FILTER_SANITIZE_STRING,
-            'userlat' => FILTER_SANITIZE_STRING,
-            'userlong' => FILTER_SANITIZE_STRING
-        );
+            'status'       => FILTER_SANITIZE_STRING,
+            'userlat'      => FILTER_SANITIZE_STRING,
+            'userlong'     => FILTER_SANITIZE_STRING,
+        ];
 
         $myinputs = filter_input_array(INPUT_POST, $args);
         if (!$myinputs) {
-            throw Exception("Problem Filtering the inputs");
+            throw Exception('Problem Filtering the inputs');
         }
 
         return $myinputs;
@@ -436,22 +433,20 @@ class Whatsapp
      *  - Google Contacts (if username/password was supplied in config)
      *
      * @return void
-     *
      */
     private function getContacts()
     {
         try {
             //Get whatsapp's Groups this user belongs to.
-            $this->waGroupList = array();
+            $this->waGroupList = [];
             $this->getGroupList();
             if (is_array($this->waGroupList)) {
                 $this->contacts = array_merge($this->contacts, $this->waGroupList);
             }
 
             //Get contacts from google if gmail account configured.
-            $googleContacts = array();
+            $googleContacts = [];
             if (isset($this->config[$this->from]['email'])) {
-
                 $email = $this->config[$this->from]['email'];
 
                 if (stripos($email, 'gmail') !== false || stripos($email, 'googlemail') !== false) {
@@ -464,19 +459,19 @@ class Whatsapp
             }
 
             if (isset($this->contacts)) {
-                exit(json_encode(array(
-                    "success" => true,
-                    "type" => 'contacts',
-                    "data" => $this->contacts,
-                    "messages" => $this->messages
-                )));
+                exit(json_encode([
+                    'success'  => true,
+                    'type'     => 'contacts',
+                    'data'     => $this->contacts,
+                    'messages' => $this->messages,
+                ]));
             }
         } catch (Exception $e) {
-            exit(json_encode(array(
-                "success" => false,
-                'type' => 'contacts',
-                "errormsg" => $e->getMessage()
-            )));
+            exit(json_encode([
+                'success'  => false,
+                'type'     => 'contacts',
+                'errormsg' => $e->getMessage(),
+            ]));
         }
     }
 
@@ -501,13 +496,14 @@ class Whatsapp
      * Create a connection to the whatsapp servers
      * using the supplied password.
      *
-     * @return boolean
+     * @return bool
      */
     private function connectToWhatsApp()
     {
         if (isset($this->wa)) {
             $this->wa->connect();
             $this->wa->loginWithPassword($this->password);
+
             return true;
         }
 
@@ -552,23 +548,24 @@ class Whatsapp
         if (preg_match('/\d*/', $from, $matches)) {
             $from = $matches[0];
         }
-        $this->messages[] = array('phone' => $phone, 'from' => $from, 'id' => $id, 'type' => $type, 'time' => $time, 'name' => $name, 'data' => $data);
+        $this->messages[] = ['phone' => $phone, 'from' => $from, 'id' => $id, 'type' => $type, 'time' => $time, 'name' => $name, 'data' => $data];
     }
 
     /**
      * Process the event onGetGroupList and sets a formatted array of groups the user belongs to.
      *
-     * @param  string        $phone      The phone number (jid ) of the user
-     * @param  array         $groupArray Array with details of all groups user eitehr belongs to or owns.
-     * @return array|boolean
+     * @param string $phone      The phone number (jid ) of the user
+     * @param array  $groupArray Array with details of all groups user eitehr belongs to or owns.
+     *
+     * @return array|bool
      */
     public function processGroupArray($phone, $groupArray)
     {
-        $formattedGroups = array();
+        $formattedGroups = [];
 
         if (!empty($groupArray)) {
             foreach ($groupArray as $group) {
-                $formattedGroups[] = array('name' => "GROUP: " . $group['subject'], 'id' => $group['id']);
+                $formattedGroups[] = ['name' => 'GROUP: '.$group['subject'], 'id' => $group['id']];
             }
 
             $this->waGroupList = $formattedGroups;
@@ -580,7 +577,7 @@ class Whatsapp
     }
 
     /**
-     * Update a users Status
+     * Update a users Status.
      *
      * @return void
      */
@@ -589,16 +586,16 @@ class Whatsapp
         if (isset($this->inputs['status']) && trim($this->inputs['status']) !== '') {
             $this->connectToWhatsApp();
             $this->wa->sendStatusUpdate($this->inputs['status']);
-            exit(json_encode(array(
-                "success" => true,
-                "data" => "<br />Your status was updated to - <b>{$this->inputs['status']}</b>",
-                "messages" => $this->messages
-            )));
+            exit(json_encode([
+                'success'  => true,
+                'data'     => "<br />Your status was updated to - <b>{$this->inputs['status']}</b>",
+                'messages' => $this->messages,
+            ]));
         } else {
-            exit(json_encode(array(
-                "success" => false,
-                "errormsg" => "There was no text in the submitted status box!"
-            )));
+            exit(json_encode([
+                'success'  => false,
+                'errormsg' => 'There was no text in the submitted status box!',
+            ]));
         }
     }
 
@@ -634,24 +631,24 @@ class Whatsapp
                         $this->wa->sendMessageLocation($to, $this->inputs['userlong'], $this->inputs['userlat'], $this->inputs['locationname'], null);
                     }
                 } else {
-                    exit(json_encode(array(
-                        "success" => false,
-                        "errormsg" => "A blank number was provided!",
-                        "messages" => $this->messages
-                    )));
+                    exit(json_encode([
+                        'success'  => false,
+                        'errormsg' => 'A blank number was provided!',
+                        'messages' => $this->messages,
+                    ]));
                 }
             }
 
-            exit(json_encode(array(
-                "success" => true,
-                "data" => "Message Sent!",
-                "messages" => $this->messages
-            )));
+            exit(json_encode([
+                'success'  => true,
+                'data'     => 'Message Sent!',
+                'messages' => $this->messages,
+            ]));
         }
-        exit(json_encode(array(
-            "success" => false,
-            "errormsg" => "Provided numbers to send message to were not in valid format."
-        )));
+        exit(json_encode([
+            'success'  => false,
+            'errormsg' => 'Provided numbers to send message to were not in valid format.',
+        ]));
     }
 
     /**
@@ -665,7 +662,6 @@ class Whatsapp
     private function sendBroadcast()
     {
         if (isset($this->inputs['action']) && trim($this->inputs['action']) == 'sendBroadcast') {
-
             $this->connectToWhatsApp();
             if (isset($this->inputs['message']) && trim($this->inputs['message'] !== '')) {
                 $this->wa->sendBroadcastMessage($this->inputs['to'], $this->inputs['message']);
@@ -682,11 +678,11 @@ class Whatsapp
             if (isset($this->inputs['locationname']) && trim($this->inputs['locationname'] !== '')) {
                 $this->wa->sendBroadcastPlace($this->inputs['to'], $this->inputs['userlong'], $this->inputs['userlat'], $this->inputs['locationname'], null);
             }
-            exit(json_encode(array(
-                "success" => true,
-                "data" => "Broadcast Message Sent!",
-                "messages" => $this->messages
-            )));
+            exit(json_encode([
+                'success'  => true,
+                'data'     => 'Broadcast Message Sent!',
+                'messages' => $this->messages,
+            ]));
         }
     }
 
@@ -701,13 +697,13 @@ class Whatsapp
             $_SESSION['logged_in'] = true;
             exit($this->showWebForm());
         } else {
-            $error = "Sorry your password was incorrect.";
+            $error = 'Sorry your password was incorrect.';
             exit($this->showWebLoginForm($error));
         }
     }
 
     /**
-     * Logout of the webapp
+     * Logout of the webapp.
      *
      * @return void
      */
@@ -717,7 +713,7 @@ class Whatsapp
     }
 
     /**
-     * Show Web app Login page
+     * Show Web app Login page.
      *
      * @return string
      */
@@ -781,7 +777,8 @@ class Whatsapp
 									<h2>Whatsapp! Login</h2>
 								</div>
 								<div class="panel-body">
-									<form class="form-signin" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" role="form">
+									<form class="form-signin" action="<?php echo $_SERVER['PHP_SELF'];
+        ?>" method="post" role="form">
 										<input type="hidden" name="action" value="login">
 										
 										<div class="row">
@@ -1115,7 +1112,8 @@ class Whatsapp
 								var fromuser = $("#from").val();
 								$.ajax({
 									type: "POST",
-									url: "<?php echo $_SERVER['PHP_SELF']; ?>",
+									url: "<?php echo $_SERVER['PHP_SELF'];
+        ?>",
 									cache: false,
 									data: {action: "getContacts", from: fromuser},
 									dataType: "json",
@@ -1383,10 +1381,12 @@ class Whatsapp
 					$('#logout').bind("click", function() {
 						$.ajax({
 							type: "POST",
-							url: "<?php echo $_SERVER['PHP_SELF']; ?>",
+							url: "<?php echo $_SERVER['PHP_SELF'];
+        ?>",
 							data: {action: "logout"},
 							success: function(result) {
-								window.location.href = "<?php echo $_SERVER['PHP_SELF']; ?>";
+								window.location.href = "<?php echo $_SERVER['PHP_SELF'];
+        ?>";
 							},
 							async: false
 						});
@@ -1429,12 +1429,12 @@ class Whatsapp
 													<select class="form-control" id="from" name="from" placeholder="Choose who to send as...">
 														<option value="">Choose Sender...</option> 
 														<?php
-														foreach (array_keys($this->config) as $key) {
-															if ($key !== 'webpassword') {
-																echo "<option value='$key'>$key</option>";
-															}
-														}
-														?>
+                                                        foreach (array_keys($this->config) as $key) {
+                                                            if ($key !== 'webpassword') {
+                                                                echo "<option value='$key'>$key</option>";
+                                                            }
+                                                        }
+        ?>
 													</select>
 												</div>
 											</div>

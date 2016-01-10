@@ -1,4 +1,5 @@
 <?php
+
 class rc4
 {
     private $s;
@@ -26,7 +27,7 @@ class rc4
             $this->i = ($this->i + 1) & 0xff;
             $this->j = ($this->j + $this->s[$this->i]) & 0xff;
             $this->swap($this->i, $this->j);
-            $d            = ord($data{$offset});
+            $d = ord($data{$offset});
             $out[$offset] = chr($d ^ $this->s[($this->s[$this->i] + $this->s[$this->j]) & 0xff]);
             $offset++;
         }
@@ -36,7 +37,7 @@ class rc4
 
     protected function swap($i, $j)
     {
-        $c           = $this->s[$i];
+        $c = $this->s[$i];
         $this->s[$i] = $this->s[$j];
         $this->s[$j] = $c;
     }

@@ -1,5 +1,6 @@
 <?php
-class Medium {
-    const MAX_VALUE = 0xFFFFFF;    // int
 
+class Medium
+{
+    const MAX_VALUE = 0xFFFFFF;    // int
 }

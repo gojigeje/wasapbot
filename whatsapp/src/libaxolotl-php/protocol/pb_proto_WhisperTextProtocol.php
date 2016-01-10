@@ -1,12 +1,12 @@
 <?php
 /**
- * Auto generated from WhisperTextProtocol.proto at 2015-09-10 23:24:53
+ * Auto generated from WhisperTextProtocol.proto at 2015-09-10 23:24:53.
  *
  * textsecure package
  */
 
 /**
- * WhisperMessage message
+ * WhisperMessage message.
  */
 class Textsecure_WhisperMessage extends \ProtobufMessage
 {
@@ -17,31 +17,31 @@ class Textsecure_WhisperMessage extends \ProtobufMessage
     const CIPHERTEXT = 4;
 
     /* @var array Field descriptors */
-    protected static $fields = array(
-        self::RATCHETKEY => array(
-            'name' => 'ratchetKey',
+    protected static $fields = [
+        self::RATCHETKEY => [
+            'name'     => 'ratchetKey',
             'required' => false,
-            'type' => 7,
-        ),
-        self::COUNTER => array(
-            'name' => 'counter',
+            'type'     => 7,
+        ],
+        self::COUNTER => [
+            'name'     => 'counter',
             'required' => false,
-            'type' => 5,
-        ),
-        self::PREVIOUSCOUNTER => array(
-            'name' => 'previousCounter',
+            'type'     => 5,
+        ],
+        self::PREVIOUSCOUNTER => [
+            'name'     => 'previousCounter',
             'required' => false,
-            'type' => 5,
-        ),
-        self::CIPHERTEXT => array(
-            'name' => 'ciphertext',
+            'type'     => 5,
+        ],
+        self::CIPHERTEXT => [
+            'name'     => 'ciphertext',
             'required' => false,
-            'type' => 7,
-        ),
-    );
+            'type'     => 7,
+        ],
+    ];
 
     /**
-     * Constructs new message container and clears its internal state
+     * Constructs new message container and clears its internal state.
      *
      * @return null
      */
@@ -51,7 +51,7 @@ class Textsecure_WhisperMessage extends \ProtobufMessage
     }
 
     /**
-     * Clears message values and sets default ones
+     * Clears message values and sets default ones.
      *
      * @return null
      */
@@ -64,7 +64,7 @@ class Textsecure_WhisperMessage extends \ProtobufMessage
     }
 
     /**
-     * Returns field descriptors
+     * Returns field descriptors.
      *
      * @return array
      */
@@ -74,7 +74,7 @@ class Textsecure_WhisperMessage extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'ratchetKey' property
+     * Sets value of 'ratchetKey' property.
      *
      * @param string $value Property value
      *
@@ -86,7 +86,7 @@ class Textsecure_WhisperMessage extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'ratchetKey' property
+     * Returns value of 'ratchetKey' property.
      *
      * @return string
      */
@@ -96,7 +96,7 @@ class Textsecure_WhisperMessage extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'counter' property
+     * Sets value of 'counter' property.
      *
      * @param int $value Property value
      *
@@ -108,7 +108,7 @@ class Textsecure_WhisperMessage extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'counter' property
+     * Returns value of 'counter' property.
      *
      * @return int
      */
@@ -118,7 +118,7 @@ class Textsecure_WhisperMessage extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'previousCounter' property
+     * Sets value of 'previousCounter' property.
      *
      * @param int $value Property value
      *
@@ -130,7 +130,7 @@ class Textsecure_WhisperMessage extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'previousCounter' property
+     * Returns value of 'previousCounter' property.
      *
      * @return int
      */
@@ -140,7 +140,7 @@ class Textsecure_WhisperMessage extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'ciphertext' property
+     * Sets value of 'ciphertext' property.
      *
      * @param string $value Property value
      *
@@ -152,7 +152,7 @@ class Textsecure_WhisperMessage extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'ciphertext' property
+     * Returns value of 'ciphertext' property.
      *
      * @return string
      */
@@ -163,7 +163,7 @@ class Textsecure_WhisperMessage extends \ProtobufMessage
 }
 
 /**
- * PreKeyWhisperMessage message
+ * PreKeyWhisperMessage message.
  */
 class Textsecure_PreKeyWhisperMessage extends \ProtobufMessage
 {
@@ -176,41 +176,41 @@ class Textsecure_PreKeyWhisperMessage extends \ProtobufMessage
     const MESSAGE = 4;
 
     /* @var array Field descriptors */
-    protected static $fields = array(
-        self::REGISTRATIONID => array(
-            'name' => 'registrationId',
+    protected static $fields = [
+        self::REGISTRATIONID => [
+            'name'     => 'registrationId',
             'required' => false,
-            'type' => 5,
-        ),
-        self::PREKEYID => array(
-            'name' => 'preKeyId',
+            'type'     => 5,
+        ],
+        self::PREKEYID => [
+            'name'     => 'preKeyId',
             'required' => false,
-            'type' => 5,
-        ),
-        self::SIGNEDPREKEYID => array(
-            'name' => 'signedPreKeyId',
+            'type'     => 5,
+        ],
+        self::SIGNEDPREKEYID => [
+            'name'     => 'signedPreKeyId',
             'required' => false,
-            'type' => 5,
-        ),
-        self::BASEKEY => array(
-            'name' => 'baseKey',
+            'type'     => 5,
+        ],
+        self::BASEKEY => [
+            'name'     => 'baseKey',
             'required' => false,
-            'type' => 7,
-        ),
-        self::IDENTITYKEY => array(
-            'name' => 'identityKey',
+            'type'     => 7,
+        ],
+        self::IDENTITYKEY => [
+            'name'     => 'identityKey',
             'required' => false,
-            'type' => 7,
-        ),
-        self::MESSAGE => array(
-            'name' => 'message',
+            'type'     => 7,
+        ],
+        self::MESSAGE => [
+            'name'     => 'message',
             'required' => false,
-            'type' => 7,
-        ),
-    );
+            'type'     => 7,
+        ],
+    ];
 
     /**
-     * Constructs new message container and clears its internal state
+     * Constructs new message container and clears its internal state.
      *
      * @return null
      */
@@ -220,7 +220,7 @@ class Textsecure_PreKeyWhisperMessage extends \ProtobufMessage
     }
 
     /**
-     * Clears message values and sets default ones
+     * Clears message values and sets default ones.
      *
      * @return null
      */
@@ -235,7 +235,7 @@ class Textsecure_PreKeyWhisperMessage extends \ProtobufMessage
     }
 
     /**
-     * Returns field descriptors
+     * Returns field descriptors.
      *
      * @return array
      */
@@ -245,7 +245,7 @@ class Textsecure_PreKeyWhisperMessage extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'registrationId' property
+     * Sets value of 'registrationId' property.
      *
      * @param int $value Property value
      *
@@ -257,7 +257,7 @@ class Textsecure_PreKeyWhisperMessage extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'registrationId' property
+     * Returns value of 'registrationId' property.
      *
      * @return int
      */
@@ -267,7 +267,7 @@ class Textsecure_PreKeyWhisperMessage extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'preKeyId' property
+     * Sets value of 'preKeyId' property.
      *
      * @param int $value Property value
      *
@@ -279,7 +279,7 @@ class Textsecure_PreKeyWhisperMessage extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'preKeyId' property
+     * Returns value of 'preKeyId' property.
      *
      * @return int
      */
@@ -289,7 +289,7 @@ class Textsecure_PreKeyWhisperMessage extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'signedPreKeyId' property
+     * Sets value of 'signedPreKeyId' property.
      *
      * @param int $value Property value
      *
@@ -301,7 +301,7 @@ class Textsecure_PreKeyWhisperMessage extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'signedPreKeyId' property
+     * Returns value of 'signedPreKeyId' property.
      *
      * @return int
      */
@@ -311,7 +311,7 @@ class Textsecure_PreKeyWhisperMessage extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'baseKey' property
+     * Sets value of 'baseKey' property.
      *
      * @param string $value Property value
      *
@@ -323,7 +323,7 @@ class Textsecure_PreKeyWhisperMessage extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'baseKey' property
+     * Returns value of 'baseKey' property.
      *
      * @return string
      */
@@ -333,7 +333,7 @@ class Textsecure_PreKeyWhisperMessage extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'identityKey' property
+     * Sets value of 'identityKey' property.
      *
      * @param string $value Property value
      *
@@ -345,7 +345,7 @@ class Textsecure_PreKeyWhisperMessage extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'identityKey' property
+     * Returns value of 'identityKey' property.
      *
      * @return string
      */
@@ -355,7 +355,7 @@ class Textsecure_PreKeyWhisperMessage extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'message' property
+     * Sets value of 'message' property.
      *
      * @param string $value Property value
      *
@@ -367,7 +367,7 @@ class Textsecure_PreKeyWhisperMessage extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'message' property
+     * Returns value of 'message' property.
      *
      * @return string
      */
@@ -378,7 +378,7 @@ class Textsecure_PreKeyWhisperMessage extends \ProtobufMessage
 }
 
 /**
- * KeyExchangeMessage message
+ * KeyExchangeMessage message.
  */
 class Textsecure_KeyExchangeMessage extends \ProtobufMessage
 {
@@ -390,36 +390,36 @@ class Textsecure_KeyExchangeMessage extends \ProtobufMessage
     const BASEKEYSIGNATURE = 5;
 
     /* @var array Field descriptors */
-    protected static $fields = array(
-        self::ID => array(
-            'name' => 'id',
+    protected static $fields = [
+        self::ID => [
+            'name'     => 'id',
             'required' => false,
-            'type' => 5,
-        ),
-        self::BASEKEY => array(
-            'name' => 'baseKey',
+            'type'     => 5,
+        ],
+        self::BASEKEY => [
+            'name'     => 'baseKey',
             'required' => false,
-            'type' => 7,
-        ),
-        self::RATCHETKEY => array(
-            'name' => 'ratchetKey',
+            'type'     => 7,
+        ],
+        self::RATCHETKEY => [
+            'name'     => 'ratchetKey',
             'required' => false,
-            'type' => 7,
-        ),
-        self::IDENTITYKEY => array(
-            'name' => 'identityKey',
+            'type'     => 7,
+        ],
+        self::IDENTITYKEY => [
+            'name'     => 'identityKey',
             'required' => false,
-            'type' => 7,
-        ),
-        self::BASEKEYSIGNATURE => array(
-            'name' => 'baseKeySignature',
+            'type'     => 7,
+        ],
+        self::BASEKEYSIGNATURE => [
+            'name'     => 'baseKeySignature',
             'required' => false,
-            'type' => 7,
-        ),
-    );
+            'type'     => 7,
+        ],
+    ];
 
     /**
-     * Constructs new message container and clears its internal state
+     * Constructs new message container and clears its internal state.
      *
      * @return null
      */
@@ -429,7 +429,7 @@ class Textsecure_KeyExchangeMessage extends \ProtobufMessage
     }
 
     /**
-     * Clears message values and sets default ones
+     * Clears message values and sets default ones.
      *
      * @return null
      */
@@ -443,7 +443,7 @@ class Textsecure_KeyExchangeMessage extends \ProtobufMessage
     }
 
     /**
-     * Returns field descriptors
+     * Returns field descriptors.
      *
      * @return array
      */
@@ -453,7 +453,7 @@ class Textsecure_KeyExchangeMessage extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'id' property
+     * Sets value of 'id' property.
      *
      * @param int $value Property value
      *
@@ -465,7 +465,7 @@ class Textsecure_KeyExchangeMessage extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'id' property
+     * Returns value of 'id' property.
      *
      * @return int
      */
@@ -475,7 +475,7 @@ class Textsecure_KeyExchangeMessage extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'baseKey' property
+     * Sets value of 'baseKey' property.
      *
      * @param string $value Property value
      *
@@ -487,7 +487,7 @@ class Textsecure_KeyExchangeMessage extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'baseKey' property
+     * Returns value of 'baseKey' property.
      *
      * @return string
      */
@@ -497,7 +497,7 @@ class Textsecure_KeyExchangeMessage extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'ratchetKey' property
+     * Sets value of 'ratchetKey' property.
      *
      * @param string $value Property value
      *
@@ -509,7 +509,7 @@ class Textsecure_KeyExchangeMessage extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'ratchetKey' property
+     * Returns value of 'ratchetKey' property.
      *
      * @return string
      */
@@ -519,7 +519,7 @@ class Textsecure_KeyExchangeMessage extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'identityKey' property
+     * Sets value of 'identityKey' property.
      *
      * @param string $value Property value
      *
@@ -531,7 +531,7 @@ class Textsecure_KeyExchangeMessage extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'identityKey' property
+     * Returns value of 'identityKey' property.
      *
      * @return string
      */
@@ -541,7 +541,7 @@ class Textsecure_KeyExchangeMessage extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'baseKeySignature' property
+     * Sets value of 'baseKeySignature' property.
      *
      * @param string $value Property value
      *
@@ -553,7 +553,7 @@ class Textsecure_KeyExchangeMessage extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'baseKeySignature' property
+     * Returns value of 'baseKeySignature' property.
      *
      * @return string
      */
@@ -564,7 +564,7 @@ class Textsecure_KeyExchangeMessage extends \ProtobufMessage
 }
 
 /**
- * SenderKeyMessage message
+ * SenderKeyMessage message.
  */
 class Textsecure_SenderKeyMessage extends \ProtobufMessage
 {
@@ -574,26 +574,26 @@ class Textsecure_SenderKeyMessage extends \ProtobufMessage
     const CIPHERTEXT = 3;
 
     /* @var array Field descriptors */
-    protected static $fields = array(
-        self::ID => array(
-            'name' => 'id',
+    protected static $fields = [
+        self::ID => [
+            'name'     => 'id',
             'required' => false,
-            'type' => 5,
-        ),
-        self::ITERATION => array(
-            'name' => 'iteration',
+            'type'     => 5,
+        ],
+        self::ITERATION => [
+            'name'     => 'iteration',
             'required' => false,
-            'type' => 5,
-        ),
-        self::CIPHERTEXT => array(
-            'name' => 'ciphertext',
+            'type'     => 5,
+        ],
+        self::CIPHERTEXT => [
+            'name'     => 'ciphertext',
             'required' => false,
-            'type' => 7,
-        ),
-    );
+            'type'     => 7,
+        ],
+    ];
 
     /**
-     * Constructs new message container and clears its internal state
+     * Constructs new message container and clears its internal state.
      *
      * @return null
      */
@@ -603,7 +603,7 @@ class Textsecure_SenderKeyMessage extends \ProtobufMessage
     }
 
     /**
-     * Clears message values and sets default ones
+     * Clears message values and sets default ones.
      *
      * @return null
      */
@@ -615,7 +615,7 @@ class Textsecure_SenderKeyMessage extends \ProtobufMessage
     }
 
     /**
-     * Returns field descriptors
+     * Returns field descriptors.
      *
      * @return array
      */
@@ -625,7 +625,7 @@ class Textsecure_SenderKeyMessage extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'id' property
+     * Sets value of 'id' property.
      *
      * @param int $value Property value
      *
@@ -637,7 +637,7 @@ class Textsecure_SenderKeyMessage extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'id' property
+     * Returns value of 'id' property.
      *
      * @return int
      */
@@ -647,7 +647,7 @@ class Textsecure_SenderKeyMessage extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'iteration' property
+     * Sets value of 'iteration' property.
      *
      * @param int $value Property value
      *
@@ -659,7 +659,7 @@ class Textsecure_SenderKeyMessage extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'iteration' property
+     * Returns value of 'iteration' property.
      *
      * @return int
      */
@@ -669,7 +669,7 @@ class Textsecure_SenderKeyMessage extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'ciphertext' property
+     * Sets value of 'ciphertext' property.
      *
      * @param string $value Property value
      *
@@ -681,7 +681,7 @@ class Textsecure_SenderKeyMessage extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'ciphertext' property
+     * Returns value of 'ciphertext' property.
      *
      * @return string
      */
@@ -692,7 +692,7 @@ class Textsecure_SenderKeyMessage extends \ProtobufMessage
 }
 
 /**
- * SenderKeyDistributionMessage message
+ * SenderKeyDistributionMessage message.
  */
 class Textsecure_SenderKeyDistributionMessage extends \ProtobufMessage
 {
@@ -703,31 +703,31 @@ class Textsecure_SenderKeyDistributionMessage extends \ProtobufMessage
     const SIGNINGKEY = 4;
 
     /* @var array Field descriptors */
-    protected static $fields = array(
-        self::ID => array(
-            'name' => 'id',
+    protected static $fields = [
+        self::ID => [
+            'name'     => 'id',
             'required' => false,
-            'type' => 5,
-        ),
-        self::ITERATION => array(
-            'name' => 'iteration',
+            'type'     => 5,
+        ],
+        self::ITERATION => [
+            'name'     => 'iteration',
             'required' => false,
-            'type' => 5,
-        ),
-        self::CHAINKEY => array(
-            'name' => 'chainKey',
+            'type'     => 5,
+        ],
+        self::CHAINKEY => [
+            'name'     => 'chainKey',
             'required' => false,
-            'type' => 7,
-        ),
-        self::SIGNINGKEY => array(
-            'name' => 'signingKey',
+            'type'     => 7,
+        ],
+        self::SIGNINGKEY => [
+            'name'     => 'signingKey',
             'required' => false,
-            'type' => 7,
-        ),
-    );
+            'type'     => 7,
+        ],
+    ];
 
     /**
-     * Constructs new message container and clears its internal state
+     * Constructs new message container and clears its internal state.
      *
      * @return null
      */
@@ -737,7 +737,7 @@ class Textsecure_SenderKeyDistributionMessage extends \ProtobufMessage
     }
 
     /**
-     * Clears message values and sets default ones
+     * Clears message values and sets default ones.
      *
      * @return null
      */
@@ -750,7 +750,7 @@ class Textsecure_SenderKeyDistributionMessage extends \ProtobufMessage
     }
 
     /**
-     * Returns field descriptors
+     * Returns field descriptors.
      *
      * @return array
      */
@@ -760,7 +760,7 @@ class Textsecure_SenderKeyDistributionMessage extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'id' property
+     * Sets value of 'id' property.
      *
      * @param int $value Property value
      *
@@ -772,7 +772,7 @@ class Textsecure_SenderKeyDistributionMessage extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'id' property
+     * Returns value of 'id' property.
      *
      * @return int
      */
@@ -782,7 +782,7 @@ class Textsecure_SenderKeyDistributionMessage extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'iteration' property
+     * Sets value of 'iteration' property.
      *
      * @param int $value Property value
      *
@@ -794,7 +794,7 @@ class Textsecure_SenderKeyDistributionMessage extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'iteration' property
+     * Returns value of 'iteration' property.
      *
      * @return int
      */
@@ -804,7 +804,7 @@ class Textsecure_SenderKeyDistributionMessage extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'chainKey' property
+     * Sets value of 'chainKey' property.
      *
      * @param string $value Property value
      *
@@ -816,7 +816,7 @@ class Textsecure_SenderKeyDistributionMessage extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'chainKey' property
+     * Returns value of 'chainKey' property.
      *
      * @return string
      */
@@ -826,7 +826,7 @@ class Textsecure_SenderKeyDistributionMessage extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'signingKey' property
+     * Sets value of 'signingKey' property.
      *
      * @param string $value Property value
      *
@@ -838,7 +838,7 @@ class Textsecure_SenderKeyDistributionMessage extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'signingKey' property
+     * Returns value of 'signingKey' property.
      *
      * @return string
      */

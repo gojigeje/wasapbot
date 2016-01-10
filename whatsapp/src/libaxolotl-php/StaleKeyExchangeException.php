@@ -1,3 +1,5 @@
 <?php
-class StaleKeyExchangeException extends Exception {
+
+class StaleKeyExchangeException extends Exception
+{
 }

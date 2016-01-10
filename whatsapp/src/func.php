@@ -4,40 +4,44 @@
  * This function extracts the phone number.
  *
  * @param string $from
- * The remitter delivered by WHATSAPP example 1234567890@s.whatsapp.net
+ *                     The remitter delivered by WHATSAPP example 1234567890@s.whatsapp.net
  *
  * @return string
- * Returns the number of phone cleanly.
- *
+ *                Returns the number of phone cleanly.
  **/
 function ExtractNumber($from)
 {
-    return str_replace(array("@s.whatsapp.net", "@g.us"), "", $from);
+    return str_replace(['@s.whatsapp.net', '@g.us'], '', $from);
 }
-function pkcs5_unpad($text) 
-{ 
-    $pad = ord($text{strlen($text)-1}); 
-    if ($pad > strlen($text)) return false; 
-    if (strspn($text, chr($pad), strlen($text) - $pad) != $pad) return false; 
-    return substr($text, 0, -1 * $pad); 
+function pkcs5_unpad($text)
+{
+    $pad = ord($text{strlen($text) - 1});
+    if ($pad > strlen($text)) {
+        return false;
+    }
+    if (strspn($text, chr($pad), strlen($text) - $pad) != $pad) {
+        return false;
+    }
+
+    return substr($text, 0, -1 * $pad);
 }
 
 function wa_pbkdf2($algorithm, $password, $salt, $count, $key_length, $raw_output = false)
 {
     $algorithm = strtolower($algorithm);
-    if ( ! in_array($algorithm, hash_algos(), true)) {
+    if (!in_array($algorithm, hash_algos(), true)) {
         die('PBKDF2 ERROR: Invalid hash algorithm.');
     }
     if ($count <= 0 || $key_length <= 0) {
         die('PBKDF2 ERROR: Invalid parameters.');
     }
 
-    $hash_length = strlen(hash($algorithm, "", true));
+    $hash_length = strlen(hash($algorithm, '', true));
     $block_count = ceil($key_length / $hash_length);
 
-    $output = "";
+    $output = '';
     for ($i = 1; $i <= $block_count; $i++) {
-        $last = $salt . pack("N", $i);
+        $last = $salt.pack('N', $i);
         $last = $xorsum = hash_hmac($algorithm, $last, $password, true);
         for ($j = 1; $j < $count; $j++) {
             $xorsum ^= ($last = hash_hmac($algorithm, $last, $password, true));
@@ -123,11 +127,11 @@ function createVideoIcon($file)
     /* should install ffmpeg for the method to work successfully  */
     if (checkFFMPEG()) {
         //generate thumbnail
-        $preview = sys_get_temp_dir() . '/' . md5($file) . '.jpg';
+        $preview = sys_get_temp_dir().'/'.md5($file).'.jpg';
         @unlink($preview);
 
         //capture video preview
-        $command = "ffmpeg -i \"" . $file . "\" -f mjpeg -ss 00:00:01 -vframes 1 \"" . $preview . "\"";
+        $command = 'ffmpeg -i "'.$file.'" -f mjpeg -ss 00:00:01 -vframes 1 "'.$preview.'"';
         exec($command);
 
         return createIconGD($preview);
@@ -139,12 +143,12 @@ function createVideoIcon($file)
 function checkFFMPEG()
 {
     //check if ffmpeg is installed.
-    $output = array();
+    $output = [];
     $returnvalue = false;
 
     exec('ffmpeg -version', $output, $returnvalue);
 
-    return ($returnvalue === 0);
+    return $returnvalue === 0;
 }
 
 function giftThumbnail()
@@ -158,19 +162,19 @@ function videoThumbnail()
 }
 function updateData($nameFile, $WAver, $WAToken = null)
 {
-    $file    = __DIR__ . "/" . $nameFile;
-    $open    = fopen($file, 'r+');
+    $file = __DIR__.'/'.$nameFile;
+    $open = fopen($file, 'r+');
     $content = fread($open, filesize($file));
     fclose($open);
 
     $content = explode("\n", $content);
 
-    if ($file == __DIR__ . '/token.php') {
-        $content[27] = '    $releaseTime = \'' . $WAToken .'\';';
+    if ($file == __DIR__.'/token.php') {
+        $content[27] = '    $releaseTime = \''.$WAToken.'\';';
     } else {
-        if ($file == __DIR__ . '/Constants.php') {
-            $content[21] = '    const WHATSAPP_VER = \'' . trim($WAver) . '\';                                                          // The WhatsApp version.';
-            $content[22] = '    const WHATSAPP_USER_AGENT = \'WhatsApp/' . trim($WAver) . ' S40Version/14.26 Device/Nokia302\';         // User agent used in request/registration code.';
+        if ($file == __DIR__.'/Constants.php') {
+            $content[21] = '    const WHATSAPP_VER = \''.trim($WAver).'\';                                                          // The WhatsApp version.';
+            $content[22] = '    const WHATSAPP_USER_AGENT = \'WhatsApp/'.trim($WAver).' S40Version/14.26 Device/Nokia302\';         // User agent used in request/registration code.';
         }
     }
 
@@ -185,13 +189,13 @@ function updateData($nameFile, $WAver, $WAToken = null)
  * @param string $number Your number with international code, e.g. 49123456789
  * @param int    $sku    The Time in years (1, 3 or 5) you want to extend the account-expiration.
  *
- * @return string        Returns the link.
+ * @return string Returns the link.
  **/
 function generatePaymentLink($number, $sku)
 {
-    return sprintf("https://www.whatsapp.com/payments/cksum_pay.php?phone=%s&cksum=%s&sku=%d",
+    return sprintf('https://www.whatsapp.com/payments/cksum_pay.php?phone=%s&cksum=%s&sku=%d',
         $number,
-        md5($number."abc"),
+        md5($number.'abc'),
         $sku,
         ($sku != 1 && $sku != 3 && $sku != 5) ? 1 : $sku);
 }
@@ -199,20 +203,22 @@ function generatePaymentLink($number, $sku)
 // Gets mime type of a file using various methods
 function get_mime($file)
 {
-    if (function_exists("finfo_file")) {
+    if (function_exists('finfo_file')) {
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
-        $mime  = finfo_file($finfo, $file);
+        $mime = finfo_file($finfo, $file);
         finfo_close($finfo);
+
         return $mime;
     }
 
-    if (function_exists("mime_content_type")) {
+    if (function_exists('mime_content_type')) {
         return mime_content_type($file);
     }
 
-    if (!strncasecmp(PHP_OS, 'WIN', 3) == 0 && !stristr(ini_get("disable_functions"), "shell_exec")) {
+    if (!strncasecmp(PHP_OS, 'WIN', 3) == 0 && !stristr(ini_get('disable_functions'), 'shell_exec')) {
         $file = escapeshellarg($file);
-        $mime = shell_exec("file -b --mime-type " . $file);
+        $mime = shell_exec('file -b --mime-type '.$file);
+
         return trim($mime);
     }
 
@@ -221,7 +227,7 @@ function get_mime($file)
 
 function getExtensionFromMime($mime)
 {
-    $extensions = array(
+    $extensions = [
       'audio/3gpp'      => '3gp',
       'audio/x-caf'     => 'caf',
       'audio/wav'       => 'wav',
@@ -242,127 +248,135 @@ function getExtensionFromMime($mime)
       'video/quicktime' => 'mov',
       'video/avi'       => 'avi',
       'video/msvideo'   => 'avi',
-      'video/x-msvideo' => 'avi'
-  );
+      'video/x-msvideo' => 'avi',
+  ];
 
-  return $extensions[$mime];
+    return $extensions[$mime];
 }
 
 function adjustId($id)
 {
-  $data = strrev(pack("L",$id));
-  $data = bin2hex(ltrim($data));
-  while(strlen($data) < 6)
-    $data = "0".$data;
+    $data = strrev(pack('L', $id));
+    $data = bin2hex(ltrim($data));
+    while (strlen($data) < 6) {
+        $data = '0'.$data;
+    }
 
-  return hex2bin($data);
+    return hex2bin($data);
 }
 
 function deAdjustId($data)
 {
-  if(strlen($data) < 4)
-    $data = "\x00".$data;
-  $data = strrev($data);
-  $data = unpack("L",$data);
+    if (strlen($data) < 4) {
+        $data = "\x00".$data;
+    }
+    $data = strrev($data);
+    $data = unpack('L', $data);
 
-  return $data[1];
+    return $data[1];
 }
 
 function unpadV2Plaintext($v2plaintext)
 {
-  if(strlen($v2plaintext) < 128)
-    return substr($v2plaintext,2,-1);
-  else
-    return substr($v2plaintext,3,-1);
+    if (strlen($v2plaintext) < 128) {
+        return substr($v2plaintext, 2, -1);
+    } else {
+        return substr($v2plaintext, 3, -1);
+    }
 }
-function parseText($txt){
-    for($x=0;$x<strlen($txt);$x++){
-        if(ord($txt[$x]) < 20 || ord($txt[$x]) > 230)
-        {
-            $txt = "HEX:".bin2hex($txt);
+function parseText($txt)
+{
+    for ($x = 0; $x < strlen($txt); $x++) {
+        if (ord($txt[$x]) < 20 || ord($txt[$x]) > 230) {
+            $txt = 'HEX:'.bin2hex($txt);
+
             return $txt;
         }
     }
+
     return $txt;
 }
-function niceVarDump($obj,$ident = 0){
-    $data = "";
-    $data .= str_repeat(" ",$ident);
+function niceVarDump($obj, $ident = 0)
+{
+    $data = '';
+    $data .= str_repeat(' ', $ident);
     $original_ident = $ident;
     $toClose = false;
-    switch(gettype($obj)){
-        case "object":
+    switch (gettype($obj)) {
+        case 'object':
             $vars = (array) $obj;
-            $data .= gettype($obj)." (".get_class($obj).") (".count($vars).") {\n";
+            $data .= gettype($obj).' ('.get_class($obj).') ('.count($vars).") {\n";
             $ident += 2;
-            foreach($vars as $key=>$var){
-                $type = "";
+            foreach ($vars as $key => $var) {
+                $type = '';
                 $k = bin2hex($key);
-                if(strpos($k,"002a00") === 0){
-                    $k = str_replace("002a00", "", $k);
-                    $type = ":protected";
-                }
-                else if(strpos($k,bin2hex("\x00".get_class($obj)."\x00")) === 0){
-                    $k = str_replace(bin2hex("\x00".get_class($obj)."\x00"),"", $k);
-                    $type = ":private";
+                if (strpos($k, '002a00') === 0) {
+                    $k = str_replace('002a00', '', $k);
+                    $type = ':protected';
+                } elseif (strpos($k, bin2hex("\x00".get_class($obj)."\x00")) === 0) {
+                    $k = str_replace(bin2hex("\x00".get_class($obj)."\x00"), '', $k);
+                    $type = ':private';
                 }
                 $k = hex2bin($k);
-                if(is_subclass_of($obj, "ProtobufMessage") && $k == "values"){
+                if (is_subclass_of($obj, 'ProtobufMessage') && $k == 'values') {
                     $r = new ReflectionClass($obj);
                     $constants = $r->getConstants();
                     $newVar = [];
-                    foreach($constants as $ckey=>$cval){
-                        if(substr($ckey,0,3) != "PB_")
+                    foreach ($constants as $ckey => $cval) {
+                        if (substr($ckey, 0, 3) != 'PB_') {
                             $newVar[$ckey] = $var[$cval];
+                        }
                     }
                     $var = $newVar;
                 }
-                $data .= str_repeat(" ", $ident)."[$k$type]=>\n".niceVarDump($var,$ident)."\n";
+                $data .= str_repeat(' ', $ident)."[$k$type]=>\n".niceVarDump($var, $ident)."\n";
             }
             $toClose = true;
         break;
-        case "array":
-            $data .= "array (".count($obj).") {\n";
+        case 'array':
+            $data .= 'array ('.count($obj).") {\n";
             $ident += 2;
-            foreach($obj as $key=>$val){
-                $data .= str_repeat(" ", $ident)."[".(is_integer($key)?$key:"\"$key\"")."]=>\n".niceVarDump($val,$ident)."\n";
+            foreach ($obj as $key => $val) {
+                $data .= str_repeat(' ', $ident).'['.(is_int($key) ? $key : "\"$key\"")."]=>\n".niceVarDump($val, $ident)."\n";
             }
             $toClose = true;
         break;
-        case "string":
-            $data .= "string \"".parseText($obj)."\"\n";
+        case 'string':
+            $data .= 'string "'.parseText($obj)."\"\n";
         break;
-        case "NULL":
+        case 'NULL':
             $data .= gettype($obj);
         break;
         default:
-            $data .= gettype($obj)."(".strval($obj).")\n";
+            $data .= gettype($obj).'('.strval($obj).")\n";
         break;
     }
-    if($toClose)
-        $data .= str_repeat(" ", $original_ident)."}\n";
+    if ($toClose) {
+        $data .= str_repeat(' ', $original_ident)."}\n";
+    }
 
     return $data;
 }
 function encodeInt7bit($value)
 {
-  $v = $value;
-  $out = "";
-  while($v >= 0x80){
-    $out .= chr(($v | 0x80) % 256);
-    $v >>= 7;
-  }
-  $out .= chr($v % 256);
+    $v = $value;
+    $out = '';
+    while ($v >= 0x80) {
+        $out .= chr(($v | 0x80) % 256);
+        $v >>= 7;
+    }
+    $out .= chr($v % 256);
 
-  return $out;
+    return $out;
 }
 
 function padMessage($plaintext)
 {
-  $padded = "";
-  $padded .= chr(10);
-  $padded .= encodeInt7bit(strlen($plaintext));
-  $padded .= $plaintext;
-  $padded .= chr(1);
-  return $padded;
+    $padded = '';
+    $padded .= chr(10);
+    $padded .= encodeInt7bit(strlen($plaintext));
+    $padded .= $plaintext;
+    $padded .= chr(1);
+
+    return $padded;
 }

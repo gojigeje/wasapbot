@@ -1,19 +1,20 @@
 <?php
+
 set_time_limit(30);
 
-require_once("../src/whatsprot.class.php");
+require_once '../src/whatsprot.class.php';
 
-$username = $_GET["phone"];
-$password = $_GET["pass"];
-$u        = $_GET["u"];
+$username = $_GET['phone'];
+$password = $_GET['pass'];
+$u = $_GET['u'];
 
 if (!is_array($u)) {
-    $u = array($u);
+    $u = [$u];
 }
 
-$numbers = array();
+$numbers = [];
 foreach ($u as $number) {
-    if ($number[0] != "+") {
+    if ($number[0] != '+') {
         //add leading +
         $number = "+$number";
     }
@@ -35,7 +36,7 @@ function onSyncResult($result)
     die(); //to break out of the while(true) loop
 }
 
-$wa = new WhatsProt($username, "WhatsApp", false);
+$wa = new WhatsProt($username, 'WhatsApp', false);
 
 //bind event handler
 $wa->eventManager()->bind('onGetSyncResult', 'onSyncResult');

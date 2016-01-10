@@ -65,7 +65,7 @@ Here we will use registerTool.php (you can always use other tool, their function
 1. Prepare any mobile number, it's advised to use a new number which has never been used on WhatsApp before, otherwise it may cause some problem. Make sure the number is able to receive sms or voice call to receive registration code from WhatsApp
 2. Download this repo, then extract it
 3. Go to [whatsapp/examples/](whatsapp/examples/) folder and run registerTool.php from your terminal or CLI:  
-` cd whatsapp/examples/ `
+` cd whatsapp/examples/ `  
 ` php registerTool.php `
 4. Input your bot's mobile number (country code prefixed, without plus sign '+')  
 e.g. ` 6285xxxxxxxxx `

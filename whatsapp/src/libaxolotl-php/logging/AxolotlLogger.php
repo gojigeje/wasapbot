@@ -1,5 +1,7 @@
 <?php
-abstract class AxolotlLogger {
+
+abstract class AxolotlLogger
+{
     const VERBOSE = 2;
     const DEBUG = 3;
     const INFO = 4;

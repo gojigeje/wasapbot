@@ -1,6 +1,8 @@
 <?php
-interface ECPrivateKey {
-    public function serialize ();
-    public function getType ();
-}
 
+interface ECPrivateKey
+{
+    public function serialize();
+
+    public function getType();
+}

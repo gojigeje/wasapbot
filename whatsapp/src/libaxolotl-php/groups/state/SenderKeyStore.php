@@ -1,5 +1,12 @@
 <?php
-abstract class SenderKeyStore {
-    abstract function storeSenderKey ($senderKeyId, $record); // [String senderKeyId, SenderKeyRecord record]
-    abstract function loadSenderKey ($senderKeyId); // [String senderKeyId]
+
+abstract class SenderKeyStore
+{
+    abstract public function storeSenderKey($senderKeyId, $record);
+
+ // [String senderKeyId, SenderKeyRecord record]
+
+    abstract public function loadSenderKey($senderKeyId);
+
+ // [String senderKeyId]
 }

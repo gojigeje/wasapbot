@@ -1,3 +1,5 @@
 <?php
-class UntrustedIdentityException extends Exception {
+
+class UntrustedIdentityException extends Exception
+{
 }

@@ -1,8 +1,21 @@
 <?php
-require_once(__DIR__."/../InvalidKeyIdException.php");
-abstract class PreKeyStore {
-    abstract function loadPreKey ($preKeyId); // [int preKeyId]
-    abstract function storePreKey ($preKeyId, $record); // [int preKeyId, PreKeyRecord record]
-    abstract function containsPreKey ($preKeyId); // [int preKeyId]
-    abstract function removePreKey ($preKeyId); // [int preKeyId]
+
+require_once __DIR__.'/../InvalidKeyIdException.php';
+abstract class PreKeyStore
+{
+    abstract public function loadPreKey($preKeyId);
+
+ // [int preKeyId]
+
+    abstract public function storePreKey($preKeyId, $record);
+
+ // [int preKeyId, PreKeyRecord record]
+
+    abstract public function containsPreKey($preKeyId);
+
+ // [int preKeyId]
+
+    abstract public function removePreKey($preKeyId);
+
+ // [int preKeyId]
 }

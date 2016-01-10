@@ -1,12 +1,12 @@
 <?php
 /**
- * Auto generated from LocalStorageProtocol.proto at 2015-09-10 23:19:03
+ * Auto generated from LocalStorageProtocol.proto at 2015-09-10 23:19:03.
  *
  * textsecure package
  */
 
 /**
- * ChainKey message embedded in Chain/SessionStructure message
+ * ChainKey message embedded in Chain/SessionStructure message.
  */
 class Textsecure_SessionStructure_Chain_ChainKey extends \ProtobufMessage
 {
@@ -15,21 +15,21 @@ class Textsecure_SessionStructure_Chain_ChainKey extends \ProtobufMessage
     const KEY = 2;
 
     /* @var array Field descriptors */
-    protected static $fields = array(
-        self::INDEX => array(
-            'name' => 'index',
+    protected static $fields = [
+        self::INDEX => [
+            'name'     => 'index',
             'required' => false,
-            'type' => 5,
-        ),
-        self::KEY => array(
-            'name' => 'key',
+            'type'     => 5,
+        ],
+        self::KEY => [
+            'name'     => 'key',
             'required' => false,
-            'type' => 7,
-        ),
-    );
+            'type'     => 7,
+        ],
+    ];
 
     /**
-     * Constructs new message container and clears its internal state
+     * Constructs new message container and clears its internal state.
      *
      * @return null
      */
@@ -39,7 +39,7 @@ class Textsecure_SessionStructure_Chain_ChainKey extends \ProtobufMessage
     }
 
     /**
-     * Clears message values and sets default ones
+     * Clears message values and sets default ones.
      *
      * @return null
      */
@@ -50,7 +50,7 @@ class Textsecure_SessionStructure_Chain_ChainKey extends \ProtobufMessage
     }
 
     /**
-     * Returns field descriptors
+     * Returns field descriptors.
      *
      * @return array
      */
@@ -60,7 +60,7 @@ class Textsecure_SessionStructure_Chain_ChainKey extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'index' property
+     * Sets value of 'index' property.
      *
      * @param int $value Property value
      *
@@ -72,7 +72,7 @@ class Textsecure_SessionStructure_Chain_ChainKey extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'index' property
+     * Returns value of 'index' property.
      *
      * @return int
      */
@@ -82,7 +82,7 @@ class Textsecure_SessionStructure_Chain_ChainKey extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'key' property
+     * Sets value of 'key' property.
      *
      * @param string $value Property value
      *
@@ -94,7 +94,7 @@ class Textsecure_SessionStructure_Chain_ChainKey extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'key' property
+     * Returns value of 'key' property.
      *
      * @return string
      */
@@ -105,7 +105,7 @@ class Textsecure_SessionStructure_Chain_ChainKey extends \ProtobufMessage
 }
 
 /**
- * MessageKey message embedded in Chain/SessionStructure message
+ * MessageKey message embedded in Chain/SessionStructure message.
  */
 class Textsecure_SessionStructure_Chain_MessageKey extends \ProtobufMessage
 {
@@ -116,31 +116,31 @@ class Textsecure_SessionStructure_Chain_MessageKey extends \ProtobufMessage
     const IV = 4;
 
     /* @var array Field descriptors */
-    protected static $fields = array(
-        self::INDEX => array(
-            'name' => 'index',
+    protected static $fields = [
+        self::INDEX => [
+            'name'     => 'index',
             'required' => false,
-            'type' => 5,
-        ),
-        self::CIPHERKEY => array(
-            'name' => 'cipherKey',
+            'type'     => 5,
+        ],
+        self::CIPHERKEY => [
+            'name'     => 'cipherKey',
             'required' => false,
-            'type' => 7,
-        ),
-        self::MACKEY => array(
-            'name' => 'macKey',
+            'type'     => 7,
+        ],
+        self::MACKEY => [
+            'name'     => 'macKey',
             'required' => false,
-            'type' => 7,
-        ),
-        self::IV => array(
-            'name' => 'iv',
+            'type'     => 7,
+        ],
+        self::IV => [
+            'name'     => 'iv',
             'required' => false,
-            'type' => 7,
-        ),
-    );
+            'type'     => 7,
+        ],
+    ];
 
     /**
-     * Constructs new message container and clears its internal state
+     * Constructs new message container and clears its internal state.
      *
      * @return null
      */
@@ -150,7 +150,7 @@ class Textsecure_SessionStructure_Chain_MessageKey extends \ProtobufMessage
     }
 
     /**
-     * Clears message values and sets default ones
+     * Clears message values and sets default ones.
      *
      * @return null
      */
@@ -163,7 +163,7 @@ class Textsecure_SessionStructure_Chain_MessageKey extends \ProtobufMessage
     }
 
     /**
-     * Returns field descriptors
+     * Returns field descriptors.
      *
      * @return array
      */
@@ -173,7 +173,7 @@ class Textsecure_SessionStructure_Chain_MessageKey extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'index' property
+     * Sets value of 'index' property.
      *
      * @param int $value Property value
      *
@@ -185,7 +185,7 @@ class Textsecure_SessionStructure_Chain_MessageKey extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'index' property
+     * Returns value of 'index' property.
      *
      * @return int
      */
@@ -195,7 +195,7 @@ class Textsecure_SessionStructure_Chain_MessageKey extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'cipherKey' property
+     * Sets value of 'cipherKey' property.
      *
      * @param string $value Property value
      *
@@ -207,7 +207,7 @@ class Textsecure_SessionStructure_Chain_MessageKey extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'cipherKey' property
+     * Returns value of 'cipherKey' property.
      *
      * @return string
      */
@@ -217,7 +217,7 @@ class Textsecure_SessionStructure_Chain_MessageKey extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'macKey' property
+     * Sets value of 'macKey' property.
      *
      * @param string $value Property value
      *
@@ -229,7 +229,7 @@ class Textsecure_SessionStructure_Chain_MessageKey extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'macKey' property
+     * Returns value of 'macKey' property.
      *
      * @return string
      */
@@ -239,7 +239,7 @@ class Textsecure_SessionStructure_Chain_MessageKey extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'iv' property
+     * Sets value of 'iv' property.
      *
      * @param string $value Property value
      *
@@ -251,7 +251,7 @@ class Textsecure_SessionStructure_Chain_MessageKey extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'iv' property
+     * Returns value of 'iv' property.
      *
      * @return string
      */
@@ -262,7 +262,7 @@ class Textsecure_SessionStructure_Chain_MessageKey extends \ProtobufMessage
 }
 
 /**
- * Chain message embedded in SessionStructure message
+ * Chain message embedded in SessionStructure message.
  */
 class Textsecure_SessionStructure_Chain extends \ProtobufMessage
 {
@@ -273,31 +273,31 @@ class Textsecure_SessionStructure_Chain extends \ProtobufMessage
     const MESSAGEKEYS = 4;
 
     /* @var array Field descriptors */
-    protected static $fields = array(
-        self::SENDERRATCHETKEY => array(
-            'name' => 'senderRatchetKey',
+    protected static $fields = [
+        self::SENDERRATCHETKEY => [
+            'name'     => 'senderRatchetKey',
             'required' => false,
-            'type' => 7,
-        ),
-        self::SENDERRATCHETKEYPRIVATE => array(
-            'name' => 'senderRatchetKeyPrivate',
+            'type'     => 7,
+        ],
+        self::SENDERRATCHETKEYPRIVATE => [
+            'name'     => 'senderRatchetKeyPrivate',
             'required' => false,
-            'type' => 7,
-        ),
-        self::CHAINKEY => array(
-            'name' => 'chainKey',
+            'type'     => 7,
+        ],
+        self::CHAINKEY => [
+            'name'     => 'chainKey',
             'required' => false,
-            'type' => 'Textsecure_SessionStructure_Chain_ChainKey'
-        ),
-        self::MESSAGEKEYS => array(
-            'name' => 'messageKeys',
+            'type'     => 'Textsecure_SessionStructure_Chain_ChainKey',
+        ],
+        self::MESSAGEKEYS => [
+            'name'     => 'messageKeys',
             'repeated' => true,
-            'type' => 'Textsecure_SessionStructure_Chain_MessageKey'
-        ),
-    );
+            'type'     => 'Textsecure_SessionStructure_Chain_MessageKey',
+        ],
+    ];
 
     /**
-     * Constructs new message container and clears its internal state
+     * Constructs new message container and clears its internal state.
      *
      * @return null
      */
@@ -307,7 +307,7 @@ class Textsecure_SessionStructure_Chain extends \ProtobufMessage
     }
 
     /**
-     * Clears message values and sets default ones
+     * Clears message values and sets default ones.
      *
      * @return null
      */
@@ -316,11 +316,11 @@ class Textsecure_SessionStructure_Chain extends \ProtobufMessage
         $this->values[self::SENDERRATCHETKEY] = null;
         $this->values[self::SENDERRATCHETKEYPRIVATE] = null;
         $this->values[self::CHAINKEY] = null;
-        $this->values[self::MESSAGEKEYS] = array();
+        $this->values[self::MESSAGEKEYS] = [];
     }
 
     /**
-     * Returns field descriptors
+     * Returns field descriptors.
      *
      * @return array
      */
@@ -330,7 +330,7 @@ class Textsecure_SessionStructure_Chain extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'senderRatchetKey' property
+     * Sets value of 'senderRatchetKey' property.
      *
      * @param string $value Property value
      *
@@ -342,7 +342,7 @@ class Textsecure_SessionStructure_Chain extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'senderRatchetKey' property
+     * Returns value of 'senderRatchetKey' property.
      *
      * @return string
      */
@@ -352,7 +352,7 @@ class Textsecure_SessionStructure_Chain extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'senderRatchetKeyPrivate' property
+     * Sets value of 'senderRatchetKeyPrivate' property.
      *
      * @param string $value Property value
      *
@@ -364,7 +364,7 @@ class Textsecure_SessionStructure_Chain extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'senderRatchetKeyPrivate' property
+     * Returns value of 'senderRatchetKeyPrivate' property.
      *
      * @return string
      */
@@ -374,7 +374,7 @@ class Textsecure_SessionStructure_Chain extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'chainKey' property
+     * Sets value of 'chainKey' property.
      *
      * @param Textsecure_SessionStructure_Chain_ChainKey $value Property value
      *
@@ -386,7 +386,7 @@ class Textsecure_SessionStructure_Chain extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'chainKey' property
+     * Returns value of 'chainKey' property.
      *
      * @return Textsecure_SessionStructure_Chain_ChainKey
      */
@@ -396,7 +396,7 @@ class Textsecure_SessionStructure_Chain extends \ProtobufMessage
     }
 
     /**
-     * Appends value to 'messageKeys' list
+     * Appends value to 'messageKeys' list.
      *
      * @param Textsecure_SessionStructure_Chain_MessageKey $value Value to append
      *
@@ -408,7 +408,7 @@ class Textsecure_SessionStructure_Chain extends \ProtobufMessage
     }
 
     /**
-     * Clears 'messageKeys' list
+     * Clears 'messageKeys' list.
      *
      * @return null
      */
@@ -418,7 +418,7 @@ class Textsecure_SessionStructure_Chain extends \ProtobufMessage
     }
 
     /**
-     * Returns 'messageKeys' list
+     * Returns 'messageKeys' list.
      *
      * @return Textsecure_SessionStructure_Chain_MessageKey[]
      */
@@ -428,7 +428,7 @@ class Textsecure_SessionStructure_Chain extends \ProtobufMessage
     }
 
     /**
-     * Returns 'messageKeys' iterator
+     * Returns 'messageKeys' iterator.
      *
      * @return ArrayIterator
      */
@@ -438,7 +438,7 @@ class Textsecure_SessionStructure_Chain extends \ProtobufMessage
     }
 
     /**
-     * Returns element from 'messageKeys' list at given offset
+     * Returns element from 'messageKeys' list at given offset.
      *
      * @param int $offset Position in list
      *
@@ -450,7 +450,7 @@ class Textsecure_SessionStructure_Chain extends \ProtobufMessage
     }
 
     /**
-     * Returns count of 'messageKeys' list
+     * Returns count of 'messageKeys' list.
      *
      * @return int
      */
@@ -461,7 +461,7 @@ class Textsecure_SessionStructure_Chain extends \ProtobufMessage
 }
 
 /**
- * PendingKeyExchange message embedded in SessionStructure message
+ * PendingKeyExchange message embedded in SessionStructure message.
  */
 class Textsecure_SessionStructure_PendingKeyExchange extends \ProtobufMessage
 {
@@ -475,46 +475,46 @@ class Textsecure_SessionStructure_PendingKeyExchange extends \ProtobufMessage
     const LOCALIDENTITYKEYPRIVATE = 8;
 
     /* @var array Field descriptors */
-    protected static $fields = array(
-        self::SEQUENCE => array(
-            'name' => 'sequence',
+    protected static $fields = [
+        self::SEQUENCE => [
+            'name'     => 'sequence',
             'required' => false,
-            'type' => 5,
-        ),
-        self::LOCALBASEKEY => array(
-            'name' => 'localBaseKey',
+            'type'     => 5,
+        ],
+        self::LOCALBASEKEY => [
+            'name'     => 'localBaseKey',
             'required' => false,
-            'type' => 7,
-        ),
-        self::LOCALBASEKEYPRIVATE => array(
-            'name' => 'localBaseKeyPrivate',
+            'type'     => 7,
+        ],
+        self::LOCALBASEKEYPRIVATE => [
+            'name'     => 'localBaseKeyPrivate',
             'required' => false,
-            'type' => 7,
-        ),
-        self::LOCALRATCHETKEY => array(
-            'name' => 'localRatchetKey',
+            'type'     => 7,
+        ],
+        self::LOCALRATCHETKEY => [
+            'name'     => 'localRatchetKey',
             'required' => false,
-            'type' => 7,
-        ),
-        self::LOCALRATCHETKEYPRIVATE => array(
-            'name' => 'localRatchetKeyPrivate',
+            'type'     => 7,
+        ],
+        self::LOCALRATCHETKEYPRIVATE => [
+            'name'     => 'localRatchetKeyPrivate',
             'required' => false,
-            'type' => 7,
-        ),
-        self::LOCALIDENTITYKEY => array(
-            'name' => 'localIdentityKey',
+            'type'     => 7,
+        ],
+        self::LOCALIDENTITYKEY => [
+            'name'     => 'localIdentityKey',
             'required' => false,
-            'type' => 7,
-        ),
-        self::LOCALIDENTITYKEYPRIVATE => array(
-            'name' => 'localIdentityKeyPrivate',
+            'type'     => 7,
+        ],
+        self::LOCALIDENTITYKEYPRIVATE => [
+            'name'     => 'localIdentityKeyPrivate',
             'required' => false,
-            'type' => 7,
-        ),
-    );
+            'type'     => 7,
+        ],
+    ];
 
     /**
-     * Constructs new message container and clears its internal state
+     * Constructs new message container and clears its internal state.
      *
      * @return null
      */
@@ -524,7 +524,7 @@ class Textsecure_SessionStructure_PendingKeyExchange extends \ProtobufMessage
     }
 
     /**
-     * Clears message values and sets default ones
+     * Clears message values and sets default ones.
      *
      * @return null
      */
@@ -540,7 +540,7 @@ class Textsecure_SessionStructure_PendingKeyExchange extends \ProtobufMessage
     }
 
     /**
-     * Returns field descriptors
+     * Returns field descriptors.
      *
      * @return array
      */
@@ -550,7 +550,7 @@ class Textsecure_SessionStructure_PendingKeyExchange extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'sequence' property
+     * Sets value of 'sequence' property.
      *
      * @param int $value Property value
      *
@@ -562,7 +562,7 @@ class Textsecure_SessionStructure_PendingKeyExchange extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'sequence' property
+     * Returns value of 'sequence' property.
      *
      * @return int
      */
@@ -572,7 +572,7 @@ class Textsecure_SessionStructure_PendingKeyExchange extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'localBaseKey' property
+     * Sets value of 'localBaseKey' property.
      *
      * @param string $value Property value
      *
@@ -584,7 +584,7 @@ class Textsecure_SessionStructure_PendingKeyExchange extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'localBaseKey' property
+     * Returns value of 'localBaseKey' property.
      *
      * @return string
      */
@@ -594,7 +594,7 @@ class Textsecure_SessionStructure_PendingKeyExchange extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'localBaseKeyPrivate' property
+     * Sets value of 'localBaseKeyPrivate' property.
      *
      * @param string $value Property value
      *
@@ -606,7 +606,7 @@ class Textsecure_SessionStructure_PendingKeyExchange extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'localBaseKeyPrivate' property
+     * Returns value of 'localBaseKeyPrivate' property.
      *
      * @return string
      */
@@ -616,7 +616,7 @@ class Textsecure_SessionStructure_PendingKeyExchange extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'localRatchetKey' property
+     * Sets value of 'localRatchetKey' property.
      *
      * @param string $value Property value
      *
@@ -628,7 +628,7 @@ class Textsecure_SessionStructure_PendingKeyExchange extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'localRatchetKey' property
+     * Returns value of 'localRatchetKey' property.
      *
      * @return string
      */
@@ -638,7 +638,7 @@ class Textsecure_SessionStructure_PendingKeyExchange extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'localRatchetKeyPrivate' property
+     * Sets value of 'localRatchetKeyPrivate' property.
      *
      * @param string $value Property value
      *
@@ -650,7 +650,7 @@ class Textsecure_SessionStructure_PendingKeyExchange extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'localRatchetKeyPrivate' property
+     * Returns value of 'localRatchetKeyPrivate' property.
      *
      * @return string
      */
@@ -660,7 +660,7 @@ class Textsecure_SessionStructure_PendingKeyExchange extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'localIdentityKey' property
+     * Sets value of 'localIdentityKey' property.
      *
      * @param string $value Property value
      *
@@ -672,7 +672,7 @@ class Textsecure_SessionStructure_PendingKeyExchange extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'localIdentityKey' property
+     * Returns value of 'localIdentityKey' property.
      *
      * @return string
      */
@@ -682,7 +682,7 @@ class Textsecure_SessionStructure_PendingKeyExchange extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'localIdentityKeyPrivate' property
+     * Sets value of 'localIdentityKeyPrivate' property.
      *
      * @param string $value Property value
      *
@@ -694,7 +694,7 @@ class Textsecure_SessionStructure_PendingKeyExchange extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'localIdentityKeyPrivate' property
+     * Returns value of 'localIdentityKeyPrivate' property.
      *
      * @return string
      */
@@ -705,7 +705,7 @@ class Textsecure_SessionStructure_PendingKeyExchange extends \ProtobufMessage
 }
 
 /**
- * PendingPreKey message embedded in SessionStructure message
+ * PendingPreKey message embedded in SessionStructure message.
  */
 class Textsecure_SessionStructure_PendingPreKey extends \ProtobufMessage
 {
@@ -715,26 +715,26 @@ class Textsecure_SessionStructure_PendingPreKey extends \ProtobufMessage
     const BASEKEY = 2;
 
     /* @var array Field descriptors */
-    protected static $fields = array(
-        self::PREKEYID => array(
-            'name' => 'preKeyId',
+    protected static $fields = [
+        self::PREKEYID => [
+            'name'     => 'preKeyId',
             'required' => false,
-            'type' => 5,
-        ),
-        self::SIGNEDPREKEYID => array(
-            'name' => 'signedPreKeyId',
+            'type'     => 5,
+        ],
+        self::SIGNEDPREKEYID => [
+            'name'     => 'signedPreKeyId',
             'required' => false,
-            'type' => 5,
-        ),
-        self::BASEKEY => array(
-            'name' => 'baseKey',
+            'type'     => 5,
+        ],
+        self::BASEKEY => [
+            'name'     => 'baseKey',
             'required' => false,
-            'type' => 7,
-        ),
-    );
+            'type'     => 7,
+        ],
+    ];
 
     /**
-     * Constructs new message container and clears its internal state
+     * Constructs new message container and clears its internal state.
      *
      * @return null
      */
@@ -744,7 +744,7 @@ class Textsecure_SessionStructure_PendingPreKey extends \ProtobufMessage
     }
 
     /**
-     * Clears message values and sets default ones
+     * Clears message values and sets default ones.
      *
      * @return null
      */
@@ -756,7 +756,7 @@ class Textsecure_SessionStructure_PendingPreKey extends \ProtobufMessage
     }
 
     /**
-     * Returns field descriptors
+     * Returns field descriptors.
      *
      * @return array
      */
@@ -766,7 +766,7 @@ class Textsecure_SessionStructure_PendingPreKey extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'preKeyId' property
+     * Sets value of 'preKeyId' property.
      *
      * @param int $value Property value
      *
@@ -778,7 +778,7 @@ class Textsecure_SessionStructure_PendingPreKey extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'preKeyId' property
+     * Returns value of 'preKeyId' property.
      *
      * @return int
      */
@@ -788,7 +788,7 @@ class Textsecure_SessionStructure_PendingPreKey extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'signedPreKeyId' property
+     * Sets value of 'signedPreKeyId' property.
      *
      * @param int $value Property value
      *
@@ -800,7 +800,7 @@ class Textsecure_SessionStructure_PendingPreKey extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'signedPreKeyId' property
+     * Returns value of 'signedPreKeyId' property.
      *
      * @return int
      */
@@ -810,7 +810,7 @@ class Textsecure_SessionStructure_PendingPreKey extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'baseKey' property
+     * Sets value of 'baseKey' property.
      *
      * @param string $value Property value
      *
@@ -822,7 +822,7 @@ class Textsecure_SessionStructure_PendingPreKey extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'baseKey' property
+     * Returns value of 'baseKey' property.
      *
      * @return string
      */
@@ -833,7 +833,7 @@ class Textsecure_SessionStructure_PendingPreKey extends \ProtobufMessage
 }
 
 /**
- * SessionStructure message
+ * SessionStructure message.
  */
 class Textsecure_SessionStructure extends \ProtobufMessage
 {
@@ -853,76 +853,76 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     const ALICEBASEKEY = 13;
 
     /* @var array Field descriptors */
-    protected static $fields = array(
-        self::SESSIONVERSION => array(
-            'name' => 'sessionVersion',
+    protected static $fields = [
+        self::SESSIONVERSION => [
+            'name'     => 'sessionVersion',
             'required' => false,
-            'type' => 5,
-        ),
-        self::LOCALIDENTITYPUBLIC => array(
-            'name' => 'localIdentityPublic',
+            'type'     => 5,
+        ],
+        self::LOCALIDENTITYPUBLIC => [
+            'name'     => 'localIdentityPublic',
             'required' => false,
-            'type' => 7,
-        ),
-        self::REMOTEIDENTITYPUBLIC => array(
-            'name' => 'remoteIdentityPublic',
+            'type'     => 7,
+        ],
+        self::REMOTEIDENTITYPUBLIC => [
+            'name'     => 'remoteIdentityPublic',
             'required' => false,
-            'type' => 7,
-        ),
-        self::ROOTKEY => array(
-            'name' => 'rootKey',
+            'type'     => 7,
+        ],
+        self::ROOTKEY => [
+            'name'     => 'rootKey',
             'required' => false,
-            'type' => 7,
-        ),
-        self::PREVIOUSCOUNTER => array(
-            'name' => 'previousCounter',
+            'type'     => 7,
+        ],
+        self::PREVIOUSCOUNTER => [
+            'name'     => 'previousCounter',
             'required' => false,
-            'type' => 5,
-        ),
-        self::SENDERCHAIN => array(
-            'name' => 'senderChain',
+            'type'     => 5,
+        ],
+        self::SENDERCHAIN => [
+            'name'     => 'senderChain',
             'required' => false,
-            'type' => 'Textsecure_SessionStructure_Chain'
-        ),
-        self::RECEIVERCHAINS => array(
-            'name' => 'receiverChains',
+            'type'     => 'Textsecure_SessionStructure_Chain',
+        ],
+        self::RECEIVERCHAINS => [
+            'name'     => 'receiverChains',
             'repeated' => true,
-            'type' => 'Textsecure_SessionStructure_Chain'
-        ),
-        self::PENDINGKEYEXCHANGE => array(
-            'name' => 'pendingKeyExchange',
+            'type'     => 'Textsecure_SessionStructure_Chain',
+        ],
+        self::PENDINGKEYEXCHANGE => [
+            'name'     => 'pendingKeyExchange',
             'required' => false,
-            'type' => 'Textsecure_SessionStructure_PendingKeyExchange'
-        ),
-        self::PENDINGPREKEY => array(
-            'name' => 'pendingPreKey',
+            'type'     => 'Textsecure_SessionStructure_PendingKeyExchange',
+        ],
+        self::PENDINGPREKEY => [
+            'name'     => 'pendingPreKey',
             'required' => false,
-            'type' => 'Textsecure_SessionStructure_PendingPreKey'
-        ),
-        self::REMOTEREGISTRATIONID => array(
-            'name' => 'remoteRegistrationId',
+            'type'     => 'Textsecure_SessionStructure_PendingPreKey',
+        ],
+        self::REMOTEREGISTRATIONID => [
+            'name'     => 'remoteRegistrationId',
             'required' => false,
-            'type' => 5,
-        ),
-        self::LOCALREGISTRATIONID => array(
-            'name' => 'localRegistrationId',
+            'type'     => 5,
+        ],
+        self::LOCALREGISTRATIONID => [
+            'name'     => 'localRegistrationId',
             'required' => false,
-            'type' => 5,
-        ),
-        self::NEEDSREFRESH => array(
-            'name' => 'needsRefresh',
+            'type'     => 5,
+        ],
+        self::NEEDSREFRESH => [
+            'name'     => 'needsRefresh',
             'required' => false,
-            'type' => 8,
-        ),
-        self::ALICEBASEKEY => array(
-            'name' => 'aliceBaseKey',
+            'type'     => 8,
+        ],
+        self::ALICEBASEKEY => [
+            'name'     => 'aliceBaseKey',
             'required' => false,
-            'type' => 7,
-        ),
-    );
+            'type'     => 7,
+        ],
+    ];
 
     /**
-     * Constructs new message container and clears its internal state
+     * Constructs new message container and clears its internal state.
      *
      * @return null
      */
@@ -932,7 +932,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     }
 
     /**
-     * Clears message values and sets default ones
+     * Clears message values and sets default ones.
      *
      * @return null
      */
@@ -944,7 +944,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
         $this->values[self::ROOTKEY] = null;
         $this->values[self::PREVIOUSCOUNTER] = null;
         $this->values[self::SENDERCHAIN] = null;
-        $this->values[self::RECEIVERCHAINS] = array();
+        $this->values[self::RECEIVERCHAINS] = [];
         $this->values[self::PENDINGKEYEXCHANGE] = null;
         $this->values[self::PENDINGPREKEY] = null;
         $this->values[self::REMOTEREGISTRATIONID] = null;
@@ -954,7 +954,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns field descriptors
+     * Returns field descriptors.
      *
      * @return array
      */
@@ -964,7 +964,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'sessionVersion' property
+     * Sets value of 'sessionVersion' property.
      *
      * @param int $value Property value
      *
@@ -976,7 +976,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'sessionVersion' property
+     * Returns value of 'sessionVersion' property.
      *
      * @return int
      */
@@ -986,7 +986,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'localIdentityPublic' property
+     * Sets value of 'localIdentityPublic' property.
      *
      * @param string $value Property value
      *
@@ -998,7 +998,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'localIdentityPublic' property
+     * Returns value of 'localIdentityPublic' property.
      *
      * @return string
      */
@@ -1008,7 +1008,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'remoteIdentityPublic' property
+     * Sets value of 'remoteIdentityPublic' property.
      *
      * @param string $value Property value
      *
@@ -1020,7 +1020,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'remoteIdentityPublic' property
+     * Returns value of 'remoteIdentityPublic' property.
      *
      * @return string
      */
@@ -1030,7 +1030,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'rootKey' property
+     * Sets value of 'rootKey' property.
      *
      * @param string $value Property value
      *
@@ -1042,7 +1042,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'rootKey' property
+     * Returns value of 'rootKey' property.
      *
      * @return string
      */
@@ -1052,7 +1052,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'previousCounter' property
+     * Sets value of 'previousCounter' property.
      *
      * @param int $value Property value
      *
@@ -1064,7 +1064,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'previousCounter' property
+     * Returns value of 'previousCounter' property.
      *
      * @return int
      */
@@ -1074,7 +1074,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'senderChain' property
+     * Sets value of 'senderChain' property.
      *
      * @param Textsecure_SessionStructure_Chain $value Property value
      *
@@ -1086,7 +1086,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'senderChain' property
+     * Returns value of 'senderChain' property.
      *
      * @return Textsecure_SessionStructure_Chain
      */
@@ -1096,7 +1096,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     }
 
     /**
-     * Appends value to 'receiverChains' list
+     * Appends value to 'receiverChains' list.
      *
      * @param Textsecure_SessionStructure_Chain $value Value to append
      *
@@ -1108,7 +1108,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     }
 
     /**
-     * Clears 'receiverChains' list
+     * Clears 'receiverChains' list.
      *
      * @return null
      */
@@ -1118,7 +1118,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns 'receiverChains' list
+     * Returns 'receiverChains' list.
      *
      * @return Textsecure_SessionStructure_Chain[]
      */
@@ -1128,7 +1128,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns 'receiverChains' iterator
+     * Returns 'receiverChains' iterator.
      *
      * @return ArrayIterator
      */
@@ -1138,7 +1138,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns element from 'receiverChains' list at given offset
+     * Returns element from 'receiverChains' list at given offset.
      *
      * @param int $offset Position in list
      *
@@ -1150,7 +1150,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns count of 'receiverChains' list
+     * Returns count of 'receiverChains' list.
      *
      * @return int
      */
@@ -1160,7 +1160,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'pendingKeyExchange' property
+     * Sets value of 'pendingKeyExchange' property.
      *
      * @param Textsecure_SessionStructure_PendingKeyExchange $value Property value
      *
@@ -1172,7 +1172,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'pendingKeyExchange' property
+     * Returns value of 'pendingKeyExchange' property.
      *
      * @return Textsecure_SessionStructure_PendingKeyExchange
      */
@@ -1182,7 +1182,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'pendingPreKey' property
+     * Sets value of 'pendingPreKey' property.
      *
      * @param Textsecure_SessionStructure_PendingPreKey $value Property value
      *
@@ -1194,7 +1194,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'pendingPreKey' property
+     * Returns value of 'pendingPreKey' property.
      *
      * @return Textsecure_SessionStructure_PendingPreKey
      */
@@ -1202,11 +1202,14 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     {
         return $this->get(self::PENDINGPREKEY);
     }
-    public function clearPendingPreKey(){
-      $this->values[self::PENDINGPREKEY] = null;
+
+    public function clearPendingPreKey()
+    {
+        $this->values[self::PENDINGPREKEY] = null;
     }
+
     /**
-     * Sets value of 'remoteRegistrationId' property
+     * Sets value of 'remoteRegistrationId' property.
      *
      * @param int $value Property value
      *
@@ -1218,7 +1221,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'remoteRegistrationId' property
+     * Returns value of 'remoteRegistrationId' property.
      *
      * @return int
      */
@@ -1228,7 +1231,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'localRegistrationId' property
+     * Sets value of 'localRegistrationId' property.
      *
      * @param int $value Property value
      *
@@ -1240,7 +1243,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'localRegistrationId' property
+     * Returns value of 'localRegistrationId' property.
      *
      * @return int
      */
@@ -1250,7 +1253,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'needsRefresh' property
+     * Sets value of 'needsRefresh' property.
      *
      * @param bool $value Property value
      *
@@ -1262,7 +1265,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'needsRefresh' property
+     * Returns value of 'needsRefresh' property.
      *
      * @return bool
      */
@@ -1272,7 +1275,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'aliceBaseKey' property
+     * Sets value of 'aliceBaseKey' property.
      *
      * @param string $value Property value
      *
@@ -1284,7 +1287,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'aliceBaseKey' property
+     * Returns value of 'aliceBaseKey' property.
      *
      * @return string
      */
@@ -1295,7 +1298,7 @@ class Textsecure_SessionStructure extends \ProtobufMessage
 }
 
 /**
- * RecordStructure message
+ * RecordStructure message.
  */
 class Textsecure_RecordStructure extends \ProtobufMessage
 {
@@ -1304,21 +1307,21 @@ class Textsecure_RecordStructure extends \ProtobufMessage
     const PREVIOUSSESSIONS = 2;
 
     /* @var array Field descriptors */
-    protected static $fields = array(
-        self::CURRENTSESSION => array(
-            'name' => 'currentSession',
+    protected static $fields = [
+        self::CURRENTSESSION => [
+            'name'     => 'currentSession',
             'required' => false,
-            'type' => 'Textsecure_SessionStructure'
-        ),
-        self::PREVIOUSSESSIONS => array(
-            'name' => 'previousSessions',
+            'type'     => 'Textsecure_SessionStructure',
+        ],
+        self::PREVIOUSSESSIONS => [
+            'name'     => 'previousSessions',
             'repeated' => true,
-            'type' => 'Textsecure_SessionStructure'
-        ),
-    );
+            'type'     => 'Textsecure_SessionStructure',
+        ],
+    ];
 
     /**
-     * Constructs new message container and clears its internal state
+     * Constructs new message container and clears its internal state.
      *
      * @return null
      */
@@ -1328,18 +1331,18 @@ class Textsecure_RecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Clears message values and sets default ones
+     * Clears message values and sets default ones.
      *
      * @return null
      */
     public function reset()
     {
         $this->values[self::CURRENTSESSION] = null;
-        $this->values[self::PREVIOUSSESSIONS] = array();
+        $this->values[self::PREVIOUSSESSIONS] = [];
     }
 
     /**
-     * Returns field descriptors
+     * Returns field descriptors.
      *
      * @return array
      */
@@ -1349,7 +1352,7 @@ class Textsecure_RecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'currentSession' property
+     * Sets value of 'currentSession' property.
      *
      * @param Textsecure_SessionStructure $value Property value
      *
@@ -1361,7 +1364,7 @@ class Textsecure_RecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'currentSession' property
+     * Returns value of 'currentSession' property.
      *
      * @return Textsecure_SessionStructure
      */
@@ -1371,7 +1374,7 @@ class Textsecure_RecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Appends value to 'previousSessions' list
+     * Appends value to 'previousSessions' list.
      *
      * @param Textsecure_SessionStructure $value Value to append
      *
@@ -1383,7 +1386,7 @@ class Textsecure_RecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Clears 'previousSessions' list
+     * Clears 'previousSessions' list.
      *
      * @return null
      */
@@ -1393,7 +1396,7 @@ class Textsecure_RecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns 'previousSessions' list
+     * Returns 'previousSessions' list.
      *
      * @return Textsecure_SessionStructure[]
      */
@@ -1403,7 +1406,7 @@ class Textsecure_RecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns 'previousSessions' iterator
+     * Returns 'previousSessions' iterator.
      *
      * @return ArrayIterator
      */
@@ -1413,7 +1416,7 @@ class Textsecure_RecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns element from 'previousSessions' list at given offset
+     * Returns element from 'previousSessions' list at given offset.
      *
      * @param int $offset Position in list
      *
@@ -1425,7 +1428,7 @@ class Textsecure_RecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns count of 'previousSessions' list
+     * Returns count of 'previousSessions' list.
      *
      * @return int
      */
@@ -1436,7 +1439,7 @@ class Textsecure_RecordStructure extends \ProtobufMessage
 }
 
 /**
- * PreKeyRecordStructure message
+ * PreKeyRecordStructure message.
  */
 class Textsecure_PreKeyRecordStructure extends \ProtobufMessage
 {
@@ -1446,26 +1449,26 @@ class Textsecure_PreKeyRecordStructure extends \ProtobufMessage
     const PRIVATEKEY = 3;
 
     /* @var array Field descriptors */
-    protected static $fields = array(
-        self::ID => array(
-            'name' => 'id',
+    protected static $fields = [
+        self::ID => [
+            'name'     => 'id',
             'required' => false,
-            'type' => 5,
-        ),
-        self::PUBLICKEY => array(
-            'name' => 'publicKey',
+            'type'     => 5,
+        ],
+        self::PUBLICKEY => [
+            'name'     => 'publicKey',
             'required' => false,
-            'type' => 7,
-        ),
-        self::PRIVATEKEY => array(
-            'name' => 'privateKey',
+            'type'     => 7,
+        ],
+        self::PRIVATEKEY => [
+            'name'     => 'privateKey',
             'required' => false,
-            'type' => 7,
-        ),
-    );
+            'type'     => 7,
+        ],
+    ];
 
     /**
-     * Constructs new message container and clears its internal state
+     * Constructs new message container and clears its internal state.
      *
      * @return null
      */
@@ -1475,7 +1478,7 @@ class Textsecure_PreKeyRecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Clears message values and sets default ones
+     * Clears message values and sets default ones.
      *
      * @return null
      */
@@ -1487,7 +1490,7 @@ class Textsecure_PreKeyRecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns field descriptors
+     * Returns field descriptors.
      *
      * @return array
      */
@@ -1497,7 +1500,7 @@ class Textsecure_PreKeyRecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'id' property
+     * Sets value of 'id' property.
      *
      * @param int $value Property value
      *
@@ -1509,7 +1512,7 @@ class Textsecure_PreKeyRecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'id' property
+     * Returns value of 'id' property.
      *
      * @return int
      */
@@ -1519,7 +1522,7 @@ class Textsecure_PreKeyRecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'publicKey' property
+     * Sets value of 'publicKey' property.
      *
      * @param string $value Property value
      *
@@ -1531,7 +1534,7 @@ class Textsecure_PreKeyRecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'publicKey' property
+     * Returns value of 'publicKey' property.
      *
      * @return string
      */
@@ -1541,7 +1544,7 @@ class Textsecure_PreKeyRecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'privateKey' property
+     * Sets value of 'privateKey' property.
      *
      * @param string $value Property value
      *
@@ -1553,7 +1556,7 @@ class Textsecure_PreKeyRecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'privateKey' property
+     * Returns value of 'privateKey' property.
      *
      * @return string
      */
@@ -1564,7 +1567,7 @@ class Textsecure_PreKeyRecordStructure extends \ProtobufMessage
 }
 
 /**
- * SignedPreKeyRecordStructure message
+ * SignedPreKeyRecordStructure message.
  */
 class Textsecure_SignedPreKeyRecordStructure extends \ProtobufMessage
 {
@@ -1576,36 +1579,36 @@ class Textsecure_SignedPreKeyRecordStructure extends \ProtobufMessage
     const TIMESTAMP = 5;
 
     /* @var array Field descriptors */
-    protected static $fields = array(
-        self::ID => array(
-            'name' => 'id',
+    protected static $fields = [
+        self::ID => [
+            'name'     => 'id',
             'required' => false,
-            'type' => 5,
-        ),
-        self::PUBLICKEY => array(
-            'name' => 'publicKey',
+            'type'     => 5,
+        ],
+        self::PUBLICKEY => [
+            'name'     => 'publicKey',
             'required' => false,
-            'type' => 7,
-        ),
-        self::PRIVATEKEY => array(
-            'name' => 'privateKey',
+            'type'     => 7,
+        ],
+        self::PRIVATEKEY => [
+            'name'     => 'privateKey',
             'required' => false,
-            'type' => 7,
-        ),
-        self::SIGNATURE => array(
-            'name' => 'signature',
+            'type'     => 7,
+        ],
+        self::SIGNATURE => [
+            'name'     => 'signature',
             'required' => false,
-            'type' => 7,
-        ),
-        self::TIMESTAMP => array(
-            'name' => 'timestamp',
+            'type'     => 7,
+        ],
+        self::TIMESTAMP => [
+            'name'     => 'timestamp',
             'required' => false,
-            'type' => 3,
-        ),
-    );
+            'type'     => 3,
+        ],
+    ];
 
     /**
-     * Constructs new message container and clears its internal state
+     * Constructs new message container and clears its internal state.
      *
      * @return null
      */
@@ -1615,7 +1618,7 @@ class Textsecure_SignedPreKeyRecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Clears message values and sets default ones
+     * Clears message values and sets default ones.
      *
      * @return null
      */
@@ -1629,7 +1632,7 @@ class Textsecure_SignedPreKeyRecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns field descriptors
+     * Returns field descriptors.
      *
      * @return array
      */
@@ -1639,7 +1642,7 @@ class Textsecure_SignedPreKeyRecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'id' property
+     * Sets value of 'id' property.
      *
      * @param int $value Property value
      *
@@ -1651,7 +1654,7 @@ class Textsecure_SignedPreKeyRecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'id' property
+     * Returns value of 'id' property.
      *
      * @return int
      */
@@ -1661,7 +1664,7 @@ class Textsecure_SignedPreKeyRecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'publicKey' property
+     * Sets value of 'publicKey' property.
      *
      * @param string $value Property value
      *
@@ -1673,7 +1676,7 @@ class Textsecure_SignedPreKeyRecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'publicKey' property
+     * Returns value of 'publicKey' property.
      *
      * @return string
      */
@@ -1683,7 +1686,7 @@ class Textsecure_SignedPreKeyRecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'privateKey' property
+     * Sets value of 'privateKey' property.
      *
      * @param string $value Property value
      *
@@ -1695,7 +1698,7 @@ class Textsecure_SignedPreKeyRecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'privateKey' property
+     * Returns value of 'privateKey' property.
      *
      * @return string
      */
@@ -1705,7 +1708,7 @@ class Textsecure_SignedPreKeyRecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'signature' property
+     * Sets value of 'signature' property.
      *
      * @param string $value Property value
      *
@@ -1717,7 +1720,7 @@ class Textsecure_SignedPreKeyRecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'signature' property
+     * Returns value of 'signature' property.
      *
      * @return string
      */
@@ -1727,7 +1730,7 @@ class Textsecure_SignedPreKeyRecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'timestamp' property
+     * Sets value of 'timestamp' property.
      *
      * @param int $value Property value
      *
@@ -1739,7 +1742,7 @@ class Textsecure_SignedPreKeyRecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'timestamp' property
+     * Returns value of 'timestamp' property.
      *
      * @return int
      */
@@ -1750,7 +1753,7 @@ class Textsecure_SignedPreKeyRecordStructure extends \ProtobufMessage
 }
 
 /**
- * IdentityKeyPairStructure message
+ * IdentityKeyPairStructure message.
  */
 class Textsecure_IdentityKeyPairStructure extends \ProtobufMessage
 {
@@ -1759,21 +1762,21 @@ class Textsecure_IdentityKeyPairStructure extends \ProtobufMessage
     const PRIVATEKEY = 2;
 
     /* @var array Field descriptors */
-    protected static $fields = array(
-        self::PUBLICKEY => array(
-            'name' => 'publicKey',
+    protected static $fields = [
+        self::PUBLICKEY => [
+            'name'     => 'publicKey',
             'required' => false,
-            'type' => 7,
-        ),
-        self::PRIVATEKEY => array(
-            'name' => 'privateKey',
+            'type'     => 7,
+        ],
+        self::PRIVATEKEY => [
+            'name'     => 'privateKey',
             'required' => false,
-            'type' => 7,
-        ),
-    );
+            'type'     => 7,
+        ],
+    ];
 
     /**
-     * Constructs new message container and clears its internal state
+     * Constructs new message container and clears its internal state.
      *
      * @return null
      */
@@ -1783,7 +1786,7 @@ class Textsecure_IdentityKeyPairStructure extends \ProtobufMessage
     }
 
     /**
-     * Clears message values and sets default ones
+     * Clears message values and sets default ones.
      *
      * @return null
      */
@@ -1794,7 +1797,7 @@ class Textsecure_IdentityKeyPairStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns field descriptors
+     * Returns field descriptors.
      *
      * @return array
      */
@@ -1804,7 +1807,7 @@ class Textsecure_IdentityKeyPairStructure extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'publicKey' property
+     * Sets value of 'publicKey' property.
      *
      * @param string $value Property value
      *
@@ -1816,7 +1819,7 @@ class Textsecure_IdentityKeyPairStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'publicKey' property
+     * Returns value of 'publicKey' property.
      *
      * @return string
      */
@@ -1826,7 +1829,7 @@ class Textsecure_IdentityKeyPairStructure extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'privateKey' property
+     * Sets value of 'privateKey' property.
      *
      * @param string $value Property value
      *
@@ -1838,7 +1841,7 @@ class Textsecure_IdentityKeyPairStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'privateKey' property
+     * Returns value of 'privateKey' property.
      *
      * @return string
      */
@@ -1849,7 +1852,7 @@ class Textsecure_IdentityKeyPairStructure extends \ProtobufMessage
 }
 
 /**
- * SenderChainKey message embedded in SenderKeyStateStructure message
+ * SenderChainKey message embedded in SenderKeyStateStructure message.
  */
 class Textsecure_SenderKeyStateStructure_SenderChainKey extends \ProtobufMessage
 {
@@ -1858,21 +1861,21 @@ class Textsecure_SenderKeyStateStructure_SenderChainKey extends \ProtobufMessage
     const SEED = 2;
 
     /* @var array Field descriptors */
-    protected static $fields = array(
-        self::ITERATION => array(
-            'name' => 'iteration',
+    protected static $fields = [
+        self::ITERATION => [
+            'name'     => 'iteration',
             'required' => false,
-            'type' => 5,
-        ),
-        self::SEED => array(
-            'name' => 'seed',
+            'type'     => 5,
+        ],
+        self::SEED => [
+            'name'     => 'seed',
             'required' => false,
-            'type' => 7,
-        ),
-    );
+            'type'     => 7,
+        ],
+    ];
 
     /**
-     * Constructs new message container and clears its internal state
+     * Constructs new message container and clears its internal state.
      *
      * @return null
      */
@@ -1882,7 +1885,7 @@ class Textsecure_SenderKeyStateStructure_SenderChainKey extends \ProtobufMessage
     }
 
     /**
-     * Clears message values and sets default ones
+     * Clears message values and sets default ones.
      *
      * @return null
      */
@@ -1893,7 +1896,7 @@ class Textsecure_SenderKeyStateStructure_SenderChainKey extends \ProtobufMessage
     }
 
     /**
-     * Returns field descriptors
+     * Returns field descriptors.
      *
      * @return array
      */
@@ -1903,7 +1906,7 @@ class Textsecure_SenderKeyStateStructure_SenderChainKey extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'iteration' property
+     * Sets value of 'iteration' property.
      *
      * @param int $value Property value
      *
@@ -1915,7 +1918,7 @@ class Textsecure_SenderKeyStateStructure_SenderChainKey extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'iteration' property
+     * Returns value of 'iteration' property.
      *
      * @return int
      */
@@ -1925,7 +1928,7 @@ class Textsecure_SenderKeyStateStructure_SenderChainKey extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'seed' property
+     * Sets value of 'seed' property.
      *
      * @param string $value Property value
      *
@@ -1937,7 +1940,7 @@ class Textsecure_SenderKeyStateStructure_SenderChainKey extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'seed' property
+     * Returns value of 'seed' property.
      *
      * @return string
      */
@@ -1948,7 +1951,7 @@ class Textsecure_SenderKeyStateStructure_SenderChainKey extends \ProtobufMessage
 }
 
 /**
- * SenderMessageKey message embedded in SenderKeyStateStructure message
+ * SenderMessageKey message embedded in SenderKeyStateStructure message.
  */
 class Textsecure_SenderKeyStateStructure_SenderMessageKey extends \ProtobufMessage
 {
@@ -1957,21 +1960,21 @@ class Textsecure_SenderKeyStateStructure_SenderMessageKey extends \ProtobufMessa
     const SEED = 2;
 
     /* @var array Field descriptors */
-    protected static $fields = array(
-        self::ITERATION => array(
-            'name' => 'iteration',
+    protected static $fields = [
+        self::ITERATION => [
+            'name'     => 'iteration',
             'required' => false,
-            'type' => 5,
-        ),
-        self::SEED => array(
-            'name' => 'seed',
+            'type'     => 5,
+        ],
+        self::SEED => [
+            'name'     => 'seed',
             'required' => false,
-            'type' => 7,
-        ),
-    );
+            'type'     => 7,
+        ],
+    ];
 
     /**
-     * Constructs new message container and clears its internal state
+     * Constructs new message container and clears its internal state.
      *
      * @return null
      */
@@ -1981,7 +1984,7 @@ class Textsecure_SenderKeyStateStructure_SenderMessageKey extends \ProtobufMessa
     }
 
     /**
-     * Clears message values and sets default ones
+     * Clears message values and sets default ones.
      *
      * @return null
      */
@@ -1992,7 +1995,7 @@ class Textsecure_SenderKeyStateStructure_SenderMessageKey extends \ProtobufMessa
     }
 
     /**
-     * Returns field descriptors
+     * Returns field descriptors.
      *
      * @return array
      */
@@ -2002,7 +2005,7 @@ class Textsecure_SenderKeyStateStructure_SenderMessageKey extends \ProtobufMessa
     }
 
     /**
-     * Sets value of 'iteration' property
+     * Sets value of 'iteration' property.
      *
      * @param int $value Property value
      *
@@ -2014,7 +2017,7 @@ class Textsecure_SenderKeyStateStructure_SenderMessageKey extends \ProtobufMessa
     }
 
     /**
-     * Returns value of 'iteration' property
+     * Returns value of 'iteration' property.
      *
      * @return int
      */
@@ -2024,7 +2027,7 @@ class Textsecure_SenderKeyStateStructure_SenderMessageKey extends \ProtobufMessa
     }
 
     /**
-     * Sets value of 'seed' property
+     * Sets value of 'seed' property.
      *
      * @param string $value Property value
      *
@@ -2036,7 +2039,7 @@ class Textsecure_SenderKeyStateStructure_SenderMessageKey extends \ProtobufMessa
     }
 
     /**
-     * Returns value of 'seed' property
+     * Returns value of 'seed' property.
      *
      * @return string
      */
@@ -2047,7 +2050,7 @@ class Textsecure_SenderKeyStateStructure_SenderMessageKey extends \ProtobufMessa
 }
 
 /**
- * SenderSigningKey message embedded in SenderKeyStateStructure message
+ * SenderSigningKey message embedded in SenderKeyStateStructure message.
  */
 class Textsecure_SenderKeyStateStructure_SenderSigningKey extends \ProtobufMessage
 {
@@ -2056,21 +2059,21 @@ class Textsecure_SenderKeyStateStructure_SenderSigningKey extends \ProtobufMessa
     const _PRIVATE = 2;
 
     /* @var array Field descriptors */
-    protected static $fields = array(
-        self::_PUBLIC => array(
-            'name' => 'public',
+    protected static $fields = [
+        self::_PUBLIC => [
+            'name'     => 'public',
             'required' => false,
-            'type' => 7,
-        ),
-        self::_PRIVATE => array(
-            'name' => 'private',
+            'type'     => 7,
+        ],
+        self::_PRIVATE => [
+            'name'     => 'private',
             'required' => false,
-            'type' => 7,
-        ),
-    );
+            'type'     => 7,
+        ],
+    ];
 
     /**
-     * Constructs new message container and clears its internal state
+     * Constructs new message container and clears its internal state.
      *
      * @return null
      */
@@ -2080,7 +2083,7 @@ class Textsecure_SenderKeyStateStructure_SenderSigningKey extends \ProtobufMessa
     }
 
     /**
-     * Clears message values and sets default ones
+     * Clears message values and sets default ones.
      *
      * @return null
      */
@@ -2091,7 +2094,7 @@ class Textsecure_SenderKeyStateStructure_SenderSigningKey extends \ProtobufMessa
     }
 
     /**
-     * Returns field descriptors
+     * Returns field descriptors.
      *
      * @return array
      */
@@ -2101,7 +2104,7 @@ class Textsecure_SenderKeyStateStructure_SenderSigningKey extends \ProtobufMessa
     }
 
     /**
-     * Sets value of 'public' property
+     * Sets value of 'public' property.
      *
      * @param string $value Property value
      *
@@ -2113,7 +2116,7 @@ class Textsecure_SenderKeyStateStructure_SenderSigningKey extends \ProtobufMessa
     }
 
     /**
-     * Returns value of 'public' property
+     * Returns value of 'public' property.
      *
      * @return string
      */
@@ -2123,7 +2126,7 @@ class Textsecure_SenderKeyStateStructure_SenderSigningKey extends \ProtobufMessa
     }
 
     /**
-     * Sets value of 'private' property
+     * Sets value of 'private' property.
      *
      * @param string $value Property value
      *
@@ -2135,7 +2138,7 @@ class Textsecure_SenderKeyStateStructure_SenderSigningKey extends \ProtobufMessa
     }
 
     /**
-     * Returns value of 'private' property
+     * Returns value of 'private' property.
      *
      * @return string
      */
@@ -2146,7 +2149,7 @@ class Textsecure_SenderKeyStateStructure_SenderSigningKey extends \ProtobufMessa
 }
 
 /**
- * SenderKeyStateStructure message
+ * SenderKeyStateStructure message.
  */
 class Textsecure_SenderKeyStateStructure extends \ProtobufMessage
 {
@@ -2157,31 +2160,31 @@ class Textsecure_SenderKeyStateStructure extends \ProtobufMessage
     const SENDERMESSAGEKEYS = 4;
 
     /* @var array Field descriptors */
-    protected static $fields = array(
-        self::SENDERKEYID => array(
-            'name' => 'senderKeyId',
+    protected static $fields = [
+        self::SENDERKEYID => [
+            'name'     => 'senderKeyId',
             'required' => false,
-            'type' => 5,
-        ),
-        self::SENDERCHAINKEY => array(
-            'name' => 'senderChainKey',
+            'type'     => 5,
+        ],
+        self::SENDERCHAINKEY => [
+            'name'     => 'senderChainKey',
             'required' => false,
-            'type' => 'Textsecure_SenderKeyStateStructure_SenderChainKey'
-        ),
-        self::SENDERSIGNINGKEY => array(
-            'name' => 'senderSigningKey',
+            'type'     => 'Textsecure_SenderKeyStateStructure_SenderChainKey',
+        ],
+        self::SENDERSIGNINGKEY => [
+            'name'     => 'senderSigningKey',
             'required' => false,
-            'type' => 'Textsecure_SenderKeyStateStructure_SenderSigningKey'
-        ),
-        self::SENDERMESSAGEKEYS => array(
-            'name' => 'senderMessageKeys',
+            'type'     => 'Textsecure_SenderKeyStateStructure_SenderSigningKey',
+        ],
+        self::SENDERMESSAGEKEYS => [
+            'name'     => 'senderMessageKeys',
             'repeated' => true,
-            'type' => 'Textsecure_SenderKeyStateStructure_SenderMessageKey'
-        ),
-    );
+            'type'     => 'Textsecure_SenderKeyStateStructure_SenderMessageKey',
+        ],
+    ];
 
     /**
-     * Constructs new message container and clears its internal state
+     * Constructs new message container and clears its internal state.
      *
      * @return null
      */
@@ -2191,7 +2194,7 @@ class Textsecure_SenderKeyStateStructure extends \ProtobufMessage
     }
 
     /**
-     * Clears message values and sets default ones
+     * Clears message values and sets default ones.
      *
      * @return null
      */
@@ -2200,11 +2203,11 @@ class Textsecure_SenderKeyStateStructure extends \ProtobufMessage
         $this->values[self::SENDERKEYID] = null;
         $this->values[self::SENDERCHAINKEY] = null;
         $this->values[self::SENDERSIGNINGKEY] = null;
-        $this->values[self::SENDERMESSAGEKEYS] = array();
+        $this->values[self::SENDERMESSAGEKEYS] = [];
     }
 
     /**
-     * Returns field descriptors
+     * Returns field descriptors.
      *
      * @return array
      */
@@ -2214,7 +2217,7 @@ class Textsecure_SenderKeyStateStructure extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'senderKeyId' property
+     * Sets value of 'senderKeyId' property.
      *
      * @param int $value Property value
      *
@@ -2226,7 +2229,7 @@ class Textsecure_SenderKeyStateStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'senderKeyId' property
+     * Returns value of 'senderKeyId' property.
      *
      * @return int
      */
@@ -2236,7 +2239,7 @@ class Textsecure_SenderKeyStateStructure extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'senderChainKey' property
+     * Sets value of 'senderChainKey' property.
      *
      * @param Textsecure_SenderKeyStateStructure_SenderChainKey $value Property value
      *
@@ -2248,7 +2251,7 @@ class Textsecure_SenderKeyStateStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'senderChainKey' property
+     * Returns value of 'senderChainKey' property.
      *
      * @return Textsecure_SenderKeyStateStructure_SenderChainKey
      */
@@ -2258,7 +2261,7 @@ class Textsecure_SenderKeyStateStructure extends \ProtobufMessage
     }
 
     /**
-     * Sets value of 'senderSigningKey' property
+     * Sets value of 'senderSigningKey' property.
      *
      * @param Textsecure_SenderKeyStateStructure_SenderSigningKey $value Property value
      *
@@ -2270,7 +2273,7 @@ class Textsecure_SenderKeyStateStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns value of 'senderSigningKey' property
+     * Returns value of 'senderSigningKey' property.
      *
      * @return Textsecure_SenderKeyStateStructure_SenderSigningKey
      */
@@ -2280,7 +2283,7 @@ class Textsecure_SenderKeyStateStructure extends \ProtobufMessage
     }
 
     /**
-     * Appends value to 'senderMessageKeys' list
+     * Appends value to 'senderMessageKeys' list.
      *
      * @param Textsecure_SenderKeyStateStructure_SenderMessageKey $value Value to append
      *
@@ -2292,7 +2295,7 @@ class Textsecure_SenderKeyStateStructure extends \ProtobufMessage
     }
 
     /**
-     * Clears 'senderMessageKeys' list
+     * Clears 'senderMessageKeys' list.
      *
      * @return null
      */
@@ -2302,7 +2305,7 @@ class Textsecure_SenderKeyStateStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns 'senderMessageKeys' list
+     * Returns 'senderMessageKeys' list.
      *
      * @return Textsecure_SenderKeyStateStructure_SenderMessageKey[]
      */
@@ -2312,7 +2315,7 @@ class Textsecure_SenderKeyStateStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns 'senderMessageKeys' iterator
+     * Returns 'senderMessageKeys' iterator.
      *
      * @return ArrayIterator
      */
@@ -2322,7 +2325,7 @@ class Textsecure_SenderKeyStateStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns element from 'senderMessageKeys' list at given offset
+     * Returns element from 'senderMessageKeys' list at given offset.
      *
      * @param int $offset Position in list
      *
@@ -2334,7 +2337,7 @@ class Textsecure_SenderKeyStateStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns count of 'senderMessageKeys' list
+     * Returns count of 'senderMessageKeys' list.
      *
      * @return int
      */
@@ -2345,7 +2348,7 @@ class Textsecure_SenderKeyStateStructure extends \ProtobufMessage
 }
 
 /**
- * SenderKeyRecordStructure message
+ * SenderKeyRecordStructure message.
  */
 class Textsecure_SenderKeyRecordStructure extends \ProtobufMessage
 {
@@ -2353,16 +2356,16 @@ class Textsecure_SenderKeyRecordStructure extends \ProtobufMessage
     const SENDERKEYSTATES = 1;
 
     /* @var array Field descriptors */
-    protected static $fields = array(
-        self::SENDERKEYSTATES => array(
-            'name' => 'senderKeyStates',
+    protected static $fields = [
+        self::SENDERKEYSTATES => [
+            'name'     => 'senderKeyStates',
             'repeated' => true,
-            'type' => 'Textsecure_SenderKeyStateStructure'
-        ),
-    );
+            'type'     => 'Textsecure_SenderKeyStateStructure',
+        ],
+    ];
 
     /**
-     * Constructs new message container and clears its internal state
+     * Constructs new message container and clears its internal state.
      *
      * @return null
      */
@@ -2372,17 +2375,17 @@ class Textsecure_SenderKeyRecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Clears message values and sets default ones
+     * Clears message values and sets default ones.
      *
      * @return null
      */
     public function reset()
     {
-        $this->values[self::SENDERKEYSTATES] = array();
+        $this->values[self::SENDERKEYSTATES] = [];
     }
 
     /**
-     * Returns field descriptors
+     * Returns field descriptors.
      *
      * @return array
      */
@@ -2392,7 +2395,7 @@ class Textsecure_SenderKeyRecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Appends value to 'senderKeyStates' list
+     * Appends value to 'senderKeyStates' list.
      *
      * @param Textsecure_SenderKeyStateStructure $value Value to append
      *
@@ -2404,7 +2407,7 @@ class Textsecure_SenderKeyRecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Clears 'senderKeyStates' list
+     * Clears 'senderKeyStates' list.
      *
      * @return null
      */
@@ -2414,7 +2417,7 @@ class Textsecure_SenderKeyRecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns 'senderKeyStates' list
+     * Returns 'senderKeyStates' list.
      *
      * @return Textsecure_SenderKeyStateStructure[]
      */
@@ -2424,7 +2427,7 @@ class Textsecure_SenderKeyRecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns 'senderKeyStates' iterator
+     * Returns 'senderKeyStates' iterator.
      *
      * @return ArrayIterator
      */
@@ -2434,7 +2437,7 @@ class Textsecure_SenderKeyRecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns element from 'senderKeyStates' list at given offset
+     * Returns element from 'senderKeyStates' list at given offset.
      *
      * @param int $offset Position in list
      *
@@ -2446,7 +2449,7 @@ class Textsecure_SenderKeyRecordStructure extends \ProtobufMessage
     }
 
     /**
-     * Returns count of 'senderKeyStates' list
+     * Returns count of 'senderKeyStates' list.
      *
      * @return int
      */

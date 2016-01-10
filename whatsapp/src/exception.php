@@ -1,21 +1,38 @@
 <?php
+
 interface IException
 {
     /* Protected methods inherited from Exception class */
-    public function getMessage();                 // Exception message
 
-    public function getCode();                    // User-defined Exception code
+    public function getMessage();
 
-    public function getFile();                    // Source filename
+                 // Exception message
 
-    public function getLine();                    // Source line
+    public function getCode();
 
-    public function getTrace();                   // An array of the backtrace()
+                    // User-defined Exception code
 
-    public function getTraceAsString();           // Formated string of trace
+    public function getFile();
+
+                    // Source filename
+
+    public function getLine();
+
+                    // Source line
+
+    public function getTrace();
+
+                   // An array of the backtrace()
+
+    public function getTraceAsString();
+
+           // Formated string of trace
 
     /* Overrideable methods inherited from Exception class */
-    public function __toString();                 // formated string for display
+
+    public function __toString();
+
+                 // formated string for display
 
     public function __construct($message = null, $code = 0);
 }
@@ -29,16 +46,16 @@ abstract class CustomException extends Exception implements IException
 
     public function __construct($message = null, $code = 0)
     {
-        if ( ! $message) {
-            throw new $this('Unknown ' . get_class($this));
+        if (!$message) {
+            throw new $this('Unknown '.get_class($this));
         }
         parent::__construct($message, $code);
     }
 
     public function __toString()
     {
-        return get_class($this) . " '{$this->message}' in {$this->file}({$this->line})\n"
-        . "{$this->getTraceAsString()}";
+        return get_class($this)." '{$this->message}' in {$this->file}({$this->line})\n"
+        ."{$this->getTraceAsString()}";
     }
 }
 
@@ -46,6 +63,10 @@ abstract class CustomException extends Exception implements IException
  * Exception occurs when we have no active socket
  * connection to whatsapp
  */
-class ConnectionException extends Exception{}
+class ConnectionException extends Exception
+{
+}
 
-class LoginFailureException extends Exception{}
+class LoginFailureException extends Exception
+{
+}

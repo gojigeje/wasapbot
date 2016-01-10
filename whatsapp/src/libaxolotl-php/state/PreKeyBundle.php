@@ -1,7 +1,9 @@
 <?php
-require_once(__DIR__."/../IdentityKey.php");
-require_once(__DIR__."/../ecc/ECPublicKey.php");
-class PreKeyBundle {
+
+require_once __DIR__.'/../IdentityKey.php';
+require_once __DIR__.'/../ecc/ECPublicKey.php';
+class PreKeyBundle
+{
     protected $registrationId;    // int
     protected $deviceId;    // int
     protected $preKeyId;    // int
@@ -10,7 +12,8 @@ class PreKeyBundle {
     protected $signedPreKeyPublic;    // ECPublicKey
     protected $signedPreKeySignature;    // byte[]
     protected $identityKey;    // IdentityKey
-    public function PreKeyBundle ($registrationId, $deviceId, $preKeyId, $preKeyPublic, $signedPreKeyId, $signedPreKeyPublic, $signedPreKeySignature, $identityKey) // [int registrationId, int deviceId, int preKeyId, ECPublicKey preKeyPublic, int signedPreKeyId, ECPublicKey signedPreKeyPublic, byte[] signedPreKeySignature, IdentityKey identityKey]
+
+    public function PreKeyBundle($registrationId, $deviceId, $preKeyId, $preKeyPublic, $signedPreKeyId, $signedPreKeyPublic, $signedPreKeySignature, $identityKey) // [int registrationId, int deviceId, int preKeyId, ECPublicKey preKeyPublic, int signedPreKeyId, ECPublicKey signedPreKeyPublic, byte[] signedPreKeySignature, IdentityKey identityKey]
     {
         $this->registrationId = $registrationId;
         $this->deviceId = $deviceId;
@@ -21,35 +24,43 @@ class PreKeyBundle {
         $this->signedPreKeySignature = $signedPreKeySignature;
         $this->identityKey = $identityKey;
     }
-    public function getDeviceId ()
+
+    public function getDeviceId()
     {
         return $this->deviceId;
     }
-    public function getPreKeyId ()
+
+    public function getPreKeyId()
     {
         return $this->preKeyId;
     }
-    public function getPreKey ()
+
+    public function getPreKey()
     {
         return $this->preKeyPublic;
     }
-    public function getSignedPreKeyId ()
+
+    public function getSignedPreKeyId()
     {
         return $this->signedPreKeyId;
     }
-    public function getSignedPreKey ()
+
+    public function getSignedPreKey()
     {
         return $this->signedPreKeyPublic;
     }
-    public function getSignedPreKeySignature ()
+
+    public function getSignedPreKeySignature()
     {
         return $this->signedPreKeySignature;
     }
-    public function getIdentityKey ()
+
+    public function getIdentityKey()
     {
         return $this->identityKey;
     }
-    public function getRegistrationId ()
+
+    public function getRegistrationId()
     {
         return $this->registrationId;
     }

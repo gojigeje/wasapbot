@@ -111,7 +111,7 @@ Sebagai contoh, kita akan menggunakan registerTool.php (Anda tetap bisa mengguna
 1. Siapkan nomor yang akan dijadikan nomor bot, disarankan untuk menggunakan nomor yang belum pernah menggunakan WhatsApp sebelumnya, pastikan nomor tersebut bisa menerima sms atau menerima panggilan (untuk menerima kode WhatsApp)
 2. Download repository ini, lalu ekstrak.
 3. Masuk ke folder [whatsapp/examples/](whatsapp/examples/) dan jalankan registerTool.php:  
-` cd whatsapp/examples/ `
+` cd whatsapp/examples/ `  
 ` php registerTool.php `
 4. Masukkan nomor bot (awali dengan kode negara, tanpa tanda plus '+'):  
 misal: ` 6285xxxxxxxxx `

@@ -1,7 +1,8 @@
 <?php
+
 class WhatsApiEventsManager
 {
-    private $listeners = array();
+    private $listeners = [];
 
     public function bind($event, $callback)
     {

@@ -1,10 +1,10 @@
 <?php
 session_start();
-$_SESSION["running"] = time();
-$_SESSION["inbound"] = array();
-$_SESSION["outbound"] = array();
+$_SESSION['running'] = time();
+$_SESSION['inbound'] = [];
+$_SESSION['outbound'] = [];
 
-$target = "***********"; //conversation target number/JID
+$target = '***********'; //conversation target number/JID
 ?>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript">

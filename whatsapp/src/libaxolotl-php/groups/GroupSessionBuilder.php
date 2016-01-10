@@ -1,15 +1,19 @@
 <?php
-require_once __DIR__."/../ecc/ECKeyPair.php";
-require_once __DIR__."/state/SenderKeyRecord.php";
-require_once __DIR__."/state/SenderKeyStore.php";
-require_once __DIR__."/../protocol/SenderKeyDistributionMessage.php";
-class GroupSessionBuilder {
+
+require_once __DIR__.'/../ecc/ECKeyPair.php';
+require_once __DIR__.'/state/SenderKeyRecord.php';
+require_once __DIR__.'/state/SenderKeyStore.php';
+require_once __DIR__.'/../protocol/SenderKeyDistributionMessage.php';
+class GroupSessionBuilder
+{
     protected $senderKeyStore;
-    public function GroupSessionBuilder ($senderKeyStore)
+
+    public function GroupSessionBuilder($senderKeyStore)
     {
         $this->senderKeyStore = $senderKeyStore;
     }
-    public function processSender ($sender, $senderKeyDistributionMessage)
+
+    public function processSender($sender, $senderKeyDistributionMessage)
     {
         $senderKeyRecord = $this->senderKeyStore->loadSenderKey($sender);
 
@@ -20,7 +24,7 @@ class GroupSessionBuilder {
         $this->senderKeyStore->storeSenderKey($sender, $senderKeyRecord);
     }
 
-    public function process ($groupId, $keyId, $iteration, $chainKey, $signatureKey)
+    public function process($groupId, $keyId, $iteration, $chainKey, $signatureKey)
     {
         $senderKeyRecord = $this->senderKeyStore->loadSenderKey($groupId);
 

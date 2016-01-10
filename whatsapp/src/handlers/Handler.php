@@ -1,5 +1,6 @@
 <?php
 
-interface Handler{
-	public function Process();
+interface Handler
+{
+    public function Process();
 }

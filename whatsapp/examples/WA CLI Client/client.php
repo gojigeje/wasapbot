@@ -5,7 +5,7 @@
  *************************************/
 
  // ################ CONFIG PATHS #####################
- require_once('../../src/whatsprot.class.php');
+ require_once '../../src/whatsprot.class.php';
  require '../../src//events/MyEvents.php';
  // ###################################################
 
@@ -18,7 +18,7 @@
 //  ##################################################
 
 // ############### MESSAGE DB PATH ###################
-$GLOBALS["msg_db"] = "";
+$GLOBALS['msg_db'] = '';
 // ###################################################
 
 echo "####################################\n";
@@ -28,95 +28,85 @@ echo "#                                  #\n";
 echo "####################################\n\n";
 echo "====================================\n";
 
-$fileName = __DIR__ . DIRECTORY_SEPARATOR . 'data.db';
-$contactsDB = __DIR__ . DIRECTORY_SEPARATOR . 'contacts.db';
+$fileName = __DIR__.DIRECTORY_SEPARATOR.'data.db';
+$contactsDB = __DIR__.DIRECTORY_SEPARATOR.'contacts.db';
 if (isset($argv[1])) {
-  if (!file_exists($fileName))
-  {
-    $db = new \PDO("sqlite:" . $fileName, null, null, array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-    $db->exec('CREATE TABLE data (`username` TEXT, `password` TEXT, `nickname` TEXT, `login` TEXT)');
-    $sql = 'INSERT INTO data (`username`, `password`, `nickname`, `login`) VALUES (:username, :password, :nickname, :login)';
-    $query = $db->prepare($sql);
+    if (!file_exists($fileName)) {
+        $db = new \PDO('sqlite:'.$fileName, null, null, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+        $db->exec('CREATE TABLE data (`username` TEXT, `password` TEXT, `nickname` TEXT, `login` TEXT)');
+        $sql = 'INSERT INTO data (`username`, `password`, `nickname`, `login`) VALUES (:username, :password, :nickname, :login)';
+        $query = $db->prepare($sql);
 
-    $query->execute(
-        array(
+        $query->execute(
+        [
             ':username' => $argv[1],
             ':password' => $argv[2],
             ':nickname' => $argv[3],
-            ':login'    => '1'
-        )
+            ':login'    => '1',
+        ]
     );
-  }
+    }
 }
 
-if ((!file_exists($fileName)))
-{
-
+if ((!file_exists($fileName))) {
     echo "Welcome to CLI WA Client\n";
     echo "========================\n\n\n";
-    echo "Your number > ";
+    echo 'Your number > ';
     $number = trim(fgets(STDIN));
     $w = new WhatsProt($number, $nickname, $debug);
 
-    try
-    {
+    try {
         $result = $w->codeRequest('sms');
-    } catch (Exception $e)
-    {
-       echo "there is an error" . $e;
+    } catch (Exception $e) {
+        echo 'there is an error'.$e;
     }
     echo "\nEnter sms code you have received > ";
-    $code = trim(str_replace("-", "", fgets(STDIN)));
-    try
-    {
+    $code = trim(str_replace('-', '', fgets(STDIN)));
+    try {
         $result = $w->codeRegister($code);
-    } catch (Exception $e)
-    {
-       echo "there is an error";
+    } catch (Exception $e) {
+        echo 'there is an error';
     }
 
     echo "\nYour nickname > ";
     $nickname = trim(fgets(STDIN));
-    do
-    {
-       echo "Is '$nickname' right?\n";
-       echo "yes/no > ";
-       $right = trim(fgets(STDIN));
-       if ($right != 'yes')
-       {
-         echo "\nYour nickname > ";
-         $nickname = trim(fgets(STDIN));
-       }
-
+    do {
+        echo "Is '$nickname' right?\n";
+        echo 'yes/no > ';
+        $right = trim(fgets(STDIN));
+        if ($right != 'yes') {
+            echo "\nYour nickname > ";
+            $nickname = trim(fgets(STDIN));
+        }
     } while ($right != 'yes');
 
-    $db = new \PDO("sqlite:" . $fileName, null, null, array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+    $db = new \PDO('sqlite:'.$fileName, null, null, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
     $db->exec('CREATE TABLE data (`username` TEXT, `password` TEXT, `nickname` TEXT, `login` TEXT)');
 
     $sql = 'INSERT INTO data (`username`, `password`, `nickname`, `login`) VALUES (:username, :password, :nickname, :login)';
     $query = $db->prepare($sql);
 
     $query->execute(
-        array(
+        [
             ':username' => $number,
             ':password' => $result->pw,
             ':nickname' => $nickname,
-            ':login'    => '1'
-        )
+            ':login'    => '1',
+        ]
     );
 }
 
-$db = new \PDO("sqlite:" . $fileName, null, null, array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+$db = new \PDO('sqlite:'.$fileName, null, null, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 $sql = 'SELECT username, password, nickname, login FROM data';
 $row = $db->query($sql);
 $result = $row->fetchAll();
 $username = $result[0]['username'];
 $password = $result[0]['password'];
 $nickname = $result[0]['nickname'];
-$login    = $result[0]['login'];
+$login = $result[0]['login'];
 
 $w = new WhatsProt($username, $nickname, $debug);
-$GLOBALS["wa"] = $w;
+$GLOBALS['wa'] = $w;
 $w->setMessageStore(new SqliteMessageStore($username));
 $events = new MyEvents($w);
 $w->eventManager()->bind('onGetSyncResult', 'onSyncResult');
@@ -128,44 +118,37 @@ $w->eventManager()->bind('onGetVideo', 'onGetVideo');
 $w->eventManager()->bind('onGetAudio', 'onGetAudio');
 
 $w->connect();
-try
-{
-  $w->loginWithPassword($password);
-}
-catch (Exception $e)
-{
+try {
+    $w->loginWithPassword($password);
+} catch (Exception $e) {
     echo "Error: $e";
     exit();
 }
 echo "\nConnected to WA\n\n";
-if ($login == '1')
-{
+if ($login == '1') {
     $w->sendGetClientConfig();
     $w->sendGetServerProperties();
     $w->sendGetGroups();
     $w->sendGetBroadcastLists();
 
-    $sql = "UPDATE data SET login=?";
+    $sql = 'UPDATE data SET login=?';
     $query = $db->prepare($sql);
-    $query->execute(array('0'));
+    $query->execute(['0']);
 }
 $w->sendGetPrivacyBlockedList();
 $w->sendAvailableForChat($nickname);
 $show = true;
 global $onlineContacts;
-$GLOBALS["online_contacts"] = array();
-$GLOBALS["current_contact"];
+$GLOBALS['online_contacts'] = [];
+$GLOBALS['current_contact'];
 $poll = 0;
-do
-{
-    if ($show)
-    {
+do {
+    if ($show) {
         showContacts();
         $show = false;
     }
     $poll++;
-    if ($poll == 10)
-    {
+    if ($poll == 10) {
         $w->pollMessage();
         $poll = 0;
     }
@@ -175,19 +158,17 @@ do
         echo "\nEnter the number you want to add > ";
         $numberToAdd = trim(fgets(STDIN));
         do {
-          echo "\nIs it right yes/no > ";
-          $check = trim(fgets(STDIN));
-          if ($check != 'yes')
-          {
-              echo "\nEnter the number you want to add > ";
-              $numberToAdd = trim(fgets(STDIN));
-          }
+            echo "\nIs it right yes/no > ";
+            $check = trim(fgets(STDIN));
+            if ($check != 'yes') {
+                echo "\nEnter the number you want to add > ";
+                $numberToAdd = trim(fgets(STDIN));
+            }
         } while ($check != 'yes');
         echo "\nEnter the nickname/name > ";
         $nickname = trim(fgets(STDIN));
-        $w->sendSync(array($numberToAdd), null, 3);
-        if ($existUser)
-        {
+        $w->sendSync([$numberToAdd], null, 3);
+        if ($existUser) {
             $w->sendPresenceSubscription($numberToAdd);
             addContact($numberToAdd, $nickname);
         }
@@ -196,22 +177,21 @@ do
         echo "\nEnter the nickname you want to remove > ";
         $nickname = trim(fgets(STDIN));
         do {
-          echo "\nIs it right yes/no > ";
-          $check = trim(fgets(STDIN));
-          if ($check != 'yes')
-          {
-              echo "\nEnter the nickname you want to remove > ";
-              $nickname = trim(fgets(STDIN));
-          }
+            echo "\nIs it right yes/no > ";
+            $check = trim(fgets(STDIN));
+            if ($check != 'yes') {
+                echo "\nEnter the nickname you want to remove > ";
+                $nickname = trim(fgets(STDIN));
+            }
         } while ($check != 'yes');
         $numberToRemove = findPhoneByNickname($nickname);
-        $w->sendSync(array(), array($numberToRemove), 3);
+        $w->sendSync([], [$numberToRemove], 3);
         $w->sendPresenceUnsubscription($numberToRemove);
-        $contactsDB = __DIR__ . DIRECTORY_SEPARATOR . 'contacts.db';
-        $cDB = new \PDO("sqlite:" . $contactsDB, null, null, array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-        $sql = "DELETE FROM contacts WHERE nickname = :nickname";
+        $contactsDB = __DIR__.DIRECTORY_SEPARATOR.'contacts.db';
+        $cDB = new \PDO('sqlite:'.$contactsDB, null, null, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+        $sql = 'DELETE FROM contacts WHERE nickname = :nickname';
         $query = $cDB->prepare($sql);
-        $query->execute(array(':nickname' => $nickname));
+        $query->execute([':nickname' => $nickname]);
         break;
       case '/contacts':
         $show = true;
@@ -220,13 +200,12 @@ do
           echo "\nEnter your status > ";
           $status = trim(fgets(STDIN));
           do {
-            echo "\nIs it right yes/no > ";
-            $check = trim(fgets(STDIN));
-            if ($check != 'yes')
-            {
-                echo "\nEnter your status > ";
-                $status = trim(fgets(STDIN));
-            }
+              echo "\nIs it right yes/no > ";
+              $check = trim(fgets(STDIN));
+              if ($check != 'yes') {
+                  echo "\nEnter your status > ";
+                  $status = trim(fgets(STDIN));
+              }
           } while ($check != 'yes');
           $w->sendStatusUpdate($status);
           break;
@@ -236,18 +215,16 @@ do
           do {
               echo "\nIs it right yes/no > ";
               $check = trim(fgets(STDIN));
-              if ($check != 'yes')
-              {
+              if ($check != 'yes') {
                   echo "\nEnter your profile picture URL > ";
                   $profile = trim(fgets(STDIN));
               }
           } while ($check != 'yes');
           if (!filter_var($profile, FILTER_VALIDATE_URL) === false) {
-              if(@getimagesize($profile) !== false) {
+              if (@getimagesize($profile) !== false) {
                   $w->sendSetProfilePicture($profile);
               }
-          }
-          else {
+          } else {
               echo "$profile is NOT a valid URL\n\n";
           }
           break;
@@ -264,13 +241,12 @@ do
         echo "\nEnter the name of the contact > ";
         $nickname = trim(fgets(STDIN));
         do {
-          echo "\nIs it right yes/no > ";
-          $check = trim(fgets(STDIN));
-          if ($check != 'yes')
-          {
-              echo "\nEnter the number you want to add > ";
-              $nickname = trim(fgets(STDIN));
-          }
+            echo "\nIs it right yes/no > ";
+            $check = trim(fgets(STDIN));
+            if ($check != 'yes') {
+                echo "\nEnter the number you want to add > ";
+                $nickname = trim(fgets(STDIN));
+            }
         } while ($check != 'yes');
 
         echo "\n\n";
@@ -278,10 +254,9 @@ do
         echo "=================================\n\n";
         $contact = findPhoneByNickname($nickname);
         $latestMsgs = getLatestMessages($contact);
-        $GLOBALS["current_contact"] = $contact;
-        foreach ($latestMsgs as $msg)
-        {
-            echo "\n- ".$nickname.": ".$msg['message']."    ".date('t/m/Y h:i:s A', $msg['t'])."\n";
+        $GLOBALS['current_contact'] = $contact;
+        foreach ($latestMsgs as $msg) {
+            echo "\n- ".$nickname.': '.$msg['message'].'    '.date('t/m/Y h:i:s A', $msg['t'])."\n";
         }
           $pn = new ProcessNode($w, $contact);
           $w->setNewMessageBind($pn);
@@ -292,18 +267,17 @@ do
               $w->pollMessage();
               $msgs = $w->getMessages();
               foreach ($msgs as $m) {
-              # process inbound messages
+                  // process inbound messages
               //print($m->NodeString("") . "\n");
               }
-              if ($compose)
-              {
-                $w->sendMessageComposing($contact);
-                $compose = false;
+              if ($compose) {
+                  $w->sendMessageComposing($contact);
+                  $compose = false;
               }
-              if ($lastSeen)
-              {
-                  if (!in_array($contact, $GLOBALS["online_contacts"]))
+              if ($lastSeen) {
+                  if (!in_array($contact, $GLOBALS['online_contacts'])) {
                       $w->sendGetRequestLastSeen($contact);
+                  }
                   $lastSeen = false;
               }
               $line = fgets_u(STDIN);
@@ -331,44 +305,44 @@ do
                 $typing = false;
               }
               */
-              if ($line != "") {
-                if (strrchr($line, " ")) {
-                  $command = trim(strstr($line, ' ', TRUE));
-                } else {
-                  $command = $line;
-                }
-                switch ($command) {
-                  case "/current":
+              if ($line != '') {
+                  if (strrchr($line, ' ')) {
+                      $command = trim(strstr($line, ' ', true));
+                  } else {
+                      $command = $line;
+                  }
+                  switch ($command) {
+                  case '/current':
                       $nickname = findNicknameByPhone($contact);
                       echo "[] Interactive conversation with $nickname:\n";
                       break;
-                  case "/lastseen":
+                  case '/lastseen':
                       echo "[] Last seen $contact: ";
                       $w->sendMessagePaused($contact);
                       $compose = true;
                       $w->sendGetRequestLastSeen($contact);
                       break;
-                  case "/block":
+                  case '/block':
                       echo "< User is now blocked >\n";
                       $w->sendMessagePaused($contact);
                       $compose = true;
                       $blocked = privacySettings($contact, 'block');
                       $w->sendSetPrivacyBlockedList($blocked);
                       break;
-                  case "/unblock":
+                  case '/unblock':
                       echo "< User is now unblocked >\n";
                       $w->sendMessagePaused($contact);
                       $compose = true;
                       $blocked = privacySettings($contact, 'unblock');
                       $w->sendSetPrivacyBlockedList($blocked);
                       break;
-                  case "/back":
+                  case '/back':
                       echo "\nYou are now in the main menu\n";
                       echo "================================\n\n";
                       $chatting = false;
                       break;
                   case '/time':
-                      echo date("l jS \of F Y h:i:s A") . "\n\n";
+                      echo date("l jS \of F Y h:i:s A")."\n\n";
                       break;
                   case '/help':
                       echo "Available commands\n";
@@ -383,20 +357,20 @@ do
                   default:
                       $w->sendMessagePaused($contact);
                       if (!filter_var($line, FILTER_VALIDATE_URL) === false) {
-                          if(@getimagesize($line) !== false) {
+                          if (@getimagesize($line) !== false) {
                               $w->sendMessageImage($contact, $line);
                           }
+                      } else {
+                          $w->sendMessage($contact, $line);
                       }
-                      else
-                          $w->sendMessage($contact , $line);
                       $compose = true;
                       break;
                 }
               }
-            }
+          }
         break;
       case '/time':
-        echo date("l jS \of F Y h:i:s A") . "\n\n";
+        echo date("l jS \of F Y h:i:s A")."\n\n";
         break;
       case '/help':
         echo "Available commands\n";
@@ -422,165 +396,149 @@ echo "Disconnected. Bye! :D\n";
 
 function showContacts()
 {
-  $contactsDB = __DIR__ . DIRECTORY_SEPARATOR . 'contacts.db';
-  if (file_exists($contactsDB))
-  {
-
-    $cDB = new \PDO("sqlite:" . $contactsDB, null, null, array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-    $sql = 'SELECT nickname FROM contacts';
-    $row = $cDB->query($sql);
-    $contacts = $row->fetchAll();
-    echo "\n   Contacts\n";
-    echo "==================\n\n";
-    foreach ($contacts as $contact)
-    {
-         echo "- " . $contact['nickname'] . "\n";
+    $contactsDB = __DIR__.DIRECTORY_SEPARATOR.'contacts.db';
+    if (file_exists($contactsDB)) {
+        $cDB = new \PDO('sqlite:'.$contactsDB, null, null, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+        $sql = 'SELECT nickname FROM contacts';
+        $row = $cDB->query($sql);
+        $contacts = $row->fetchAll();
+        echo "\n   Contacts\n";
+        echo "==================\n\n";
+        foreach ($contacts as $contact) {
+            echo '- '.$contact['nickname']."\n";
+        }
+        echo "\n\n";
     }
-    echo "\n\n";
-  }
 }
 
 function fgets_u($pStdn)
 {
-    $pArr = array($pStdn);
+    $pArr = [$pStdn];
 
-    if (false === ($num_changed_streams = stream_select($pArr, $write = NULL, $except = NULL, 0))) {
-        print("\$ 001 Socket Error : UNABLE TO WATCH STDIN.\n");
+    if (false === ($num_changed_streams = stream_select($pArr, $write = null, $except = null, 0))) {
+        echo "\$ 001 Socket Error : UNABLE TO WATCH STDIN.\n";
 
-        return FALSE;
+        return false;
     } elseif ($num_changed_streams > 0) {
         return trim(fgets($pStdn, 1024));
     }
-    return null;
+
+    return;
 }
 
 function addContact($number, $name)
 {
-  $contactsDB = __DIR__ . DIRECTORY_SEPARATOR . 'contacts.db';
-  if (!file_exists($contactsDB))
-  {
-    $db = new \PDO("sqlite:" . $contactsDB, null, null, array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-    $db->exec('CREATE TABLE contacts (`phone` TEXT, `nickname` TEXT)');
-  }
-  else {
-    $db = new \PDO("sqlite:" . $contactsDB, null, null, array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-  }
-  $sql = 'INSERT INTO contacts (`phone`, `nickname`) VALUES (:phone, :nickname)';
-  $query = $db->prepare($sql);
+    $contactsDB = __DIR__.DIRECTORY_SEPARATOR.'contacts.db';
+    if (!file_exists($contactsDB)) {
+        $db = new \PDO('sqlite:'.$contactsDB, null, null, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+        $db->exec('CREATE TABLE contacts (`phone` TEXT, `nickname` TEXT)');
+    } else {
+        $db = new \PDO('sqlite:'.$contactsDB, null, null, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+    }
+    $sql = 'INSERT INTO contacts (`phone`, `nickname`) VALUES (:phone, :nickname)';
+    $query = $db->prepare($sql);
 
-  $query->execute(
-      array(
-          ':phone' => $number,
-          ':nickname' => $name
-      )
+    $query->execute(
+      [
+          ':phone'    => $number,
+          ':nickname' => $name,
+      ]
   );
-
 }
 
 function findPhoneByNickname($contact)
 {
-  $contactsDB = __DIR__ . DIRECTORY_SEPARATOR . 'contacts.db';
-  if (file_exists($contactsDB))
-  {
-      $cDB = new \PDO("sqlite:" . $contactsDB, null, null, array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-      $sql = 'SELECT phone FROM contacts WHERE nickname = :nickname';
-      $query = $cDB->prepare($sql);
-      $query->execute(array(':nickname' => $contact));
-      $contact = $query->fetchAll();
-      $contact = $contact[0]['phone'];
+    $contactsDB = __DIR__.DIRECTORY_SEPARATOR.'contacts.db';
+    if (file_exists($contactsDB)) {
+        $cDB = new \PDO('sqlite:'.$contactsDB, null, null, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+        $sql = 'SELECT phone FROM contacts WHERE nickname = :nickname';
+        $query = $cDB->prepare($sql);
+        $query->execute([':nickname' => $contact]);
+        $contact = $query->fetchAll();
+        $contact = $contact[0]['phone'];
 
-      return $contact;
-  }
+        return $contact;
+    }
 }
 
 function findNicknameByPhone($phone)
 {
-  $contactsDB = __DIR__ . DIRECTORY_SEPARATOR . 'contacts.db';
-  if (file_exists($contactsDB))
-  {
-      $cDB = new \PDO("sqlite:" . $contactsDB, null, null, array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-      $sql = 'SELECT nickname FROM contacts WHERE phone = :phone';
-      $query = $cDB->prepare($sql);
-      $query->execute(array(':phone' => $phone));
-      $contact = $query->fetchAll();
-      $contact = $contact[0]['nickname'];
+    $contactsDB = __DIR__.DIRECTORY_SEPARATOR.'contacts.db';
+    if (file_exists($contactsDB)) {
+        $cDB = new \PDO('sqlite:'.$contactsDB, null, null, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+        $sql = 'SELECT nickname FROM contacts WHERE phone = :phone';
+        $query = $cDB->prepare($sql);
+        $query->execute([':phone' => $phone]);
+        $contact = $query->fetchAll();
+        $contact = $contact[0]['nickname'];
 
-      return $contact;
-  }
+        return $contact;
+    }
 }
 
 function getLatestMessages($phone)
 {
-  $msgDB = $GLOBALS["msg_db"];
-  if (file_exists($msgDB))
-  {
-      $cDB = new \PDO("sqlite:" . $msgDB, null, null, array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-      $sql = 'SELECT message, t FROM messages WHERE `from` = :phone LIMIT 20';
-      $query = $cDB->prepare($sql);
-      $query->execute(array(':phone' => $phone));
-      $messages = $query->fetchAll();
+    $msgDB = $GLOBALS['msg_db'];
+    if (file_exists($msgDB)) {
+        $cDB = new \PDO('sqlite:'.$msgDB, null, null, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+        $sql = 'SELECT message, t FROM messages WHERE `from` = :phone LIMIT 20';
+        $query = $cDB->prepare($sql);
+        $query->execute([':phone' => $phone]);
+        $messages = $query->fetchAll();
 
-      return $messages;
-  }
+        return $messages;
+    }
 }
 
 function privacySettings($number, $option)
 {
-  if ($option == 'block')
-  {
-      $privacyDB = __DIR__ . DIRECTORY_SEPARATOR . 'privacy.db';
-      if (!file_exists($privacyDB))
-      {
-          $pDB = new \PDO("sqlite:" . $privacyDB, null, null, array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-          $pDB->exec('CREATE TABLE blocked (`phone` TEXT)');
-      }
-      else {
-          $pDB = new \PDO("sqlite:" . $privacyDB, null, null, array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-      }
-      $sql = 'INSERT INTO blocked (`phone`) VALUES (:phone)';
-      $query = $pDB->prepare($sql);
-
-      $query->execute(
-          array(
-              ':phone' => $number
-            )
-        );
-
-      $sql = 'SELECT phone FROM blocked';
-      $query = $pDB->prepare($sql);
-      $query->execute();
-      $blocked = $query->fetchAll();
-      $i = 0;
-      for ($i; $i < count($blocked); $i++)
-      {
-          $blockedList[] = $blocked[$i]['phone'];
-      }
-
-      return $blockedList;
-  }
-  else {
-    $privacyDB = __DIR__ . DIRECTORY_SEPARATOR . 'privacy.db';
-    if (file_exists($privacyDB))
-    {
-        $pDB = new \PDO("sqlite:" . $privacyDB, null, null, array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-        $sql = "DELETE FROM blocked WHERE phone = :phone";
+    if ($option == 'block') {
+        $privacyDB = __DIR__.DIRECTORY_SEPARATOR.'privacy.db';
+        if (!file_exists($privacyDB)) {
+            $pDB = new \PDO('sqlite:'.$privacyDB, null, null, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+            $pDB->exec('CREATE TABLE blocked (`phone` TEXT)');
+        } else {
+            $pDB = new \PDO('sqlite:'.$privacyDB, null, null, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+        }
+        $sql = 'INSERT INTO blocked (`phone`) VALUES (:phone)';
         $query = $pDB->prepare($sql);
-        $query->execute(array(':phone' => $number));
+
+        $query->execute(
+          [
+              ':phone' => $number,
+            ]
+        );
 
         $sql = 'SELECT phone FROM blocked';
         $query = $pDB->prepare($sql);
         $query->execute();
         $blocked = $query->fetchAll();
         $i = 0;
-        for ($i; $i < count($blocked); $i++)
-        {
+        for ($i; $i < count($blocked); $i++) {
             $blockedList[] = $blocked[$i]['phone'];
         }
 
         return $blockedList;
-    }
-  }
+    } else {
+        $privacyDB = __DIR__.DIRECTORY_SEPARATOR.'privacy.db';
+        if (file_exists($privacyDB)) {
+            $pDB = new \PDO('sqlite:'.$privacyDB, null, null, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+            $sql = 'DELETE FROM blocked WHERE phone = :phone';
+            $query = $pDB->prepare($sql);
+            $query->execute([':phone' => $number]);
 
+            $sql = 'SELECT phone FROM blocked';
+            $query = $pDB->prepare($sql);
+            $query->execute();
+            $blocked = $query->fetchAll();
+            $i = 0;
+            for ($i; $i < count($blocked); $i++) {
+                $blockedList[] = $blocked[$i]['phone'];
+            }
+
+            return $blockedList;
+        }
+    }
 }
 
 function onSyncResult($result)
@@ -591,18 +549,20 @@ function onSyncResult($result)
     }
 }
 
-function onGetRequestLastSeen( $mynumber, $from, $id, $seconds )
+function onGetRequestLastSeen($mynumber, $from, $id, $seconds)
 {
-  $nickname = findNicknameByPhone(ExtractNumber($from));
-  if (($seconds != "") || ($seconds != null))
-      echo "$nickname last seen: " . gmdate('l jS \of F Y h:i:s A', intval($seconds)). "\n";
+    $nickname = findNicknameByPhone(ExtractNumber($from));
+    if (($seconds != '') || ($seconds != null)) {
+        echo "$nickname last seen: ".gmdate('l jS \of F Y h:i:s A', intval($seconds))."\n";
+    }
 }
 
 function onPresenceAvailable($mynumber, $from)
 {
     $number = ExtractNumber($from);
-    if (!in_array($number, $GLOBALS["online_contacts"]))
-        array_push($GLOBALS["online_contacts"], $number);
+    if (!in_array($number, $GLOBALS['online_contacts'])) {
+        array_push($GLOBALS['online_contacts'], $number);
+    }
     $nickname = findNicknameByPhone($number);
     echo " < $nickname is now online >\n";
 }
@@ -610,8 +570,8 @@ function onPresenceAvailable($mynumber, $from)
 function onPresenceUnavailable($mynumber, $from, $last)
 {
     $number = ExtractNumber($from);
-    if(($key = array_search($number, $GLOBALS["online_contacts"])) !== false) {
-        unset($GLOBALS["online_contacts"][$key]);
+    if (($key = array_search($number, $GLOBALS['online_contacts'])) !== false) {
+        unset($GLOBALS['online_contacts'][$key]);
     }
     $nickname = findNicknameByPhone($number);
     echo " < $nickname is now offline >\n";
@@ -620,26 +580,24 @@ function onPresenceUnavailable($mynumber, $from, $last)
 function onGetMessage($mynumber, $from, $id, $type, $time, $name, $body)
 {
     $number = ExtractNumber($from);
-    if ($number != $GLOBALS["current_contact"])
-    {
+    if ($number != $GLOBALS['current_contact']) {
         $nickname = findNicknameByPhone($number);
-        if (($nickname != "") || ($nickname != null))
+        if (($nickname != '') || ($nickname != null)) {
             echo " < New message from $nickname >";
-        else{
+        } else {
             echo " < New message from $name ($number) >";
-            do{
-              echo "\nDo you want to add $name ($number)? add/block/nothing\n";
-              echo "> ";
-              $option = trim(fgets(STDIN));
-            } while(($option != 'add') || ($option != 'block') || ($option != 'nothing'));
+            do {
+                echo "\nDo you want to add $name ($number)? add/block/nothing\n";
+                echo '> ';
+                $option = trim(fgets(STDIN));
+            } while (($option != 'add') || ($option != 'block') || ($option != 'nothing'));
 
-            switch ($option)
-            {
+            switch ($option) {
               case 'add':
                 echo "\nEnter the nickname/name > ";
                 $nickname = trim(fgets(STDIN));
                 addContact($number, $nickname);
-                $GLOBALS['wa']->sendSync(array($number), null, 3);
+                $GLOBALS['wa']->sendSync([$number], null, 3);
                 $GLOBALS['wa']->sendPresenceSubscription($number);
                 break;
               case 'block':
@@ -648,7 +606,6 @@ function onGetMessage($mynumber, $from, $id, $type, $time, $name, $body)
                 echo "$name ($number) is now blocked\n";
                 break;
             }
-
         }
     }
 }
@@ -657,12 +614,13 @@ function onGetImage($mynumber, $from, $id, $type, $time, $name, $size, $url, $fi
 {
     $number = ExtractNumber($from);
     $nickname = findNicknameByPhone($number);
-    $path = __DIR__ . DIRECTORY_SEPARATOR . "data/media/$nickname/";
-    if (!file_exists($path))
+    $path = __DIR__.DIRECTORY_SEPARATOR."data/media/$nickname/";
+    if (!file_exists($path)) {
         mkdir($path);
-    $filename = $path . time() . ".jpg";
+    }
+    $filename = $path.time().'.jpg';
     $data = file_get_contents($url);
-    $fp = @fopen($filename, "w");
+    $fp = @fopen($filename, 'w');
     if ($fp) {
         fwrite($fp, $data);
         fclose($fp);
@@ -675,14 +633,15 @@ function onGetVideo($mynumber, $from, $id, $type, $time, $name, $url, $file, $si
     $number = ExtractNumber($from);
     $nickname = findNicknameByPhone($number);
     $path = "data/media/$nickname/";
-    if (!file_exists($path))
+    if (!file_exists($path)) {
         mkdir($path);
-    $filename = __DIR__ . DIRECTORY_SEPARATOR . $path . time() . ".jpg";
+    }
+    $filename = __DIR__.DIRECTORY_SEPARATOR.$path.time().'.jpg';
     $data = file_get_contents($url);
-    $fp = @fopen($filename, "w");
+    $fp = @fopen($filename, 'w');
     if ($fp) {
-      fwrite($fp, $data);
-      fclose($fp);
+        fwrite($fp, $data);
+        fclose($fp);
     }
     echo " < Received video from $nickname >\n";
 }
@@ -692,11 +651,12 @@ function onGetAudio($mynumber, $from, $id, $type, $time, $name, $size, $url, $fi
     $number = ExtractNumber($from);
     $nickname = findNicknameByPhone($number);
     $path = "data/media/$nickname/";
-    if (!file_exists($path))
+    if (!file_exists($path)) {
         mkdir($path);
-    $filename = __DIR__ . DIRECTORY_SEPARATOR . $path . time() . ".jpg";
+    }
+    $filename = __DIR__.DIRECTORY_SEPARATOR.$path.time().'.jpg';
     $data = file_get_contents($url);
-    $fp = @fopen($filename, "w");
+    $fp = @fopen($filename, 'w');
     if ($fp) {
         fwrite($fp, $data);
         fclose($fp);
@@ -717,15 +677,13 @@ class ProcessNode
 
     public function process($node)
     {
-        if ($node->getAttribute("type") == 'text')
-        {
+        if ($node->getAttribute('type') == 'text') {
             $text = $node->getChild('body');
             $text = $text->getData();
-            $number = ExtractNumber($node->getAttribute("from"));
+            $number = ExtractNumber($node->getAttribute('from'));
             $nickname = findNicknameByPhone($number);
 
-            echo "\n- ".$nickname.": ".$text."    ".date('H:i')."\n";
+            echo "\n- ".$nickname.': '.$text.'    '.date('H:i')."\n";
         }
-
     }
 }
