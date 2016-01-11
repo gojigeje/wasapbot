@@ -2868,16 +2868,30 @@ class WhatsProt
      * Send a read receipt to a message.
      *
      * @param string $to The recipient.
-     * @param string $id
+     * @param mixed String or Array $id
      */
     public function sendMessageRead($to, $id)
     {
+        $listNode = null;
+        $idNode = $id;
+        if (is_array($id) && count($id > 1)) {
+            $idNode = array_shift($id);
+            foreach($id as $itemId) {
+                $items[] = new ProtocolNode('item',
+                [
+                  'id' => $itemId
+                ], null, null);
+            }
+            $listNode = new ProtocolNode('list', null, $items, null);
+        }
+
         $messageNode = new ProtocolNode('receipt',
         [
           'type' => 'read',
-          'to'   => $to,
-          'id'   => $id,
-        ], null, null);
+          't'    => time(),
+          'to'   => $this->getJID($to),
+          'id'   => $idNode
+        ], [$listNode], null);
 
         $this->sendNode($messageNode);
     }

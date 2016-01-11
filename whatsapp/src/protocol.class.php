@@ -137,6 +137,9 @@ class ProtocolNode
      */
     public function nodeString($indent = '', $isChild = false)
     {
+        // non printable characters regex
+        $nonPrintable = '#[^\x20-\x7E]#';
+
         //formatters
         $lt = '<';
         $gt = '>';
@@ -158,7 +161,12 @@ class ProtocolNode
         if (strlen($this->data) > 0) {
             if (strlen($this->data) <= 1024) {
                 //message
-                $ret .= $this->data;
+                if (preg_match($nonPrintable, $this->data)) {
+                    $ret .= bin2hex($this->data);
+                }
+                else {
+                    $ret .= $this->data;
+                }
             } else {
                 //raw data
                 $ret .= ' '.strlen($this->data).' byte data';
