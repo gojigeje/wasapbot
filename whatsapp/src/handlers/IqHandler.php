@@ -238,6 +238,8 @@ class IqHandler implements Handler
             $nodeIds = $this->parent->getNodeId();
             if (isset($nodeIds['sendcipherKeys']) && (isset($nodeIds['sendcipherKeys'])  ==  $this->node->getAttribute('id'))  && $this->node->getChild('error')->getAttribute('code') == '406') {
                 $this->parent->sendSetPreKeys();
+            } elseif ($this->node->getAttribute('id') == '2'){
+                $this->parent->sendSetGCM();
             }
 
             $this->parent->eventManager()->fire('onGetError',
@@ -271,7 +273,7 @@ class IqHandler implements Handler
                         $msgHandler = new MessageHandler($this->parent, $pendingNode);
                         $msgHandler->Process();
                     }
-                    unset($this->parent->getPendingNodes()[ExtractNumber($jid)]);
+                    $this->parent->unsetPendingNode($jid);
                 }
                 $this->parent->sendPendingMessages($jid);
             }

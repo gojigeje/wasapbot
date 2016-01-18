@@ -38,19 +38,22 @@ class MessageHandler implements Handler
             $this->processMessageNode($this->node);
         }
         if ($this->node->getAttribute('type') == 'media' && ($this->node->getChild('media') != null || $this->node->getChild('enc') != null)) {
-            if ($this->node->getChild('enc') != null && $this->node->getAttribute('participant') == null) { // for now only private messages
+          $file_data = "";
+	  if ($this->node->getChild('enc') != null && $this->node->getAttribute('participant') == null) { // for now only private messages
 
                 if (extension_loaded('curve25519') && extension_loaded('protobuf')) {
                     $dec_node = $this->processEncryptedNode($this->node);
                 }
                 if ($dec_node) {
                     $this->node = $dec_node;
-                    $file_data = $dec_node->getChild("media")->getAttribute("file");
+		    if($dec_node->getChild("media") != null)
+                    	$file_data = $dec_node->getChild("media")->getAttribute("file");
                 }
             }
-            else if ($this->node->getChild("enc") == null) {
+            else if (($this->node->getChild("enc") == null) && ($this->node->getChild('media')->getAttribute('url') != null)) {
               $file_data = file_get_contents($this->node->getChild('media')->getAttribute('url'));
             }
+
             if ($this->node->getChild('media') != null) {
                 if ($this->node->getChild('media')->getAttribute('type') == 'image') {
                     if ($this->node->getAttribute('participant') == null) {

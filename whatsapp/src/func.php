@@ -380,3 +380,22 @@ function padMessage($plaintext)
 
     return $padded;
 }
+
+function randomStr($length)
+{
+    $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+    $string = '';
+    for ($i = 0; $i < $length; $i++) {
+         $string .= $characters[mt_rand(0, strlen($characters) - 1)];
+    }
+
+    return $string;
+}
+
+function getRandomGCM()
+{
+  return randomStr(5) . '_' . randomStr(5) . ':' . 'APA91b' . randomStr(64) .
+         '_' . randomStr(5) . '-' . randomStr(12) . '_' . randomStr(9) .
+         '_' . randomStr(11) . '_' . randomStr(1) . '_' . randomStr(26);
+}
