@@ -104,7 +104,7 @@ abstract class AllEvents
     {
     }
 
-    public function onGetAudio($mynumber, $from, $id, $type, $time, $name, $size, $url, $file, $mimeType, $fileHash, $duration, $acodec, $fromJID_ifGroup = null)
+    public function onGetAudio($mynumber, $from, $id, $type, $time, $name, $size, $url, $file, $mimeType, $fileHash, $duration, $acodec)
     {
     }
 
@@ -144,7 +144,15 @@ abstract class AllEvents
     {
     }
 
+    public function onGetGroupAudio($mynumber, $from_group_jid, $from_user_jid, $id, $type, $time, $name, $size, $url, $file, $mimeType, $fileHash, $duration, $acodec)
+    {
+    }
+
     public function onGetGroupImage($mynumber, $from_group_jid, $from_user_jid, $id, $type, $time, $name, $size, $url, $file, $mimeType, $fileHash, $width, $height, $preview, $caption)
+    {
+    }
+
+    public function onGetGroupLocation($mynumber, $from_group_jid, $from_user_jid, $id, $type, $time, $name, $author, $longitude, $latitude, $url, $preview)
     {
     }
 
@@ -152,7 +160,11 @@ abstract class AllEvents
     {
     }
 
-    public function onGetLocation($mynumber, $from, $id, $type, $time, $name, $author, $longitude, $latitude, $url, $preview, $fromJID_ifGroup = null)
+    public function onGetGroupvCard($mynumber, $from_group_jid, $from_user_jid, $id, $type, $time, $name, $vcardname, $vcard)
+    {
+    }
+
+    public function onGetLocation($mynumber, $from, $id, $type, $time, $name, $author, $longitude, $latitude, $url, $preview)
     {
     }
 
@@ -196,7 +208,7 @@ abstract class AllEvents
     {
     }
 
-    public function onGetvCard($mynumber, $from, $id, $type, $time, $name, $vcardname, $vcard, $fromJID_ifGroup = null)
+    public function onGetvCard($mynumber, $from, $id, $type, $time, $name, $vcardname, $vcard)
     {
     }
 
