@@ -446,7 +446,7 @@ class MessageHandler implements Handler
                         'filehash' => bin2hex($image->getSha256()),
                         'width'    => 0,
                         'height'   => 0,
-                        'file'     => $decrypted_image,
+                        'file'     => $decrypted_image ?: $file_enc,
                         'type'     => 'image',
                       ], null, $image->getThumbnail());
                   $node->addChild($child);

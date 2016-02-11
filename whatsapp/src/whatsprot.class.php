@@ -1283,11 +1283,12 @@ class WhatsProt
 
                 if (in_array($to_num, $this->v2Jids) && !isset($this->v1Only[$to_num])) {
                     $version = '2';
-                    $plaintext = padMessage($plaintext);
+                    $alteredText = padMessage($plaintext);
                 } else {
                     $version = '1';
+                    $alteredText = $plaintext;
                 }
-                $cipherText = $sessionCipher->encrypt($plaintext);
+                $cipherText = $sessionCipher->encrypt($alteredText);
 
                 if ($cipherText instanceof WhisperMessage) {
                     $type = 'msg';
