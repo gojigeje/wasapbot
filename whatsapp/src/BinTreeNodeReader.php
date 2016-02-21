@@ -35,6 +35,9 @@ class BinTreeNodeReader
             if (isset($this->key)) {
                 $realSize = $stanzaSize - 4;
                 $this->input = $this->key->DecodeMessage($this->input, $realSize, 0, $realSize); // . $remainingData;
+                if($stanzaFlag & 4) { //compressed
+                  $this->input = gzuncompress($this->input); // done
+                }
             } else {
                 throw new Exception('Encountered encrypted message, missing key');
             }
@@ -274,12 +277,10 @@ class BinTreeNodeReader
         return $attributes;
     }
 
-	/*
     protected function inflateBuffer($stanzaSize = 0)
     {
         $this->input = gzuncompress($this->input); // maybe gzinflate or gzdecode .
     }
-	*/
 
     protected function nextTreeInternal()
     {
@@ -372,7 +373,6 @@ class BinTreeNodeReader
         return $ret;
     }
 
-    /*
     public function readHeader($offset = 0)
     {
         $ret = 0;
@@ -385,7 +385,6 @@ class BinTreeNodeReader
 
         return $ret;
     }
-    */
 
     protected function readInt24()
     {

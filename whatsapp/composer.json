@@ -11,13 +11,13 @@
         {
             "role": "Contributors",
             "name": "Chat API Contributing Team",
-            "homepage": "https://github.com/WHAnonymous/Chat-API/graphs/contributors"
+            "homepage": "https://github.com/mgp25/Chat-API/graphs/contributors"
         }
     ],
     "support": {
-        "issues": "https://github.com/WHAnonymous/Chat-API/issues",
-        "wiki": "https://github.com/WHAnonymous/Chat-API/wiki",
-        "source": "https://github.com/WHAnonymous/Chat-API"
+        "issues": "https://github.com/mgp25/Chat-API/issues",
+        "wiki": "https://github.com/mgp25/Chat-API/wiki",
+        "source": "https://github.com/mgp25/Chat-API"
     },
     "autoload": {
         "classmap": [

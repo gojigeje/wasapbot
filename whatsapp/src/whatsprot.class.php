@@ -2671,7 +2671,7 @@ class WhatsProt
     protected function sendCheckAndSendMedia($filepath, $maxSize, $to, $type, $allowedExtensions, $storeURLmedia, $caption = '')
     {
         if ($this->getMediaFile($filepath, $maxSize) == true) {
-            if (in_array($this->mediaFileInfo['fileextension'], $allowedExtensions)) {
+            if (in_array(strtolower($this->mediaFileInfo['fileextension']), $allowedExtensions)) {
                 $b64hash = base64_encode(hash_file('sha256', $this->mediaFileInfo['filepath'], true));
                 //request upload and get Message ID
                 $id = $this->sendRequestFileUpload($b64hash, $type, $this->mediaFileInfo['filesize'], $this->mediaFileInfo['filepath'], $to, $caption);
