@@ -6,6 +6,7 @@ Make sure these boxes are checked before submitting your issue -- thank you!
 - [ ] You have checked if someone has already asked the same issue you have.
 - [ ] You have read the [wiki](https://github.com/mgp25/Chat-API/wiki).
 - [ ] Is not a programming question.
+- [ ] You are using latest Chat API code.
 
 
 ### Error

@@ -120,8 +120,6 @@ class Login
 
             return $this->outputKey->EncodeMessage($array, 0, strlen($array), false);
         }
-
-        return;
     }
 
   /**

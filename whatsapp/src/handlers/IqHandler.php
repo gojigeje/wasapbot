@@ -16,7 +16,7 @@ class IqHandler implements Handler
     protected $parent;
     protected $phoneNumber;
 
-    public function __construct($parent, $node)
+    public function __construct(\WhatsProt $parent, \ProtocolNode $node)
     {
         $this->node = $node;
         $this->parent = $parent;
@@ -28,6 +28,7 @@ class IqHandler implements Handler
         if ($this->node->getChild('query') != null) {
             if (isset($this->parent->getNodeId()['privacy']) && ($this->parent->getNodeId()['privacy'] == $this->node->getAttribute('id'))) {
                 $listChild = $this->node->getChild(0)->getChild(0);
+                $blockedJids = [];
                 foreach ($listChild->getChildren() as $child) {
                     $blockedJids[] = $child->getAttribute('value');
                 }
@@ -238,7 +239,7 @@ class IqHandler implements Handler
             $nodeIds = $this->parent->getNodeId();
             if (isset($nodeIds['sendcipherKeys']) && (isset($nodeIds['sendcipherKeys'])  ==  $this->node->getAttribute('id'))  && $this->node->getChild('error')->getAttribute('code') == '406') {
                 $this->parent->sendSetPreKeys();
-            } elseif ($this->node->getAttribute('id') == '2'){
+            } elseif ($this->node->getAttribute('id') == '2') {
                 $this->parent->sendSetGCM();
             }
 

@@ -35,7 +35,7 @@ class BinTreeNodeReader
             if (isset($this->key)) {
                 $realSize = $stanzaSize - 4;
                 $this->input = $this->key->DecodeMessage($this->input, $realSize, 0, $realSize); // . $remainingData;
-                if($stanzaFlag & 4) { //compressed
+                if ($stanzaFlag & 4) { //compressed
                   $this->input = gzuncompress($this->input); // done
                 }
             } else {
@@ -45,8 +45,6 @@ class BinTreeNodeReader
         if ($stanzaSize > 0) {
             return $this->nextTreeInternal();
         }
-
-        return;
     }
 
     protected function readNibble()

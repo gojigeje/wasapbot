@@ -123,8 +123,6 @@ class SenderKeyState
         if (!is_null($result)) {
             return new SenderMessageKey($result->getIteration(), $result->getSeed());
         }
-
-        return;
     }
 
     public function getStructure()

@@ -387,7 +387,7 @@ function randomStr($length)
 
     $string = '';
     for ($i = 0; $i < $length; $i++) {
-         $string .= $characters[mt_rand(0, strlen($characters) - 1)];
+        $string .= $characters[mt_rand(0, strlen($characters) - 1)];
     }
 
     return $string;
@@ -395,7 +395,7 @@ function randomStr($length)
 
 function getRandomGCM()
 {
-  return randomStr(5) . '_' . randomStr(5) . ':' . 'APA91b' . randomStr(64) .
-         '_' . randomStr(5) . '-' . randomStr(12) . '_' . randomStr(9) .
-         '_' . randomStr(11) . '_' . randomStr(1) . '_' . randomStr(26);
+    return randomStr(5).'_'.randomStr(5).':'.'APA91b'.randomStr(64).
+         '_'.randomStr(5).'-'.randomStr(12).'_'.randomStr(9).
+         '_'.randomStr(11).'_'.randomStr(1).'_'.randomStr(26);
 }

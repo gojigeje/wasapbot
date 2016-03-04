@@ -37,8 +37,6 @@ function fgets_u($pStdn)
     } elseif ($num_changed_streams > 0) {
         return trim(fgets($pStdn, 1024));
     }
-
-    return;
 }
 
 function onPresenceAvailable($username, $from)
@@ -102,7 +100,7 @@ while (1) {
     }
 }
 
-class ProcessNode
+class ProcessNode implements NewMsgBindInterface
 {
     protected $wp = false;
     protected $target = false;
@@ -113,7 +111,7 @@ class ProcessNode
         $this->target = $target;
     }
 
-    public function process($node)
+    public function process(\ProtocolNode $node)
     {
         $text = $node->getChild('body');
         $text = $text->getData();

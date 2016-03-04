@@ -9,7 +9,7 @@ class NotificationHandler implements Handler
     protected $parent;
     protected $phoneNumber;
 
-    public function __construct($parent, $node)
+    public function __construct(\WhatsProt $parent, \ProtocolNode $node)
     {
         $this->node = $node;
         $this->type = $node->getAttribute('type');
@@ -77,7 +77,7 @@ class NotificationHandler implements Handler
             if (extension_loaded('curve25519') && extension_loaded('protobuf')) {
                 $value = $this->node->getChild(0)->getAttribute('value');
                 if (is_numeric($value)) {
-                    $this->parent->axolotlStore->removeAllPrekeys();
+                    $this->parent->getAxolotlStore()->removeAllPrekeys();
                     $this->parent->sendSetPreKeys(true);
                 } else {
                     echo 'Corrupt Stream: value '.$value.'is not numeric';

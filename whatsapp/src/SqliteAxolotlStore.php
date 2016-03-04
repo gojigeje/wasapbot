@@ -40,6 +40,8 @@ interface axolotlInterface
 
     public function saveIdentity($recipientId, $identityKey);
 
+    public function clearRecipient($recipientId);
+
     //session
 
     public function storeSession($recipientId, $deviceId, $sessionRecord);
@@ -386,7 +388,7 @@ class axolotlSqliteStore implements axolotlInterface
 
     public function isTrustedIdentity($recipientId, $identityKey)
     {
-      /*
+        /*
         $sql = 'SELECT public_key from identities WHERE recipient_id = :recipient_id';
         $query = $this->db->prepare($sql);
 
