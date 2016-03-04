@@ -55,7 +55,7 @@ class MessageHandler implements Handler
                 $file_data = file_get_contents($this->node->getChild('media')->getAttribute('url'));
             }
 
-            if ($this->node->getChild('enc')->getAttribute('mediatype') == 'url') {
+            if ($this->node->getChild('enc') != null && $this->node->getChild('enc')->getAttribute('mediatype') == 'url') {
                 $this->parent->eventManager()->fire('onGetMessage',
                     [
                         $this->phoneNumber,
