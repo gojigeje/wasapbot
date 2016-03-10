@@ -24,13 +24,10 @@ class WhatsMediaUploader
         fwrite($sock, $TAIL);
         sleep(1);
 
-        $data = fgets($sock, 8192);
-        $data .= fgets($sock, 8192);
-        $data .= fgets($sock, 8192);
-        $data .= fgets($sock, 8192);
-        $data .= fgets($sock, 8192);
-        $data .= fgets($sock, 8192);
-        $data .= fgets($sock, 8192);
+        $data = '';
+        while (($line = fgets($sock, 8192)) !== false){
+            $data .= $line;
+        }
         fclose($sock);
 
         list($header, $body) = preg_split("/\R\R/", $data, 2);
