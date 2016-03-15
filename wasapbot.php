@@ -13,7 +13,7 @@
   //              as hell too. You won't find anything special here, just putting things to work together.           //
   //                                                                                                                 //
   // --------------------------------------------------------------------------------------------------------------- //
-  //  uses Chat-API - https://github.com/WHAnonymous/Chat-API                                                        //
+  //  uses Chat-API - https://github.com/mgp25/Chat-API                                                              //
   // --------------------------------------------------------------------------------------------------------------- //
   
   error_reporting(E_ERROR | E_WARNING | E_PARSE);
@@ -23,26 +23,25 @@
   require_once 'whatsapp/src/whatsprot.class.php';
 
   // bot configuration 
-  // dapetin passwordnya dg script registerTool.php
+  $nickname = "wasapbot";                          // bot's nickname
+  $username = "62xxxxxxxxxxx";                     // bot's number
+  $password = "C34G7Cauuw8lbxxxxxxxxxxxxxxxx";     // bot's spassword
+  // get the password using registerTool.php
   // --> whatsapp/examples/registerTool.php
 
-  $nickname = "wasapbot";                          // bot nickname
-  $username = "62xxxxxxxxxxx";                     // bot number
-  $password = "C34G7Cauuw8lbxxxxxxxxxxxxxxxx";     // password
-
 
   // --------------------------------------------------------------------------------------------------------------- //
   // --------------------------------------------------------------------------------------------------------------- //
-  //   Edit script di bawah kalau udah faham tentang Chat-API, backup dulu sebelum edit!                             //
-  //   Baca-baca dulu wikinya --> https://github.com/WHAnonymous/Chat-API/wiki                                       //
+  //   Only edit the scripts below if you understand about how Chat-API works, make a backup before edit!            //
+  //   Please do read the wiki --> https://github.com/mgp25/Chat-API/wiki                                            //
   // --------------------------------------------------------------------------------------------------------------- //
   // --------------------------------------------------------------------------------------------------------------- //
   
-  // restart script pas error -----------------------------------------------------------------------------------------
+  // restart script when error ----------------------------------------------------------------------------------------
   $ke = ++$argv[1]; $_ = $_SERVER['_']; $poll = 0;
   $restartMyself = function () {
       global $_, $argv, $ke;
-      echo "\n[$ke][".date('H:i:s')."] - Ada yang salah.. Me-restart bot..\n";
+      echo "\n[$ke][".date('H:i:s')."] - Something wrong, restarting bot..\n";
       sleep(10);
       pcntl_exec($_, $argv);
   };
@@ -52,20 +51,20 @@
   pcntl_signal(SIGHUP,  $restartMyself); // kill -s HUP or kill -1
   // pcntl_signal(SIGINT,  $restartMyself); // Ctrl-C
 
-  echo "[$ke][".date('H:i:s')."] ----------------------------------------------------\n";
-  echo "[$ke][".date('H:i:s')."] - Login sebagai '$nickname' ($username)\n";
-  cek_konek();
+  echo "[$ke][".date('H:i:s')."] ---------------------------------------------------------\n";
+  echo "[$ke][".date('H:i:s')."] - Login as '$nickname' ($username)\n";
+  check_connection();
   $w = new WhatsProt($username, $nickname, $debug);
   
   // bind events ------------------------------------------------------------------------------------------------------
-  // list semua event -->  https://github.com/WHAnonymous/Chat-API/wiki/WhatsAPI-Documentation#list-of-all-events
+  // list of all events -->  https://github.com/mgp25/Chat-API/wiki/WhatsAPI-Documentation#list-of-all-events
   $w->eventManager()->bind("onConnect", "onConnect");
   $w->eventManager()->bind("onDisconnect", "onDisconnect");
   $w->eventManager()->bind("onClose", "onClose");
   $w->eventManager()->bind("onGetMessage", "onGetMessage");
   $w->eventManager()->bind("onGetGroupMessage", "onGetGroupMessage");
 
-  // konek ------------------------------------------------------------------------------------------------------------
+  // connect ----------------------------------------------------------------------------------------------------------
   sleep(3);
   $w->connect();
   $w->loginWithPassword($password);
@@ -78,26 +77,25 @@
   while (1) {
 
     if ($poll==5) {
-      echo "\n[$ke][".date('H:i:s')."] ----------------------------------------------------\n";
-      echo "[$ke][".date('H:i:s')."] --- BOT SIAP!\n";
+      echo "\n[$ke][".date('H:i:s')."] ---------------------------------------------------------\n";
+      echo "[$ke][".date('H:i:s')."] --- BOT IS READY!\n";
       echo "[$ke][".date('H:i:s')."] --- \n";
-      echo "[$ke][".date('H:i:s')."] --- Sekarang coba kirim pesan ke bot ini,\n";
-      echo "[$ke][".date('H:i:s')."] --- seharusnya bot akan mengirim balik teks yang\n";
-      echo "[$ke][".date('H:i:s')."] --- dikirimkan ke dia.\n";
+      echo "[$ke][".date('H:i:s')."] --- Now try to send a message to this bot,\n";
+      echo "[$ke][".date('H:i:s')."] --- this bot should reply back any text you sent to it.\n";
       echo "[$ke][".date('H:i:s')."] --- \n";
-      echo "[$ke][".date('H:i:s')."] --- Ubah perilaku bot dengan mengedit function\n";
-      echo "[$ke][".date('H:i:s')."] --- onGetMessage() dan onGetGroupMessage()\n";
-      echo "[$ke][".date('H:i:s')."] --- di baris 126 dan baris 182.\n";
+      echo "[$ke][".date('H:i:s')."] --- Change the bot's behaviour by editing the\n";
+      echo "[$ke][".date('H:i:s')."] --- onGetMessage() and onGetGroupMessage() function\n";
+      echo "[$ke][".date('H:i:s')."] --- on line 126 and line 182.\n";
       echo "[$ke][".date('H:i:s')."] --- \n";
-      echo "[$ke][".date('H:i:s')."] --- Semoga sukses!\n";
-      echo "[$ke][".date('H:i:s')."] ----------------------------------------------------\n";
+      echo "[$ke][".date('H:i:s')."] --- Good luck!\n";
+      echo "[$ke][".date('H:i:s')."] ---------------------------------------------------------\n";
     }
 
     $w->pollMessage(true); // markAsRead
 
-    // cek konek
+    // check connection state every 100 loop
     if ($poll % 100 == 0 && $poll != 0) {
-      cek_konek();
+      check_connection();
     }
 
     $poll++; // poll control
@@ -108,18 +106,17 @@
   // FUNCTIONS 
   // ------------------------------------------------------------------------------------------------------------------
 
-  // ketika dapat pesan pm
+  // on private message
   function onGetMessage($mynumber, $from, $id, $type, $time, $name, $body)
   {
     global $ke, $w, $poll;
-    $bodi = str_replace( array("\n", "\r\n", "\r") , " ", $body);
-    $from = str_replace(array("@s.whatsapp.net","@g.us"), "", $from);  // nomer user
-    $user = explode(' ',trim($name)); $nama = $user[0];                // ambil nama depan
+    $bodi = str_replace( array("\n", "\r\n", "\r") , " ", $body);       // trim new line, for displaying on console
+    $from = str_replace(array("@s.whatsapp.net","@g.us"), "", $from);   // sender's phone number
 
     echo "\n[$ke][".date('H:i:s')."] [$from]\n";
     echo "--- $name > $bodi\n";
 
-    // coba tampilkan semua parameter yang didapat ketika ada pm masuk
+    // display all private messsage parameter
     echo "mynumber  : $mynumber\n";
     echo "from      : $from\n";
     echo "id        : $id\n";
@@ -129,60 +126,71 @@
     echo "body      : $body\n";
 
 
-    if ($poll > 5) { // abaikan poll-poll awal, biar nggak ngeflood
+    // ignore messages on early poll,
+    // this will give some time for older message to arrive (messages sent to bot when bot is offline)
+    // those messages are ignored so the bot won't spam
+    
+    if ($poll > 5) {
 
-      // dari sini udah bisa bikin logic botnya..
-      // misalnya nge-echo balik apa chat yg dikirim ke botnya
+      // from here, we can write the bot's logic.. for example:
+      
+      // (1) echo back any messages sent to it
       // --------------------------------------------------------------------------------------------
 
-            // kirim typing..
+            // we'll try to mimic human behaviour, so whatsapp won't think that this is a bot
+            
+            // send 'is typing' signal..
             $w->sendMessageComposing($from);
-            // selalu kasih jeda barang 2-3 detik, biar ga dikira bot
+
+            // always give some interval time (2, 3 or 5 seconds)
+            // don't instantly reply (too unnatural, too bot-ish)
             sleep(3);
-            // kirim balik
-            $w->sendMessage($from, $body); // kirim ke orangnya
-            // setelah send apapun, selalu poll
+
+            // send back message
+            $w->sendMessage($from, $body);
+
+            // after sending anything, always call pollMessage()
             $w->pollMessage();
 
 
-      // atau nge-respon perintah tertentu
+      // (2) or respond to particular text/command, uncomment to activate
       // --------------------------------------------------------------------------------------------
 
-      //      // sesuaikan responnya dulu
-      //      if ($body == "!ping") {
-      //        $respon = "pong! $nama";
-      //      }
-      //      elseif ($body == "!help") {
-      //        $respon = "ada yang bisa dibantu, bos $nama? 😎";
-      //      }
-      //    
-      //      // jika ada respon, kirimkan responnya
-      //      if (!empty($respon)) {
-      //        // dikirim  belakangan
-      //        $w->sendMessageComposing($from); // kirim ke orangnya
-      //        sleep(3);
-      //        $w->sendMessage($from, $respon);
-      //        $w->pollMessage();
-      //      }
+           // // customize bot's response
+           // if ($body == "!ping") {
+           //   $respon = "pong! $name";
+           // }
+           // elseif ($body == "!help") {
+           //   $respon = "can I help you $name? 😎";
+           // }
+         
+           // // if $respon is not empty, send it
+           // if (!empty($respon)) {
 
+           //   $w->sendMessageComposing($from);
+           //   sleep(3);
+           //   $w->sendMessage($from, $respon);
+           //   $w->pollMessage();
+           // }
+           
     }
 
   }
 
-  // pesan di grup
+
+  // on group message
   function onGetGroupMessage($mynumber, $from_group_jid, $from_user_jid, $id, $type, $time, $name, $body)
   {
     global $ke, $w, $poll;
-    $from_group = str_replace(array("@s.whatsapp.net","@g.us"), "", $from_group_jid);     // id grup
-    $from_user = str_replace(array("@s.whatsapp.net","@g.us"), "", $from_user_jid);       // nomer user
+    $from_group = str_replace(array("@s.whatsapp.net","@g.us"), "", $from_group_jid);     // group id
+    $from_user = str_replace(array("@s.whatsapp.net","@g.us"), "", $from_user_jid);       // sender's phone number
     $bodi = str_replace( array("\n", "\r\n", "\r") , " ", $body);
-    $user = explode(' ',trim($name)); $nama = $user[0];                                   // ambil nama depan
 
     echo "\n[$ke][".date('H:i:s')."] [$from_group_jid]\n";
-    echo "--- grup: $from_group | user : $from_user\n";
+    echo "--- group: $from_group | user : $from_user\n";
     echo "--- $name > $bodi\n";
 
-    // coba tampilkan semua parameter yg didapat ketika ada pesan baru di grup
+    // display all group message parameter
     echo "mynumber        : $mynumber\n";
     echo "from_group_jid  : $from_group_jid\n";
     echo "from_group      : $from_group\n";
@@ -194,37 +202,32 @@
     echo "name            : $name\n";
     echo "body            : $body\n";
 
-    if ($poll > 5) { // abaikan poll-poll awal, biar nggak ngeflood di grup
 
-      // dari sini udah bisa bikin logic botnya..
-      // misalnya nge-echo balik apa chat yg dikirim grup sama orang lain
+    if ($poll > 5) {   // <-- read what's this on 'onGetMessage' function above
+
+      // read detailed explanation on 'onGetMessage' function above
+      
+      // (1) echo back any messages sent to group, be careful not to spam. Uncomment to activate.
       // --------------------------------------------------------------------------------------------
 
-      //     // kirim typing..
-      //     $w->sendMessageComposing($from_group); // kirim ke groupnya
-      //     // selalu kasih jeda barang 2-3 detik, biar ga dikira bot
-      //     sleep(3);
-      //     // kirim balik
-      //     $w->sendMessage($from_group, $body);
-      //     // setelah send apapun, selalu poll
-      //     $w->pollMessage();
+          // $w->sendMessageComposing($from_group);
+          // sleep(3);
+          // $w->sendMessage($from_group, $body);
+          // $w->pollMessage();
 
 
-      // atau nge-respon perintah tertentu
-      // --------------------------------------------------------------------------------------------
+      // (2) or respond to particular text/command
+      // --------------------------------------------------------------------------------------
 
-           // sesuaikan responnya dulu
            if ($body == "!ping") {
-             $respon = "pong! $nama";
+             $respon = "[group] pong! $name";
            }
            elseif ($body == "!help") {
-             $respon = "ada yang bisa dibantu, bos $nama? 😎";
+             $respon = "[group] can I help you $name? 😎";
            }
 
-           // jika ada respon, kirimkan responnya
            if (!empty($respon)) {
-             // dikirim  belakangan
-             $w->sendMessageComposing($from_group); // kirim ke grup
+             $w->sendMessageComposing($from_group);
              sleep(3);
              $w->sendMessage($from_group, $respon);
              $w->pollMessage();
@@ -234,22 +237,23 @@
 
   }
 
+
   function onConnect($mynumber, $socket)
   {
     global $ke;
-    echo "[$ke][".date('H:i:s')."] - $mynumber sukses login!!\n";
-    echo "[$ke][".date('H:i:s')."] - Tunggu hingga bot siap!\n";
-    echo "[$ke][".date('H:i:s')."] ----------------------------------------------------\n";
+    echo "[$ke][".date('H:i:s')."] - $mynumber logged in..!\n";
+    echo "[$ke][".date('H:i:s')."] - Wait until the bot is ready..!\n";
+    echo "[$ke][".date('H:i:s')."] ---------------------------------------------------------\n";
   }
 
   function onDisconnect($mynumber, $socket)
   {
     global $ke;
-    echo "\n[$ke][".date('H:i:s')."] - $mynumber koneksi terputus!\n";
+    echo "\n[$ke][".date('H:i:s')."] - $mynumber disconnected..!\n";
     exit(1);
   }
 
-  function onClose( $mynumber, $error )
+  function onClose($mynumber, $error)
   {
     global $ke;
     echo "\n[$ke][".date('H:i:s')."] EVENT: onClose\n";
@@ -257,19 +261,19 @@
     echo " error    : $error\n\n";
   }
 
-  function cek_konek() { 
+  function check_connection() { 
     global $ke;
     $connected = @fsockopen("www.google.com", 80); 
     if ($connected){
       fclose($connected);
     } else {
-      echo "\n[$ke][".date('H:i:s')."] Tidak bisa mengakses internet! coba lagi dalam 15 detik..\n";
+      echo "\n[$ke][".date('H:i:s')."] Can't access internet..! pausing for 15 seconds..\n";
       sleep(15);
       $connected2 = @fsockopen("www.google.com", 80); 
       if ($connected2) {
         fclose($connected2);
       } else {
-        echo "\n[$ke][".date('H:i:s')."] EROR: Tidak bisa mengakses internet!\n";
+        echo "\n[$ke][".date('H:i:s')."] EROR: Can't access internet..!\n";
         exit(1);
       }
     }
