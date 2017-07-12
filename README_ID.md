@@ -1,5 +1,8 @@
 # wasapbot
 
+> repo ini udah ane tinggalin gan, ga akan ane oprek lagi, maaf.
+---
+
 Read in [English](README.md).
 
 Script bot WhatsApp yang sangat sederhana, menggunakan library [Chat-API](https://github.com/WHAnonymous/Chat-API). Sebagai contoh, script wasapbot ini akan mengirim kembali chat yang dikirimkan melalui pesan privat, dan akan menanggapi kiriman "!ping" atau "!help" di grup.
