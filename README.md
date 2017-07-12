@@ -1,5 +1,8 @@
 # wasapbot
 
+> This project is abandoned and won't be maintained anymore, sorry.
+---
+
 Baca dalam [Bahasa Indonesia](README_ID.md).
 
 A very simple WhatsApp bot script built using [Chat-API](https://github.com/WHAnonymous/Chat-API) library. This bot will send back any private message sent to it, and it also respond to "!ping" or "!help" sent to group.
